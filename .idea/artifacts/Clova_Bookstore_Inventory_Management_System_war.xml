@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Clova_Bookstore_Inventory_Management_System:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>false</exploded>
+        <module>Clova_Bookstore_Inventory_Management_System</module>
+        <packaging>war</packaging>
+        <unpackNestedArchives>false</unpackNestedArchives>
+      </options>
+    </properties>
+    <root id="archive" name="Clova_Bookstore_Inventory_Management_System-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Clova_Bookstore_Inventory_Management_System:war exploded" />
+    </root>
+  </artifact>
+</component>
