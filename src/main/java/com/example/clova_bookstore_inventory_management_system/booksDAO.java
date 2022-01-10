@@ -5,8 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
-public class customersDAO {
+public class booksDAO {
     private String dbUrl = "jdbc:mysql://localhost:3306/cbims";
     private String dbUname = "root";
     private String dbPassword = "";
@@ -34,21 +33,22 @@ public class customersDAO {
         return con;
     }
 
-
-    public String insert(customers cust)
+    public String insert(books bk)
     {
         loadDriver(dbDriver);
         Connection con = getConnection();
         String result = "Data entered successfully";
-        String sql = "insert into customer values(?,?,?,?)";
+        String sql = "insert into book values(?,?,?,?,?,?)";
 
         PreparedStatement ps;
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, cust.getCustomer_ID());
-            ps.setString(2, cust.getCustomer_Name());
-            ps.setString(3, cust.getCustomer_PhoneNo());
-            ps.setString(4, cust.getCustomer_Email());
+            ps.setString(1, bk.getBook_ID());
+            ps.setString(2, bk.getBook_Title());
+            ps.setString(3, bk.getBook_AuthorName());
+            ps.setString(4, bk.getBook_Description());
+            ps.setString(5, bk.getBook_Price());
+            ps.setString(6, bk.getBook_NoOfStocks());
             ps.executeUpdate();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
