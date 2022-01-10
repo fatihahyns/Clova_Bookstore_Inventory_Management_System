@@ -110,17 +110,20 @@
                 <div class="tab-pane fade show active" id="add-category">
 
                     <div class="bkstr-form">
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/categoryServlet">
 
 
                             <div class="form-row align-items-center">
-                                <div class="col-sm-8 my-1">
+                                <div class="col-sm-5 my-1">
+                                    <input type="input" class="form-control" name="category_Name" placeholder="Book category">
+                                </div>
 
-                                    <input type="input" class="form-control" name="add_category" placeholder="Add new book category">
+                                <div class="col-sm-3 my-1">
+                                    <input type="input" class="form-control" name="category_NoOfBooks" placeholder="No. of books">
                                 </div>
 
                                 <div class="col-auto my-1">
-                                    <button type="submit" class="btn btn-primary" name="add">ADD</button>
+                                    <button type="submit" class="btn btn-primary" value="submit">ADD</button>
                                 </div>
                             </div>
 

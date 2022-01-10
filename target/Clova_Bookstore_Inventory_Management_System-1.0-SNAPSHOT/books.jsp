@@ -118,7 +118,7 @@
                         id="add-books">
 
                     <div class="bkstr-form">
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/booksServlet">
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Book Title:</label>
                                 <div class="col-sm-12">
@@ -172,7 +172,7 @@
                             </div>
 
 
-                            <button type="submit" class="btn btn-primary btn-block mb-4" name="update" >SUBMIT</button>
+                            <button type="submit" class="btn btn-primary btn-block mb-4" value="submit" >SUBMIT</button>
 
                         </form>
                     </div>
