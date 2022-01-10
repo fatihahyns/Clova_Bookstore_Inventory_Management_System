@@ -9,11 +9,6 @@
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
 <body class="is-preload">
-<center>
-    <c:forEach var = "i" begin = "1" end = "5">
-        <c:out value = "JSTL successfully installed! "/>
-    </c:forEach>
-</center>
 
 <!-- Wrapper -->
 <div id="wrapper">
