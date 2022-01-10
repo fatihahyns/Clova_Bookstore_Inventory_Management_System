@@ -6,6 +6,13 @@ public class customers {
     private String customer_PhoneNo;
     private String customer_Email;
 
+    public customers(String customer_ID, String customer_Name, String customer_PhoneNo, String customer_Email) {
+        this.customer_ID = customer_ID;
+        this.customer_Name = customer_Name;
+        this.customer_PhoneNo = customer_PhoneNo;
+        this.customer_Email = customer_Email;
+    }
+
     public String getCustomer_ID() {
         return customer_ID;
     }

@@ -120,13 +120,13 @@
                         id="new-customer">
 
                     <div class="bkstr-form">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label class="control-label col-sm-4">Customer ID:</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" name="customer_ID" placeholder="5" readonly> <!--auto generated-->
-                                </div>
-                            </div>
+                        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/customersServlet">
+<%--                            <div class="form-group">--%>
+<%--                                <label class="control-label col-sm-4">Customer ID:</label>--%>
+<%--                                <div class="col-sm-12">--%>
+<%--                                    <input type="text" class="form-control" name="customer_ID" placeholder="5" readonly> <!--auto generated-->--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
 
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Full Name:</label>
@@ -150,7 +150,7 @@
                             </div>
 
 
-                            <button type="submit" class="btn btn-primary btn-block mb-4" name="update" >SUBMIT</button>
+                            <button type="submit" class="btn btn-primary btn-block mb-4" value="submit" >SUBMIT</button>
 
                         </form>
                     </div>
