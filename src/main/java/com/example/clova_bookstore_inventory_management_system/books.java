@@ -3,14 +3,16 @@ package com.example.clova_bookstore_inventory_management_system;
 public class books {
 
     private String book_ID;
+    private String category_ID;
     private String book_Title;
     private String book_AuthorName;
     private String book_Description;
     private String book_Price;
     private String book_NoOfStocks;
 
-    public books(String book_ID, String book_Title, String book_AuthorName, String book_Description, String book_Price, String book_NoOfStocks) {
+    public books(String book_ID, String category_ID, String book_Title, String book_AuthorName, String book_Description, String book_Price, String book_NoOfStocks) {
         this.book_ID = book_ID;
+        this.category_ID = category_ID;
         this.book_Title = book_Title;
         this.book_AuthorName = book_AuthorName;
         this.book_Description = book_Description;
@@ -24,6 +26,14 @@ public class books {
 
     public void setBook_ID(String book_ID) {
         this.book_ID = book_ID;
+    }
+
+    public String getCategory_ID() {
+        return category_ID;
+    }
+
+    public void setCategory_ID(String category_ID) {
+        this.category_ID = category_ID;
     }
 
     public String getBook_Title() {

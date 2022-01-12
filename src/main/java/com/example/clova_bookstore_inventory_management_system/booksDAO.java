@@ -38,17 +38,18 @@ public class booksDAO {
         loadDriver(dbDriver);
         Connection con = getConnection();
         String result = "Data entered successfully";
-        String sql = "insert into book values(?,?,?,?,?,?)";
+        String sql = "insert into book values(?,?,?,?,?,?,?)";
 
         PreparedStatement ps;
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, bk.getBook_ID());
-            ps.setString(2, bk.getBook_Title());
-            ps.setString(3, bk.getBook_AuthorName());
-            ps.setString(4, bk.getBook_Description());
-            ps.setString(5, bk.getBook_Price());
-            ps.setString(6, bk.getBook_NoOfStocks());
+            ps.setString(2, bk.getCategory_ID());
+            ps.setString(3, bk.getBook_Title());
+            ps.setString(4, bk.getBook_AuthorName());
+            ps.setString(5, bk.getBook_Description());
+            ps.setString(6, bk.getBook_Price());
+            ps.setString(7, bk.getBook_NoOfStocks());
             ps.executeUpdate();
         } catch (SQLException e) {
             // TODO Auto-generated catch block

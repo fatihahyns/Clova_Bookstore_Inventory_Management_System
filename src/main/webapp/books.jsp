@@ -121,6 +121,21 @@
                     <div class="bkstr-form">
                         <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/booksServlet">
                             <div class="form-group">
+                                <label class="control-label col-sm-4">Book Category:</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" name="category_ID">
+                                        <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
+                                        <sql:query dataSource="${ic}" var="oc">
+                                            SELECT * from category order by category_Name;
+                                        </sql:query>
+                                        <c:forEach var="result" items="${oc.rows}">
+                                            <option value="${result.category_ID}">${result.category_Name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="control-label col-sm-4">Book Title:</label>
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control" name="book_Title">
@@ -137,7 +152,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Book Description:</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control"  name="book_Description" rows="5">
+                                    <textarea class="form-control"  name="book_Description" rows="5"></textarea>
                                 </div>
                             </div>
 
@@ -145,7 +160,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Price:</label>
                                 <div class="col-sm-12">
-                                    <input type="email" class="form-control" name="book_Price">
+                                    <input type="text" class="form-control" name="book_Price">
                                 </div>
                             </div>
 
@@ -156,25 +171,6 @@
                                     <input type="text" class="form-control"  name="book_NoOfStocks">
                                 </div>
                             </div>
-
-
-                            <div class="form-group">
-                                <label class="control-label col-sm-4">Book Category:</label>
-                                <div class="col-sm-12">
-                                    <select class="form-control" name="category_ID">
-                                        <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
-                                        <sql:query dataSource="${ic}" var="oc">
-                                            SELECT * from category;
-                                        </sql:query>
-                                        <c:forEach var="result" items="${oc.rows}">
-                                            <option><c:out value="${result.category_Name}"/></option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </div>
-
-
-
 
                             <button type="submit" class="btn btn-primary btn-block mb-4" value="submit" >SUBMIT</button>
 
