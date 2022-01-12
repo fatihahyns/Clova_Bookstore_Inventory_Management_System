@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2022 at 08:58 AM
+-- Generation Time: Jan 12, 2022 at 11:42 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -52,6 +52,14 @@ CREATE TABLE `book` (
   `book_NoOfStocks` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `book`
+--
+
+INSERT INTO `book` (`book_ID`, `category_ID`, `book_Title`, `book_AuthorName`, `book_Description`, `book_Price`, `book_NoOfStocks`) VALUES
+(1, 4, 'Theory of Machines', 'J.K. Gupta', 'Theory of Machines is designed mainly for the students of mechanical engineering. It focuses on recent developments on the new mechanisms in the field of kinematics.', '199.00', 67),
+(2, 5, 'The Art Spirit', 'Robert Henri', 'In this book are the essential beliefs and theories of a great teacher and American artist, Robert Henri.', '99.00', 834);
+
 -- --------------------------------------------------------
 
 --
@@ -71,7 +79,9 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`category_ID`, `category_Name`, `category_NoOfBooks`) VALUES
 (1, 'Accounting and Finance', 15),
 (2, 'Business and Economics', 23),
-(3, 'Computing and Internet', 39);
+(3, 'Computing and Internet', 39),
+(4, 'Engineering', 21),
+(5, 'Arts', 40);
 
 -- --------------------------------------------------------
 
@@ -102,6 +112,8 @@ INSERT INTO `customer` (`customer_ID`, `customer_Name`, `customer_PhoneNo`, `cus
 
 CREATE TABLE `orderdetails` (
   `orderDetails_ID` int(11) NOT NULL,
+  `book_ID` int(11) NOT NULL,
+  `order_ID` int(11) NOT NULL,
   `orderDetails_Quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -113,6 +125,7 @@ CREATE TABLE `orderdetails` (
 
 CREATE TABLE `orders` (
   `order_ID` int(11) NOT NULL,
+  `customer_ID` int(11) NOT NULL,
   `order_DateTime` datetime NOT NULL,
   `order_TotalPrice` decimal(11,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -194,13 +207,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `book`
 --
 ALTER TABLE `book`
-  MODIFY `book_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `book_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `category_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `customer`
