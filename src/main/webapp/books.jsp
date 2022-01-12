@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <html>
 <head>
     <title>Books | Bookstore Inventory Management System</title>
@@ -161,15 +162,18 @@
                                 <label class="control-label col-sm-4">Category:</label>
                                 <div class="col-sm-12">
                                     <select class="form-control" name="category_ID">
-                                        <option value="" disabled selected>Select Category</option>
-                                        <option value="1">Accounting and Finance</option>
-                                        <option value="2">Business and Economics</option>
-                                        <option value="3">Computing and internet</option>
-                                        <option value="4">Engineering</option>
+                                        <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
+                                        <sql:query dataSource="${ic}" var="oc">
+                                            SELECT * from category;
+                                        </sql:query>
+                                        <c:forEach var="result" items="${oc.rows}">
+                                            <option><c:out value="${result.category_Name}"/></option>
+                                        </c:forEach>
                                     </select>
-
                                 </div>
                             </div>
+
+
 
 
                             <button type="submit" class="btn btn-primary btn-block mb-4" value="submit" >SUBMIT</button>
