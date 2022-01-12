@@ -130,7 +130,6 @@
                                         </sql:query>
                                         <c:forEach var="result" items="${oc.rows}">
                                             <option value="${result.category_ID}">${result.category_Name}</option>
-<%--                                            <option value="${category.id}">${category.name}</option>--%>
                                         </c:forEach>
                                     </select>
                                 </div>
