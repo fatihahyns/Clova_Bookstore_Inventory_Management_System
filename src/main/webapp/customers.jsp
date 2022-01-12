@@ -5,8 +5,30 @@
   Time: 11:29 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+<%
+    String dbDriver = "com.mysql.jdbc.Driver";
+    String dbUname = "root";
+    String dbPassword = "";
+    String dbUrl = "jdbc:mysql://localhost:3306/cbims";
+
+    try {
+        Class.forName(dbDriver);
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+    Connection con = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+%>
+
 <html>
 <head>
     <title>Customers | Bookstore Inventory Management System</title>
@@ -16,20 +38,8 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
-        table.table td a {
-            cursor: pointer;
-            display: inline-block;
-            margin: 0 5px;
-            min-width: 24px;
-        }
-        table.table td a.edit {
-            color: #FFC107;
-        }
-        table.table td a.delete {
-            color: #E34724;
-        }
-
         .nav-tabs .nav-link.active {
             background-color: #F4F4F4;
         }
@@ -71,7 +81,7 @@
 
             <li><a href="suppliers.jsp">Suppliers</a></li>
 
-            <li><a href="customers.jsp"  class="active">Customers</a></li>
+            <li><a href="customers.jsp" class="active">Customers</a></li>
 
             <li><a href="orders.jsp">Orders</a></li>
 
@@ -121,13 +131,6 @@
 
                     <div class="bkstr-form">
                         <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/customersServlet">
-<%--                            <div class="form-group">--%>
-<%--                                <label class="control-label col-sm-4">Customer ID:</label>--%>
-<%--                                <div class="col-sm-12">--%>
-<%--                                    <input type="text" class="form-control" name="customer_ID" placeholder="5" readonly> <!--auto generated-->--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Full Name:</label>
                                 <div class="col-sm-12">
@@ -156,12 +159,13 @@
                     </div>
                 </div>
 
-                <div class="tab-pane fade" id="list-customers">
 
+
+                <div class="tab-pane fade" id="list-customers">
                     <table class="table table-bordered table-hover">
                         <thead class="thead-dark">
                         <tr>
-                            <th class="text-center" scope="col">ID</th>
+                            <th class="text-center" scope="col">No.</th>
                             <th class="text-center" scope="col">Name</th>
                             <th class="text-center" scope="col">Phone Number</th>
                             <th class="text-center" scope="col">Email</th>
@@ -169,61 +173,64 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th class="text-center" scope="row">1</th>
-                            <td align="center">Kalsum binti Said</td>
-                            <td align="center">019-6678144</td>
-                            <td align="center">kalsumsaid@gmail.com</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
 
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">2</th>
-                            <td align="center">Jacob Tan</td>
-                            <td align="center">013-7774534</td>
-                            <td align="center">jacobtan@gmail.com</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                        <%
+                            try{
+                                con = DriverManager.getConnection(dbUrl, dbUname, dbPassword);
+                                statement=con.createStatement();
+                                String sql ="select * from customer";
+                                resultSet = statement.executeQuery(sql);
+                                int i=1;
+                                while(resultSet.next()){
+                        %>
+                            <tr>
+                                <th class="text-center" scope="row"><%=i%></th>
+                                <td align="center"><%=resultSet.getString("customer_Name") %></td>
+                                <td align="center"><%=resultSet.getString("customer_PhoneNo") %></td>
+                                <td align="center"><%=resultSet.getString("customer_Email") %></td>
+                                <td align="center" class="col-2">
+<%--                                    <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>--%>
+<%--                                    <button type="button" id="<%=resultSet.getString("customer_ID") %>" class="btn btn-success btn-sm rounded-0" title="Edit"><i class="material-icons">&#xE254;</i></button>--%>
+                                    <button type="button" id="<%=resultSet.getString("customer_ID") %>" class="btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>
+                                </td>
+                            </tr>
+                        <%
+                                    i++;
+                                }
+                                con.close();
+                            }
+                            catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        %>
 
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">3</th>
-                            <td align="center">Baktiar bin Zain</td>
-                            <td align="center">013-8908534</td>
-                            <td align="center">baktiarzain@gmail.com</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">4</th>
-                            <td align="center">Natrah A/P Ravindran</td>
-                            <td align="center">019-8971884</td>
-                            <td align="center">natrahravindran@gmail.com</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        </tbody>
+                        <script>
+                            $(document).ready(function() {
+                                $(".delete").click(function() {
+                                    var id = +this.id;
+                                    $.ajax({
+                                        url: "deleteCustomers.jsp",
+                                        type: "post",
+                                        data: {
+                                            id : id,
+                                        },
+                                        success : function(data){
+                                            alert(data); // alerts the response from jsp
+                                            location.reload();
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+                         </tbody>
                     </table>
-
-
-                </div>
+ </div>
             </div>
             <!-- Tabs content -->
-
-
         </div>
     </div>
+
+
 
     <!-- Footer -->
     <footer id="footer">
