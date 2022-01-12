@@ -159,7 +159,7 @@
 
 
                             <div class="form-group">
-                                <label class="control-label col-sm-4">Category:</label>
+                                <label class="control-label col-sm-4">Book Category:</label>
                                 <div class="col-sm-12">
                                     <select class="form-control" name="category_ID">
                                         <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
