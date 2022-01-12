@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,16 +79,29 @@
 									</span>
                     <a href="books.jsp">
                         <h2>TOTAL BOOKS</h2>
-                        <p style="font-size:500%;"><strong>150</strong></p>
+                        <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
+                        <sql:query dataSource="${ic}" var="oc">
+                            SELECT COUNT(book_ID) AS count FROM book;
+                        </sql:query>
+                        <c:forEach var="row" items="${oc.rows}">
+                            <p style="font-size:500%;"><strong>${row.count}</strong></p>
+                        </c:forEach>
                     </a>
                 </article>
+
                 <article class="style2">
 									<span class="image">
 										<img src="images/product-2-720x480.jpg" alt="" />
 									</span>
                     <a href="category.jsp">
                         <h2>TOTAL CATEGORY</h2>
-                        <p style="font-size:500%;"><strong>10</strong></p>
+                        <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
+                        <sql:query dataSource="${ic}" var="oc">
+                            SELECT COUNT(category_ID) AS count FROM category;
+                        </sql:query>
+                        <c:forEach var="row" items="${oc.rows}">
+                            <p style="font-size:500%;"><strong>${row.count}</strong></p>
+                        </c:forEach>
                     </a>
                 </article>
                 <article class="style3">
@@ -95,7 +110,13 @@
 									</span>
                     <a href="suppliers.jsp">
                         <h2>TOTAL SUPPLIERS</h2>
-                        <p style="font-size:500%;"><strong>15</strong></p>
+                        <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
+                        <sql:query dataSource="${ic}" var="oc">
+                            SELECT COUNT(supplier_ID) AS count FROM supplier;
+                        </sql:query>
+                        <c:forEach var="row" items="${oc.rows}">
+                            <p style="font-size:500%;"><strong>${row.count}</strong></p>
+                        </c:forEach>
                     </a>
                 </article>
 
@@ -105,7 +126,13 @@
 									</span>
                     <a href="customers.jsp">
                         <h2>TOTAL CUSTOMERS</h2>
-                        <p style="font-size:500%;"><strong>50</strong></p>
+                        <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
+                        <sql:query dataSource="${ic}" var="oc">
+                            SELECT COUNT(customer_ID) AS count FROM customer;
+                        </sql:query>
+                        <c:forEach var="row" items="${oc.rows}">
+                            <p style="font-size:500%;"><strong>${row.count}</strong></p>
+                        </c:forEach>
                     </a>
                 </article>
 
@@ -115,7 +142,13 @@
 									</span>
                     <a href="#">
                         <h2>TOTAL SALES</h2>
-                        <p style="font-size:500%;"><strong>5,000</strong></p>
+                        <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
+                        <sql:query dataSource="${ic}" var="oc">
+                            SELECT COUNT(order_ID) AS count FROM orders;
+                        </sql:query>
+                        <c:forEach var="row" items="${oc.rows}">
+                            <p style="font-size:500%;"><strong>${row.count}</strong></p>
+                        </c:forEach>
                     </a>
                 </article>
 
@@ -125,7 +158,13 @@
 									</span>
                     <a href="#">
                         <h2>TOTAL USERS</h2>
-                        <p style="font-size:500%;"><strong>2</strong></p>
+                        <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
+                        <sql:query dataSource="${ic}" var="oc">
+                            SELECT COUNT(admin_ID) AS count FROM admin;
+                        </sql:query>
+                        <c:forEach var="row" items="${oc.rows}">
+                            <p style="font-size:500%;"><strong>${row.count}</strong></p>
+                        </c:forEach>
                     </a>
                 </article>
             </section>
