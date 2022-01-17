@@ -1,9 +1,6 @@
 package com.example.clova_bookstore_inventory_management_system;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class registerDAO {
     private String dbUrl = "jdbc:mysql://localhost:3306/cbims";
@@ -11,6 +8,7 @@ public class registerDAO {
     private String dbPassword = "";
     private String dbDriver = "com.mysql.cj.jdbc.Driver";
 
+    static ResultSet rs = null;
     public void loadDriver(String dbDriver)
     {
         try {
@@ -33,6 +31,7 @@ public class registerDAO {
         return con;
     }
 
+    //register function
     public String register(register reg)
     {
         loadDriver(dbDriver);
@@ -56,5 +55,29 @@ public class registerDAO {
             result = "User not registered!";
         }
         return result;
+    }
+
+    //login function
+    public boolean login(register log)
+    {
+        boolean status = false;
+
+        loadDriver(dbDriver);
+        Connection con = getConnection();
+
+        String sql = "select * from admin where admin_Username = ? and admin_Password =?";
+        PreparedStatement ps;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, log.getAdmin_Username());
+            ps.setString(2, log.getAdmin_Password());
+            ResultSet rs = ps.executeQuery();
+            status = rs.next();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return status;
     }
 }
