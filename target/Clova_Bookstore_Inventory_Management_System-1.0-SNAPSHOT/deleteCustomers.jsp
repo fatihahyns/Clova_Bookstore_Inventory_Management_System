@@ -23,6 +23,6 @@
     {
         System.out.print(e);
         e.printStackTrace();
-        out.println("Delete Unsuccessful!");
+        out.println("Delete Unsuccessful! Please try again.");
     }
 %>
