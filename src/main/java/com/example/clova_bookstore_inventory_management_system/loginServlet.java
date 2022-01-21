@@ -1,15 +1,14 @@
 package com.example.clova_bookstore_inventory_management_system;
 
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "registerServlet", value = "/registerServlet")
-public class registerServlet extends HttpServlet
+@WebServlet(name = "loginServlet", value = "/loginServlet")
+public class loginServlet extends HttpServlet
 {
-    public registerServlet()
+    public loginServlet()
     {
         super();
     }
@@ -23,6 +22,8 @@ public class registerServlet extends HttpServlet
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+        registerDAO lg = new registerDAO();
+
         String admin_ID = request.getParameter("admin_ID");
         String admin_Name = request.getParameter("admin_Name");
         String admin_PhoneNo = request.getParameter("admin_PhoneNo");
@@ -30,10 +31,20 @@ public class registerServlet extends HttpServlet
         String admin_Email = request.getParameter("admin_Email");
         String admin_Password = request.getParameter("admin_Password");
 
-        register reg = new register(admin_ID,admin_Name,admin_PhoneNo,admin_Username,admin_Email,admin_Password);
-        registerDAO rg = new registerDAO();
-        String result = rg.register(reg);
-        response.getWriter().print(result);
+        register log = new register(admin_ID,admin_Name,admin_PhoneNo,admin_Username,admin_Email,admin_Password);
+        log.setAdmin_Username(admin_Username);
+        log.setAdmin_Password(admin_Password);
 
+        if (lg.login(log))
+        {
+            response.sendRedirect("index.jsp");
+
+        }
+        else
+        {
+            //HttpSession session = request.getSession();
+            response.sendRedirect("login.jsp");
+
+        }
     }
 }

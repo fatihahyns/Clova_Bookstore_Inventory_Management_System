@@ -24,40 +24,40 @@
                 <div class="card fat">
                     <div class="card-body">
                         <h4 class="card-title">Register</h4>
-                        <form method="POST" class="my-login-validation" novalidate="">
+                        <form method="post" class="my-login-validation" novalidate="" action="${pageContext.request.contextPath}/registerServlet">
                             <div class="form-group">
-                                <label for="name">Full Name</label>
-                                <input id="name" type="text" class="form-control" name="name" required autofocus>
+                                <label for="admin_Name">Full Name</label>
+                                <input id="admin_Name" type="text" class="form-control" name="admin_Name" required autofocus>
                                 <div class="invalid-feedback">
                                     What's your full name?
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="username">Username</label>
-                                <input id="username" type="text" class="form-control" name="username" required autofocus>
+                                <label for="admin_Username">Username</label>
+                                <input id="admin_Username" type="text" class="form-control" name="admin_Username" required autofocus>
                                 <div class="invalid-feedback">
                                     What's your username?
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="phNum">Contact No.</label>
-                                <input id="phNum" type="text" class="form-control" name="phNum" required autofocus>
+                                <label for="admin_PhoneNo">Contact No.</label>
+                                <input id="admin_PhoneNo" type="text" class="form-control" name="admin_PhoneNo" required autofocus>
                                 <div class="invalid-feedback">
                                     What's your contact no?
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="email">E-Mail Address</label>
-                                <input id="email" type="email" class="form-control" name="email" required>
+                                <label for="admin_Email">E-Mail Address</label>
+                                <input id="admin_Email" type="email" class="form-control" name="admin_Email" required>
                                 <div class="invalid-feedback">
                                     Your email is invalid
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="password">Password</label>
-                                <input id="password" type="password" class="form-control" name="password" required data-eye>
+                                <label for="admin_Password">Password</label>
+                                <input id="admin_Password" type="password" class="form-control" name="admin_Password" required data-eye>
                                 <div class="invalid-feedback">
                                     Password is required
                                 </div>
@@ -74,7 +74,7 @@
                             </div>
 
                             <div class="form-group m-0">
-                                <a href="login.jsp" class="btn btn-primary btn-block">Register</a>
+                                <button type="submit" class="btn btn-primary btn-block" value="submit" >Register</button>
                             </div>
                             <div class="mt-4 text-center">
                                 Already have an account? <a href="login.jsp">Login</a>

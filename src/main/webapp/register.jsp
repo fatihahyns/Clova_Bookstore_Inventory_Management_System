@@ -24,57 +24,57 @@
                 <div class="card fat">
                     <div class="card-body">
                         <h4 class="card-title">Register</h4>
-                        <form method="POST" class="my-login-validation" novalidate="">
+                        <form method="post" class="my-login-validation"  action="${pageContext.request.contextPath}/registerServlet">
                             <div class="form-group">
-                                <label for="name">Full Name</label>
-                                <input id="name" type="text" class="form-control" name="name" required autofocus>
-                                <div class="invalid-feedback">
-                                    What's your full name?
-                                </div>
+                                <label for="admin_Name">Full Name</label>
+                                <input id="admin_Name" type="text" class="form-control" name="admin_Name" required/>
+                                   <div class="invalid-feedback">
+                                        What's your full name?
+                                    </div>
                             </div>
                             <div class="form-group">
-                                <label for="username">Username</label>
-                                <input id="username" type="text" class="form-control" name="username" required autofocus>
-                                <div class="invalid-feedback">
-                                    What's your username?
-                                </div>
+                                <label for="admin_Username">Username</label>
+                                <input id="admin_Username" type="text" class="form-control" name="admin_Username" required/>
+                                    <div class="invalid-feedback">
+                                        What's your username?
+                                    </div>
                             </div>
                             <div class="form-group">
-                                <label for="phNum">Contact No.</label>
-                                <input id="phNum" type="text" class="form-control" name="phNum" required autofocus>
-                                <div class="invalid-feedback">
-                                    What's your contact no?
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">E-Mail Address</label>
-                                <input id="email" type="email" class="form-control" name="email" required>
-                                <div class="invalid-feedback">
-                                    Your email is invalid
-                                </div>
+                                <label for="admin_PhoneNo">Contact No.</label>
+                                <input id="admin_PhoneNo" type="text" class="form-control" name="admin_PhoneNo" required>
+                                    <div class="invalid-feedback">
+                                        What's your contact no?
+                                    </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="password">Password</label>
-                                <input id="password" type="password" class="form-control" name="password" required data-eye>
-                                <div class="invalid-feedback">
-                                    Password is required
-                                </div>
+                                <label for="admin_Email">E-Mail Address</label>
+                                <input id="admin_Email" type="email" class="form-control" name="admin_Email" required/>
+                                    <div class="invalid-feedback">
+                                        Your email is invalid
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="admin_Password">Password</label>
+                                <input id="admin_Password" type="password" class="form-control" name="admin_Password" required/>
+                                    <div class="invalid-feedback">
+                                        Password is required
+                                    </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="custom-checkbox custom-control">
-                                    <input type="checkbox" name="agree" id="agree" class="custom-control-input" required="">
+                                    <input type="checkbox" name="agree" id="agree" class="custom-control-input" required=""/>
                                     <label for="agree" class="custom-control-label">I agree to the <a href="#">Terms and Conditions</a></label>
-                                    <div class="invalid-feedback">
-                                        You must agree with our Terms and Conditions
-                                    </div>
+                                        <div class="invalid-feedback">
+                                            You must agree with our Terms and Conditions
+                                        </div>
                                 </div>
                             </div>
 
                             <div class="form-group m-0">
-                                <a href="login.jsp" class="btn btn-primary btn-block">Register</a>
+                                <button type="submit" class="btn btn-primary btn-block" value="submit" >Register</button>
                             </div>
                             <div class="mt-4 text-center">
                                 Already have an account? <a href="login.jsp">Login</a>
@@ -90,6 +90,18 @@
     </div>
 </section>
 
+<script>
+    $("#form").submit(function() {
+        var requiredFailed = true;
+        $("#form input:text").each(function() {
+            if ($.trim($(this).val()).length == 0) {
+                requiredFailed = false;
+                return false;
+            }
+        });
+        return requiredFailed;
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="js/my-login.js"></script>

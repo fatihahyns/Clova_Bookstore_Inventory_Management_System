@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2022 at 11:42 AM
+-- Generation Time: Jan 12, 2022 at 05:15 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -101,8 +101,8 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customer_ID`, `customer_Name`, `customer_PhoneNo`, `customer_Email`) VALUES
-(1, 'tabitha', '01912345678', 'tabitha@gmail.com'),
-(2, 'amirah', '01213456789', 'amirah@gmail.com');
+(3, 'ibrahim', '0134566989', 'ibrahim@gmail.com'),
+(4, 'mariam', '0181234568', 'mariam@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -219,7 +219,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `customer_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `orderdetails`
