@@ -8,6 +8,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+
+<%
+    String dbDriver = "com.mysql.jdbc.Driver";
+    String dbUname = "root";
+    String dbPassword = "";
+    String dbUrl = "jdbc:mysql://localhost:3306/cbims";
+
+    try {
+        Class.forName(dbDriver);
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+    Connection con = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+%>
 <html>
 <head>
     <title>Books | Bookstore Inventory Management System</title>
@@ -194,90 +214,40 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th class="text-center" scope="row">1</th>
-                            <td align="center">Inside the Science of Extraordinary Athletic Performance</td>
-                            <td align="center">David Epstein</td>
-                            <td align="center">The Sports Gene is a nonfiction book, at the time a senior writer for Sports Illustrated, on the effects of genetics and sports training on human athleticism.</td>
-                            <td align="center">RM150.00</td>
-                            <td align="center">353</td>
-                            <td align="center">Sport Science</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                        <%
+                            try{
+                                con = DriverManager.getConnection(dbUrl, dbUname, dbPassword);
+                                statement=con.createStatement();
+                                String sql ="select * from book Inner join category on book.category_ID = category.category_ID";
+                                resultSet = statement.executeQuery(sql);
+                                int i=1;
+                                while(resultSet.next()){
+                        %>
+                            <tr>
+                                <th class="text-center" scope="row"><%=i%></th>
+                                <td align="center"><%=resultSet.getString("book_Title") %></td>
+                                <td align="center"><%=resultSet.getString("book_AuthorName") %></td>
+                                <td align="center"><%=resultSet.getString("book_Description") %></td>
+                                <td align="center"><%=resultSet.getString("book_price") %></td>
+                                <td align="center"><%=resultSet.getString("book_NoOfStocks") %></td>
+                                <td align="center"><%=resultSet.getString("category_Name") %></td>
 
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">2</th>
-                            <td align="center">The Art Spirit</td>
-                            <td align="center">Robert Henri</td>
-                            <td align="center">In this book are the essential beliefs and theories of a great teacher and American artist, Robert Henri</td>
-                            <td align="center">RM99.00</td>
-                            <td align="center">834</td>
-                            <td align="center">Arts</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
 
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">3</th>
-                            <td align="center">Theory of Machines</td>
-                            <td align="center">J.K. Gupta, R.S. Khurmi, and RS Khurmi | JK Gupta</td>
-                            <td align="center">Theory of Machines is designed mainly for the students of mechanical engineering. It focuses on recent developments on the new mechanisms in the field of kinematics.</td>
-                            <td align="center">RM199.00</td>
-                            <td align="center">67</td>
-                            <td align="center">Engineering</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                <td align="center" class="col-2">
+                                    <button type="button" class="btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Edit">&#xE254</i></button>
+                                    <a href="deleteBooks.jsp?id=<%=resultSet.getString("book_ID") %>"><button type="button" class="btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button></a>
+                                </td>
+                            </tr>
+                        <%
+                                    i++;
+                                }
+                                con.close();
+                            }
+                            catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        %>
 
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">4</th>
-                            <td align="center">Freakonomics</td>
-                            <td align="center">Stephen J. Dubner and Steven Levitt</td>
-                            <td align="center">A Rogue Economist Explores the Hidden Side of Everything is the debut non-fiction book by University of Chicago economist Steven Levitt and New York Times journalist Stephen J. Dubner.</td>
-                            <td align="center">RM125.00</td>
-                            <td align="center">555</td>
-                            <td align="center">Business and Economics</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">5</th>
-                            <td align="center">The Big Short: Inside the Doomsday Machine</td>
-                            <td align="center">Michael Lewis</td>
-                            <td align="center">The Big Short: Inside the Doomsday Machine is a nonfiction book by Michael Lewis about the build-up of the United States housing bubble during the 2000s.</td>
-                            <td align="center">RM210.00</td>
-                            <td align="center">178</td>
-                            <td align="center">Business and Economics</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">6</th>
-                            <td align="center">Complications: A Surgeon's Notes on an Imperfect Science</td>
-                            <td align="center">Atul Gawande</td>
-                            <td align="center">Gawande wrote this during his general surgery residency at Brigham and Women's Hospital and was published in 2002 by Picador.</td>
-                            <td align="center">RM345.00</td>
-                            <td align="center">299</td>
-                            <td align="center">Health and Medicines</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
 
