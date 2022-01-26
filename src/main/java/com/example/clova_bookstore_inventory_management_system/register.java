@@ -1,15 +1,20 @@
 package com.example.clova_bookstore_inventory_management_system;
 
-public class register
+public class register implements java.io.Serializable
 {
-    private String admin_ID;
+    private int admin_ID;
     private String admin_Name;
     private String admin_PhoneNo;
     private String admin_Username;
     private String admin_Email;
     private String admin_Password;
 
-    public register(String admin_ID, String admin_Name, String admin_PhoneNo, String admin_Username, String admin_Email, String admin_Password)
+    public register()
+    {
+
+    }
+
+    public register(int admin_ID, String admin_Name, String admin_PhoneNo, String admin_Username, String admin_Email, String admin_Password)
     {
         this.admin_ID = admin_ID;
         this.admin_Name = admin_Name;
@@ -19,11 +24,12 @@ public class register
         this.admin_Password = admin_Password;
     }
 
-    public String getAdmin_ID() {
+    public int getAdmin_ID()
+    {
         return admin_ID;
     }
 
-    public void setAdmin_ID(String admin_ID) {
+    public void setAdmin_ID(int admin_ID) {
         this.admin_ID = admin_ID;
     }
 
@@ -66,4 +72,5 @@ public class register
     public void setAdmin_Password(String admin_Password) {
         this.admin_Password = admin_Password;
     }
+
 }
