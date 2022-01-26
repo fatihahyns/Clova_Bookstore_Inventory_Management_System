@@ -191,7 +191,7 @@
                                 <td align="center" class="col-2">
 <%--                                    <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>--%>
 <%--                                    <button type="button" id="<%=resultSet.getString("customer_ID") %>" class="btn btn-success btn-sm rounded-0" title="Edit"><i class="material-icons">&#xE254;</i></button>--%>
-                                    <button type="button" id="<%=resultSet.getString("customer_ID") %>" class="btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>
+                                    <button type="button" id="<%=resultSet.getString("customer_ID") %>" class="delete btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>
                                 </td>
                             </tr>
                         <%

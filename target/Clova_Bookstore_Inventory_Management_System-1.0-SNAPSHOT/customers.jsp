@@ -40,19 +40,6 @@
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
-        table.table td a {
-            cursor: pointer;
-            display: inline-block;
-            margin: 0 5px;
-            min-width: 24px;
-        }
-        table.table td button.edit {
-            color: #FFC107;
-        }
-        table.table td button.delete {
-            color: #E34724;
-        }
-
         .nav-tabs .nav-link.active {
             background-color: #F4F4F4;
         }
@@ -94,7 +81,7 @@
 
             <li><a href="suppliers.jsp">Suppliers</a></li>
 
-            <li><a href="customers.jsp"  class="active">Customers</a></li>
+            <li><a href="customers.jsp" class="active">Customers</a></li>
 
             <li><a href="orders.jsp">Orders</a></li>
 
@@ -144,13 +131,6 @@
 
                     <div class="bkstr-form">
                         <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/customersServlet">
-<%--                            <div class="form-group">--%>
-<%--                                <label class="control-label col-sm-4">Customer ID:</label>--%>
-<%--                                <div class="col-sm-12">--%>
-<%--                                    <input type="text" class="form-control" name="customer_ID" placeholder="5" readonly> <!--auto generated-->--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Full Name:</label>
                                 <div class="col-sm-12">
@@ -210,10 +190,8 @@
                                 <td align="center"><%=resultSet.getString("customer_Email") %></td>
                                 <td align="center" class="col-2">
 <%--                                    <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>--%>
-<%--                                    <a class="delete" name="delete" title="Delete" onclick="deleteme(${result.customer_ID})" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>--%>
-    <button type="button" id="<%=resultSet.getString("customer_ID") %>" class="btn btn-success btn-sm rounded-0" title="Edit"><i class="material-icons">&#xE254;</i></button>
-    <button type="button" id="<%=resultSet.getString("customer_ID") %>" class="btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>
-
+<%--                                    <button type="button" id="<%=resultSet.getString("customer_ID") %>" class="btn btn-success btn-sm rounded-0" title="Edit"><i class="material-icons">&#xE254;</i></button>--%>
+                                    <button type="button" id="<%=resultSet.getString("customer_ID") %>" class="delete btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>
                                 </td>
                             </tr>
                         <%
@@ -244,16 +222,11 @@
                                 });
                             });
                         </script>
-
-                        </tbody>
+                         </tbody>
                     </table>
-
-
-                </div>
+ </div>
             </div>
             <!-- Tabs content -->
-
-
         </div>
     </div>
 
