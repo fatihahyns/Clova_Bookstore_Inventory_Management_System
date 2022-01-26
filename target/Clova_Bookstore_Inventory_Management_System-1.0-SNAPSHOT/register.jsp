@@ -41,10 +41,6 @@
                             </div>
                             <div class="form-group">
                                 <label for="admin_PhoneNo">Contact No.</label>
-                                <input id="admin_PhoneNo" type="text" class="form-control" name="admin_PhoneNo" required>
-                                    <div class="invalid-feedback">
-                                        What's your contact no?
-                                    </div>
                                 <input id="admin_PhoneNo" type="text" class="form-control" name="admin_PhoneNo" required/>
                                     <div class="invalid-feedback">
                                         What's your contact no?
