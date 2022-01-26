@@ -5,6 +5,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet(name = "registerServlet", value = "/registerServlet")
 public class registerServlet extends HttpServlet
@@ -23,17 +24,40 @@ public class registerServlet extends HttpServlet
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        String admin_ID = request.getParameter("admin_ID");
+
+        register reg = new register();
+
+       //reg.setAdmin_ID(Integer.parseInt(request.getParameter("admin_ID")));
+        reg.setAdmin_Name(request.getParameter("admin_Name"));
+        reg.setAdmin_PhoneNo(request.getParameter("admin_PhoneNo"));
+        reg.setAdmin_Email(request.getParameter("admin_Email"));
+        reg.setAdmin_Username(request.getParameter("admin_Username"));
+        reg.setAdmin_Password(request.getParameter("admin_Password"));
+
+       /* int admin_ID = Integer.parseInt(request.getParameter("admin_ID")) ;
         String admin_Name = request.getParameter("admin_Name");
         String admin_PhoneNo = request.getParameter("admin_PhoneNo");
         String admin_Username = request.getParameter("admin_Username");
         String admin_Email = request.getParameter("admin_Email");
-        String admin_Password = request.getParameter("admin_Password");
+        String admin_Password = request.getParameter("admin_Password");*/
 
-        register reg = new register(admin_ID,admin_Name,admin_PhoneNo,admin_Username,admin_Email,admin_Password);
-        registerDAO rg = new registerDAO();
-        String result = rg.register(reg);
-        response.getWriter().print(result);
+        String admin_ID = request.getParameter("admin_ID");
+
+        if (admin_ID == null || admin_ID.isEmpty())
+        {
+            registerDAO rg = new registerDAO();
+            String result = rg.register(reg);
+
+            if (result != null)
+            {
+                PrintWriter out = response.getWriter();
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('User successfully registered');");
+                out.println("location='login.jsp';");
+                out.println("</script>");
+            }
+        }
+        //response.getWriter().print(result);
 
     }
 }
