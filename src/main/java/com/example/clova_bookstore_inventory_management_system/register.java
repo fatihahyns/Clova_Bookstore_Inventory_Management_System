@@ -24,7 +24,8 @@ public class register implements java.io.Serializable
         this.admin_Password = admin_Password;
     }
 
-    public int getAdmin_ID() {
+    public int getAdmin_ID()
+    {
         return admin_ID;
     }
 
