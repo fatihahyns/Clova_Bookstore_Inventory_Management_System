@@ -14,19 +14,27 @@
 <%@page import="java.sql.Connection"%>
 
 <%
+    String id = request.getParameter("book_ID");
     String dbDriver = "com.mysql.jdbc.Driver";
     String dbUname = "root";
     String dbPassword = "";
     String dbUrl = "jdbc:mysql://localhost:3306/cbims";
-
     try {
         Class.forName(dbDriver);
     } catch (ClassNotFoundException e) {
         e.printStackTrace();
     }
-    Connection con = null;
+    Connection connection = null;
     Statement statement = null;
     ResultSet resultSet = null;
+%>
+<%
+    try{
+        connection = DriverManager.getConnection(dbUrl, dbUname, dbPassword);
+        statement=connection.createStatement();
+        String sql ="select * from book Inner join category on book.category_ID = category.category_ID where book.book_ID="+id;
+        resultSet = statement.executeQuery(sql);
+        while(resultSet.next()){
 %>
 <html>
 <head>
@@ -118,15 +126,7 @@
                             class="nav-link active"
                             data-bs-toggle="tab"
                             href="#add-books"
-                    >Add Books</a
-                    >
-                </li>
-                <li class="nav-item">
-                    <a
-                            class="nav-link"
-                            data-bs-toggle="tab"
-                            href="#list-books"
-                    >List of Books</a
+                    >Update Books</a
                     >
                 </li>
             </ul>
@@ -139,7 +139,7 @@
                         id="add-books">
 
                     <div class="bkstr-form">
-                        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/booksServlet">
+                        <form class="form-horizontal" method="post" action="updateBooks-process.jsp">
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Book Category:</label>
                                 <div class="col-sm-12">
@@ -158,21 +158,21 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Book Title:</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" name="book_Title">
+                                    <input type="text" class="form-control" value="<%=resultSet.getString("book_Name") %>" name="book_Title">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Author Name:</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control"name="book_AuthorName">
+                                    <input type="text" class="form-control"name="book_AuthorName" value="<%=resultSet.getString("book_AuthorName") %>">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Book Description:</label>
                                 <div class="col-sm-12">
-                                    <textarea class="form-control"  name="book_Description" rows="5"></textarea>
+                                    <textarea class="form-control"  value="<%=resultSet.getString("book_Description") %>" name="book_Description" rows="5"></textarea>
                                 </div>
                             </div>
 
@@ -180,7 +180,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Price:</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" name="book_Price">
+                                    <input type="text" class="form-control" name="book_Price" value="<%=resultSet.getString("book_Price") %>">
                                 </div>
                             </div>
 
@@ -188,86 +188,21 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4">No of Stocks:</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control"  name="book_NoOfStocks">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-sm-4">Supplier:</label>
-                                <div class="col-sm-12">
-                                    <select class="form-control" name="supplier_ID">
-                                        <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
-                                        <sql:query dataSource="${ic}" var="oc">
-                                            SELECT * from supplier order by supplier_Name;
-                                        </sql:query>
-                                        <c:forEach var="result" items="${oc.rows}">
-                                            <option value="${result.supplier_ID}">${result.supplier_Name}</option>
-                                        </c:forEach>
-                                    </select>
+                                    <input type="text" class="form-control"  name="book_NoOfStocks" value="<%=resultSet.getString("book_NoOfStocks") %>">
                                 </div>
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-block mb-4" value="submit" >SUBMIT</button>
 
                         </form>
-                    </div>
-                </div>
-
-                <div class="tab-pane fade" id="list-books">
-
-                    <table class="table table-bordered table-hover">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th class="text-center" scope="col">ID</th>
-                            <th class="text-center" scope="col">Title</th>
-                            <th class="text-center" scope="col">Author Name</th>
-                            <th class="text-center" scope="col">Description</th>
-                            <th class="text-center" scope="col">Price</th>
-                            <th class="text-center" scope="col">No of Stocks</th>
-                            <th class="text-center" scope="col">Category Name</th>
-                            <th class="text-center" scope="col">Supplier Name</th>
-                            <th class="text-center" scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
                         <%
-                            try{
-                                con = DriverManager.getConnection(dbUrl, dbUname, dbPassword);
-                                statement=con.createStatement();
-                                String sql ="select * from book Inner join category on book.category_ID = category.category_ID join supplier on book.supplier_ID = supplier.supplier_ID";
-                                resultSet = statement.executeQuery(sql);
-                                int i=1;
-                                while(resultSet.next()){
-                        %>
-                            <tr>
-                                <th class="text-center" scope="row"><%=i%></th>
-                                <td align="center"><%=resultSet.getString("book_Title") %></td>
-                                <td align="center"><%=resultSet.getString("book_AuthorName") %></td>
-                                <td align="center"><%=resultSet.getString("book_Description") %></td>
-                                <td align="center"><%=resultSet.getString("book_price") %></td>
-                                <td align="center"><%=resultSet.getString("book_NoOfStocks") %></td>
-                                <td align="center"><%=resultSet.getString("category_Name") %></td>
-                                <td align="center"><%=resultSet.getString("supplier_Name") %></td>
-
-
-                                <td align="center" class="col-2">
-                                    <a href="updateBooks.jsp?id=<%=resultSet.getString("book_ID")%>"><button type="button" class="btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Edit">&#xE254</i></button></a>
-                                    <a href="deleteBooks.jsp?id=<%=resultSet.getString("book_ID") %>"><button type="button" class="btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button></a>
-                                </td>
-                            </tr>
-                        <%
-                                    i++;
                                 }
-                                con.close();
-                            }
-                            catch (Exception e) {
+                                connection.close();
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         %>
-
-                        </tbody>
-                    </table>
-
+                    </div>
                 </div>
             </div>
             <!-- Tabs content -->

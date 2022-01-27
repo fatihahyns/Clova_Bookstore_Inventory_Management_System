@@ -192,6 +192,21 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">Supplier:</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" name="supplier_ID">
+                                        <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
+                                        <sql:query dataSource="${ic}" var="oc">
+                                            SELECT * from supplier order by supplier_Name;
+                                        </sql:query>
+                                        <c:forEach var="result" items="${oc.rows}">
+                                            <option value="${result.supplier_ID}">${result.supplier_Name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+
                             <button type="submit" class="btn btn-primary btn-block mb-4" value="submit" >SUBMIT</button>
 
                         </form>
@@ -210,6 +225,7 @@
                             <th class="text-center" scope="col">Price</th>
                             <th class="text-center" scope="col">No of Stocks</th>
                             <th class="text-center" scope="col">Category Name</th>
+                            <th class="text-center" scope="col">Supplier Name</th>
                             <th class="text-center" scope="col">Action</th>
                         </tr>
                         </thead>
@@ -218,7 +234,7 @@
                             try{
                                 con = DriverManager.getConnection(dbUrl, dbUname, dbPassword);
                                 statement=con.createStatement();
-                                String sql ="select * from book Inner join category on book.category_ID = category.category_ID";
+                                String sql ="select * from book Inner join category on book.category_ID = category.category_ID join supplier on book.supplier_ID = supplier.supplier_ID";
                                 resultSet = statement.executeQuery(sql);
                                 int i=1;
                                 while(resultSet.next()){
@@ -231,10 +247,11 @@
                                 <td align="center"><%=resultSet.getString("book_price") %></td>
                                 <td align="center"><%=resultSet.getString("book_NoOfStocks") %></td>
                                 <td align="center"><%=resultSet.getString("category_Name") %></td>
+                                <td align="center"><%=resultSet.getString("supplier_Name") %></td>
 
 
                                 <td align="center" class="col-2">
-                                    <button type="button" class="btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Edit">&#xE254</i></button>
+                                    <a href="updateBooks.jsp?id=<%=resultSet.getString("book_ID")%>"><button type="button" class="btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Edit">&#xE254</i></button></a>
                                     <a href="deleteBooks.jsp?id=<%=resultSet.getString("book_ID") %>"><button type="button" class="btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button></a>
                                 </td>
                             </tr>

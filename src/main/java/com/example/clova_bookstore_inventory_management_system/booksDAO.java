@@ -38,7 +38,7 @@ public class booksDAO {
         loadDriver(dbDriver);
         Connection con = getConnection();
         String result = "Data entered successfully";
-        String sql = "insert into book values(?,?,?,?,?,?,?)";
+        String sql = "insert into book values(?,?,?,?,?,?,?,?)";
 
         PreparedStatement ps;
         try {
@@ -50,6 +50,7 @@ public class booksDAO {
             ps.setString(5, bk.getBook_Description());
             ps.setString(6, bk.getBook_Price());
             ps.setString(7, bk.getBook_NoOfStocks());
+            ps.setString(8, bk.getSupplier_ID());
             ps.executeUpdate();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
