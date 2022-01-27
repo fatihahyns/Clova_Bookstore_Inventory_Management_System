@@ -9,8 +9,9 @@ public class books {
     private String book_Description;
     private String book_Price;
     private String book_NoOfStocks;
+    private String supplier_ID;
 
-    public books(String book_ID, String category_ID, String book_Title, String book_AuthorName, String book_Description, String book_Price, String book_NoOfStocks) {
+    public books(String book_ID, String category_ID, String book_Title, String book_AuthorName, String book_Description, String book_Price, String book_NoOfStocks, String supplier_ID) {
         this.book_ID = book_ID;
         this.category_ID = category_ID;
         this.book_Title = book_Title;
@@ -18,6 +19,7 @@ public class books {
         this.book_Description = book_Description;
         this.book_Price = book_Price;
         this.book_NoOfStocks = book_NoOfStocks;
+        this.supplier_ID = supplier_ID;
     }
 
     public String getBook_ID() {
@@ -74,5 +76,13 @@ public class books {
 
     public void setBook_NoOfStocks(String book_NoOfStocks) {
         this.book_NoOfStocks = book_NoOfStocks;
+    }
+
+    public String getSupplier_ID() {
+        return supplier_ID;
+    }
+
+    public void setSupplier_ID(String supplier_ID) {
+        this.supplier_ID = supplier_ID;
     }
 }

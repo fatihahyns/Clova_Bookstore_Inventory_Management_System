@@ -26,8 +26,9 @@ public class booksServlet extends HttpServlet {
         String book_Description = request.getParameter("book_Description");
         String book_Price = request.getParameter("book_Price");
         String book_NoOfStocks= request.getParameter("book_NoOfStocks");
+        String supplier_ID= request.getParameter("supplier_ID");
 
-        books bk= new books (book_ID, category_ID, book_Title, book_AuthorName, book_Description, book_Price, book_NoOfStocks);
+        books bk= new books (book_ID, category_ID, book_Title, book_AuthorName, book_Description, book_Price, book_NoOfStocks, supplier_ID);
         booksDAO bkDao = new booksDAO();
         String result = bkDao.insert(bk);
         response.getWriter().print(result);
