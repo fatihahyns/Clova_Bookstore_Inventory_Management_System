@@ -1,7 +1,7 @@
 package cbims.Model;
 
 public class suppliers {
-    private String supplier_ID;
+    private int supplier_ID;
     private String supplier_Name;
     private String supplier_Address;
     private String supplier_Postcode;
@@ -10,7 +10,7 @@ public class suppliers {
     private String supplier_PhoneNo;
     private String supplier_Email;
 
-    public suppliers(String supplier_ID, String supplier_Name, String supplier_Address, String supplier_Postcode, String supplier_City, String supplier_State, String supplier_PhoneNo, String supplier_Email) {
+    public suppliers(int supplier_ID, String supplier_Name, String supplier_Address, String supplier_Postcode, String supplier_City, String supplier_State, String supplier_PhoneNo, String supplier_Email) {
         super();
         this.supplier_ID = supplier_ID;
         this.supplier_Name = supplier_Name;
@@ -26,11 +26,11 @@ public class suppliers {
         super();
     }
 
-    public String getSupplier_ID() {
+    public int getSupplier_ID() {
         return supplier_ID;
     }
 
-    public void setSupplier_ID(String supplier_ID) {
+    public void setSupplier_ID(int supplier_ID) {
         this.supplier_ID = supplier_ID;
     }
 

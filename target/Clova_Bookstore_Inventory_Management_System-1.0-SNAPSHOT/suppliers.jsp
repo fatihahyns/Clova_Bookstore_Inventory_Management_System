@@ -5,10 +5,13 @@
   Time: 11:32 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="cbims.DBConnect.DBConnection"%>
+<%@page import="cbims.Model.suppliers"%>
+<%@page import="cbims.Dao.suppliersDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -40,6 +43,11 @@
     </style>
 </head>
 <body class="is-preload">
+<%
+    suppliersDAO spdao = new suppliersDAO();
+    List<suppliers> suppliersList = spdao.getAllSuppliers();
+%>
+
 <!-- Wrapper -->
 <div id="wrapper">
 
@@ -214,24 +222,27 @@
                             <td align="center"><%=rs.getString("supplier_PhoneNo") %></td>
                             <td align="center"><%=rs.getString("supplier_Email") %></td>
 
-                            <form action="suppliersServlet" method="post">
+
                                 <td>
-                                    <a href="editSupplier.jsp?id=<%=rs.getString("supplier_ID")%>">Edit</a> <input
-                                        type="hidden" name="j" value="<%=rs.getString("supplier_ID")%>">&nbsp;&nbsp;&nbsp;
-                                    <a href="deleteSupplier.jsp">Delete</a>&nbsp;&nbsp;&nbsp;
-<%--                                    <button type="button" data-toggle="modal" data-target="#updateSupplier" id="<%=rs.getString("supplier_ID") %>"  name="Action" value="Update" class="btn btn-success btn-sm rounded-0"><i class="material-icons">&#xE254;</i></button>--%>
-<%--                                    <button type="button" id="<%=rs.getString("supplier_ID") %>"  name="Action" value="Delete" class="btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>--%>
-                                </td>
+<%--                                    <a href="editSuppliers.jsp?id=<%=rs.getInt("supplier_ID")%>">Edit</a> <input--%>
+<%--                                        type="hidden" name="j" value="<%=rs.getInt("supplier_ID")%>">&nbsp;&nbsp;&nbsp;--%>
+<%--                                    <a href="deleteSupplier.jsp">Delete</a>&nbsp;&nbsp;&nbsp;--%>
+                                    <button type="button" data-toggle="modal" data-target="#updateSupplier" id="<%=rs.getInt("supplier_ID") %>" class="btn btn-success btn-sm rounded-0"><i class="material-icons" title="Edit">&#xE254;</i></button>
+                                    <button type="button" data-toggle="modal" data-target="#deleteSupplier" id="<%=rs.getInt("supplier_ID") %>" class="del btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>
+<%--    <a href="deleteSuppliers.jsp?id=<%=rs.getInt("supplier_ID")%>" class="btn btn-danger btn-sm rounded-0" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>--%>
+
+                                  </td>
 
 
                                 <%--                            <td align="center" class="col-2">--%>
                                 <%--                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>--%>
 
-                                <%--                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>--%>
+                                <%--                                <a href="suppliersServlet?action=DeleteSupplier&id=<%=rs.getInt("supplier_ID")%>" class="btn btn-danger btn-sm rounded-0" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>--%>
                                 <%--                            </td>--%>
-                        </form>
+
                         </tr>
                         <%
+                                i++;
                             }
                         %>
                         </tbody>
@@ -243,21 +254,41 @@
             <!-- Tabs content -->
 
             <!-- Update Pop up -->
-<%--            <div class="modal fade" id="updateSupplier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--%>
-<%--                <div class="modal-dialog" role="document">--%>
-<%--                    <div class="modal-content">--%>
-<%--                        <div class="modal-header">--%>
-<%--                            <h5 class="modal-title" id="exampleModalLabel">Update Supplier</h5>--%>
-<%--                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
-<%--                            <span aria-hidden="true">&times;</span></button>--%>
-<%--                        </div>--%>
-<%--                        <div class="modal-body">--%>
-<%--                            <div id="show-data"></div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
+            <div class="modal fade" id="updateSupplier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Supplier</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="show-data"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Update Pop up -->
+
+            <!-- Delete Pop up -->
+            <div class="modal fade" id="deleteSupplier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header flex-column">
+                            <div class="icon-box">
+                                <i class="material-icons">&#xE5CD;</i>
+                            </div>
+                            <h4 class="modal-title w-100">Are you sure?</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                                <div id="show-data2"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Delete Pop up -->
 
         </div>
     </div>
@@ -285,23 +316,43 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
-<%--<script type="text/javascript">--%>
-<%--    $(document).ready(function (){--%>
-<%--        $('.btn-success').click(function(){--%>
-<%--            var id = +this.id;--%>
-<%--            $.ajax({--%>
-<%--                url: "editSupplier.jsp",--%>
-<%--                type:"post",--%>
-<%--                data:{--%>
-<%--                    id: id,--%>
-<%--                },--%>
-<%--                success:function (data){--%>
-<%--                    $("#show-data").html(data);--%>
-<%--                }--%>
-<%--            });--%>
-<%--        });--%>
-<%--    });--%>
-<%--</script>--%>
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('.btn-success').click(function(){
+            var id = +this.id;
+            $.ajax({
+                url: "editSuppliers.jsp",
+                type:"post",
+                data:{
+                    id: id,
+                },
+                success:function (data){
+                    $("#show-data").html(data);
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('.del').click(function(){
+            var id = +this.id;
+            $.ajax({
+                url: "deleteSuppliers.jsp",
+                type:"post",
+                data:{
+                    id: id,
+                },
+                success:function (data){
+                    $("#show-data2").html(data);
+                }
+            });
+        });
+    });
+</script>
+
+
 
 </body>
 </html>

@@ -35,13 +35,10 @@ public class MyFilter implements Filter {
         if (request.getParameter("Action").equals("Add Supplier"))
             // pass the request along the filter chain
             chain.doFilter(request, response);
-        if (request.getParameter("Action").equals("Edit"))
+        if (request.getParameter("Action").equals("Update Supplier"))
             // pass the request along the filter chain
             chain.doFilter(request, response);
-        if (request.getParameter("Action").equals("Update"))
-            // pass the request along the filter chain
-            chain.doFilter(request, response);
-        if (request.getParameter("Action").equals("Delete"))
+        if (request.getParameter("Action").equals("Delete Supplier"))
             // pass the request along the filter chain
             chain.doFilter(request, response);
     }

@@ -22,13 +22,14 @@
 <% suppliers sp = new suppliers(); %>
 <% suppliersDAO spdao = new suppliersDAO(); %>
 
-<div class="bkstr-form">
+<%--<div class="bkstr-form">--%>
 <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/suppliersServlet">
 
-    <input type="hidden" name="Action" value="Update" /> <%
-    String sid= request.getParameter("id");
+    <input type="hidden" name="Action" value="Update Supplier" /> <%
+    String sid = request.getParameter("id");
     if (!((sid) == null)) {
-        sp = spdao.selectByID(sid);
+        int supplier_ID = Integer.parseInt(sid);
+        sp = spdao.getSupplierByID(supplier_ID);
 %>
 
             <input type="hidden" name="id" value="<%=sp.getSupplier_ID()%>" />
@@ -36,14 +37,14 @@
         <div class="form-group">
             <label class="control-label col-sm-4">Name:</label>
             <div class="col-sm-12">
-                <input type="text" class="form-control" name="supplier_Name">
+                <input type="text" class="form-control" name="supplier_Name" value="<%=sp.getSupplier_Name()%>">
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-4">Address 1 (No/Unit/Street):</label>
             <div class="col-sm-12">
-                <input type="text" class="form-control"  name="supplier_Address">
+                <input type="text" class="form-control"  name="supplier_Address" value="<%=sp.getSupplier_Address()%>">
             </div>
         </div>
 
@@ -51,7 +52,7 @@
         <div class="form-group">
             <label class="control-label col-sm-4">Address 2 (Postcode):</label>
             <div class="col-sm-12">
-                <input type="text" class="form-control" name="supplier_Postcode">
+                <input type="text" class="form-control" name="supplier_Postcode" value="<%=sp.getSupplier_Postcode()%>">
             </div>
         </div>
 
@@ -59,7 +60,7 @@
         <div class="form-group">
             <label class="control-label col-sm-4">Address 3 (City):</label>
             <div class="col-sm-12">
-                <input type="text" class="form-control" name="supplier_City">
+                <input type="text" class="form-control" name="supplier_City" value="<%=sp.getSupplier_City()%>">
             </div>
         </div>
 
@@ -67,7 +68,7 @@
         <div class="form-group">
             <label class="control-label col-sm-4">Address 4 (State):</label>
             <div class="col-sm-12">
-                <input type="text" class="form-control"  name="supplier_State">
+                <input type="text" class="form-control"  name="supplier_State" value="<%=sp.getSupplier_State()%>">
             </div>
         </div>
 
@@ -75,7 +76,7 @@
         <div class="form-group">
             <label class="control-label col-sm-4">Phone No:</label>
             <div class="col-sm-12">
-                <input type="text" class="form-control"  name="supplier_PhoneNo">
+                <input type="text" class="form-control"  name="supplier_PhoneNo" value="<%=sp.getSupplier_PhoneNo()%>">
 
             </div>
         </div>
@@ -83,7 +84,7 @@
         <div class="form-group">
             <label class="control-label col-sm-4">Email:</label>
             <div class="col-sm-12">
-                <input type="email" class="form-control"  name="supplier_Email">
+                <input type="email" class="form-control"  name="supplier_Email" value="<%=sp.getSupplier_Email()%>">
             </div>
         </div>
 
