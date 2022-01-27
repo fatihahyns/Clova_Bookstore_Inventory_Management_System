@@ -131,7 +131,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4">Password:</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" name="admin_Password" value="<%=session.getAttribute("admin_Password")%>">
+                            <input type="password" class="form-control" name="admin_Password" value="<%=session.getAttribute("admin_Password")%>">
                         </div>
                     </div>
 

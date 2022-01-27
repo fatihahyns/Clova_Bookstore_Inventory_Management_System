@@ -2,6 +2,7 @@ package cbims.Dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import cbims.DBConnect.DBConnection;
@@ -42,10 +43,10 @@ public class suppliersDAO {
     public boolean updateSupplier(suppliers sp){
         Connection con = DBConnection.getConn();
 
-        String sql = "UPDATE supplier SET supplier_Name=?, supplier_Address=?, supplier_Postcode=?, supplier_City=?, supplier_State=?, supplier_PhoneNo=?, supplier_Email=?";
-        sql += " WHERE supplier_ID=?";
+        String sql = "UPDATE supplier SET supplier_Name=?, supplier_Address=?, supplier_Postcode=?, supplier_City=?, supplier_State=?, supplier_PhoneNo=?, supplier_Email=? WHERE supplier_ID=?";
 
         int i = 0;
+
          try {
              PreparedStatement ps = con.prepareStatement(sql);
 
@@ -67,6 +68,67 @@ public class suppliersDAO {
          } else {
              return true;
          }
+    }
+
+    public suppliers selectByID(String id)
+    {
+        Connection con = DBConnection.getConn();
+
+        suppliers sp = null;
+
+        String sql = "SELECT * FROM supplier WHERE supplier_ID=?";
+        try
+        {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                String supplier_Name = rs.getString("supplier_Name");
+                String supplier_Address = rs.getString("supplier_Address");
+                String supplier_Postcode = rs.getString("supplier_Postcode");
+                String supplier_City = rs.getString("supplier_City");
+                String supplier_State = rs.getString("supplier_State");
+                String supplier_PhoneNo = rs.getString("supplier_PhoneNo");
+                String supplier_Email = rs.getString("supplier_Email");
+                sp = new suppliers(id, supplier_Name, supplier_Address, supplier_Postcode, supplier_City, supplier_State, supplier_PhoneNo, supplier_Email);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return sp;
+    }
+
+    public suppliers getSupplierByID(String id){
+        Connection con = DBConnection.getConn();
+
+        suppliers sp = new suppliers();
+
+        String sql = "SELECT * FROM supplier WHERE supplier_ID=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                sp.setSupplier_ID(rs.getString("supplier_ID"));
+                sp.setSupplier_Name(rs.getString("supplier_Name"));
+                sp.setSupplier_Address(rs.getString("supplier_Address"));
+                sp.setSupplier_Postcode(rs.getString("supplier_Postcode"));
+                sp.setSupplier_City(rs.getString("supplier_City"));
+                sp.setSupplier_State(rs.getString("supplier_State"));
+                sp.setSupplier_PhoneNo(rs.getString("supplier_PhoneNo"));
+                sp.setSupplier_Email(rs.getString("supplier_Email"));
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sp;
     }
 
     public void deleteSupplier (String supplier_ID){

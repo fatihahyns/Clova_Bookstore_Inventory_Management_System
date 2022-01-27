@@ -216,8 +216,7 @@
 
                             <form action="suppliersServlet" method="post">
                                 <td>
-                                    <a value="Update" name="Action"
-                                       href="editSupplier.jsp?id=<%=rs.getString("supplier_ID")%>">Edit</a> <input
+                                    <a href="editSupplier.jsp?id=<%=rs.getString("supplier_ID")%>">Edit</a> <input
                                         type="hidden" name="j" value="<%=rs.getString("supplier_ID")%>">&nbsp;&nbsp;&nbsp;
                                     <a href="deleteSupplier.jsp">Delete</a>&nbsp;&nbsp;&nbsp;
 <%--                                    <button type="button" data-toggle="modal" data-target="#updateSupplier" id="<%=rs.getString("supplier_ID") %>"  name="Action" value="Update" class="btn btn-success btn-sm rounded-0"><i class="material-icons">&#xE254;</i></button>--%>

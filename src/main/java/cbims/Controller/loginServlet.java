@@ -1,16 +1,13 @@
-package com.example.clova_bookstore_inventory_management_system;
+package cbims.Controller;
 
-import com.google.protobuf.Message;
+import cbims.Dao.registerDAO;
+import cbims.Model.register;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.LinkedList;
-import java.util.List;
-
-import static java.lang.System.out;
 
 @WebServlet(name = "loginServlet", value = "/loginServlet")
 public class loginServlet extends HttpServlet

@@ -1,6 +1,5 @@
-package com.example.clova_bookstore_inventory_management_system;
+package cbims.Dao;
 
-import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,42 +9,43 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.clova_bookstore_inventory_management_system.register;
+import cbims.DBConnect.DBConnection;
+import cbims.Model.register;
 
 public class registerDAO {
-    private String dbUrl = "jdbc:mysql://localhost:3306/cbims";
-    private String dbUname = "root";
-    private String dbPassword = "";
-    private String dbDriver = "com.mysql.cj.jdbc.Driver";
 
-    static ResultSet rs = null;
-    public void loadDriver(String dbDriver)
-    {
-        try {
-            Class.forName(dbDriver);
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    public Connection getConnection()
-    {
-        Connection con = null;
-        try {
-            con = DriverManager.getConnection(dbUrl, dbUname, dbPassword);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return con;
-    }
+//    private String dbUrl = "jdbc:mysql://localhost:3306/cbims";
+//    private String dbUname = "root";
+//    private String dbPassword = "";
+//    private String dbDriver = "com.mysql.cj.jdbc.Driver";
+//
+//    static ResultSet rs = null;
+//    public void loadDriver(String dbDriver)
+//    {
+//        try {
+//            Class.forName(dbDriver);
+//        } catch (ClassNotFoundException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public Connection getConnection()
+//    {
+//        Connection con = null;
+//        try {
+//            con = DriverManager.getConnection(dbUrl, dbUname, dbPassword);
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        return con;
+//    }
 
     //register function
     public String register(register reg)
     {
-        loadDriver(dbDriver);
-        Connection con = getConnection();
+        Connection con = DBConnection.getConn();
         String result = "User successfully registered!";
         String sql = "insert into admin values(?,?,?,?,?,?)";
 
@@ -72,8 +72,7 @@ public class registerDAO {
     {
         boolean status = false;
 
-        loadDriver(dbDriver);
-        Connection con = getConnection();
+        Connection con = DBConnection.getConn();
 
         String sql = "select * from admin where admin_Username = ? and admin_Password =?";
         PreparedStatement ps;
@@ -111,8 +110,7 @@ public class registerDAO {
 
     public void updateUser(register admin)
     {
-        loadDriver(dbDriver);
-        Connection con = getConnection();
+        Connection con = DBConnection.getConn();
 
         String UPDATE_USERS_SQL = "update admin set admin_Name = ?,admin_PhoneNo= ?, admin_Username =?,admin_Email =?,admin_Password =? where admin_ID = ?";
         try
@@ -140,8 +138,7 @@ public class registerDAO {
         List<register> admins = new ArrayList<register>();
         try
         {
-            loadDriver(dbDriver);
-            Connection con = getConnection();
+            Connection con = DBConnection.getConn();
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("select * from admin");
             while (rs.next()) {
@@ -164,8 +161,7 @@ public class registerDAO {
 
     public register getUserById(int admin_ID)
     {
-        loadDriver(dbDriver);
-        Connection con = getConnection();
+        Connection con = DBConnection.getConn();
         register admin = null;
         try
         {

@@ -1,8 +1,5 @@
-package com.example.clova_bookstore_inventory_management_system;
+package cbims.Controller;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -13,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.example.clova_bookstore_inventory_management_system.registerDAO;
-import com.example.clova_bookstore_inventory_management_system.register;
+import cbims.Dao.registerDAO;
+import cbims.Model.register;
 
 @WebServlet(name = "UpdateProfileServlet", value = "/UpdateProfileServlet")
 public class UpdateProfileServlet extends HttpServlet
@@ -97,7 +94,7 @@ public class UpdateProfileServlet extends HttpServlet
             PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
             out.println("alert('SUCCESFULLY UPDATED!');");
-            out.println("location='index.jsp';");
+            out.println("location='profile.jsp';");
             out.println("</script>");
 
 

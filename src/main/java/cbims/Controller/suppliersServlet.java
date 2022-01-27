@@ -28,6 +28,7 @@ public class suppliersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
         if (request.getParameter("Action").equals("Add Supplier")) {
             System.out.println("in");
             PrintWriter out = response.getWriter();
@@ -69,14 +70,18 @@ public class suppliersServlet extends HttpServlet {
             suppliers sp = new suppliers();
             suppliersDAO spdao = new suppliersDAO();
 
-            sp.setSupplier_ID((request.getParameter("supplier_ID")));
-            sp.setSupplier_Name((request.getParameter("supplier_Name")));
-            sp.setSupplier_Address((request.getParameter("supplier_Address")));
-            sp.setSupplier_Postcode((request.getParameter("supplier_Postcode")));
-            sp.setSupplier_City((request.getParameter("supplier_City")));
-            sp.setSupplier_State((request.getParameter("supplier_State")));
-            sp.setSupplier_PhoneNo((request.getParameter("supplier_PhoneNo")));
-            sp.setSupplier_Email((request.getParameter("supplier_Email")));
+            String id = request.getParameter("id");
+
+            sp.setSupplier_ID(id);
+            sp.setSupplier_Name(request.getParameter("supplier_Name"));
+            sp.setSupplier_Address(request.getParameter("supplier_Address"));
+            sp.setSupplier_Postcode(request.getParameter("supplier_Postcode"));
+            sp.setSupplier_City(request.getParameter("supplier_City"));
+            sp.setSupplier_State(request.getParameter("supplier_State"));
+            sp.setSupplier_PhoneNo(request.getParameter("supplier_PhoneNo"));
+            sp.setSupplier_Email(request.getParameter("supplier_Email"));
+
+            request.setAttribute("sp", sp);
 
             boolean result = spdao.updateSupplier(sp);
             System.out.println(result);
@@ -92,10 +97,52 @@ public class suppliersServlet extends HttpServlet {
                 out.println("location='suppliers.jsp';");
                 out.println("</script>");
             }
-            RequestDispatcher dispatcher = request.getRequestDispatcher("editSupplier.jsp");
-            dispatcher.include(request, response);
 
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("suppliers.jsp");
+//            dispatcher.forward(request, response);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("editSupplier.jsp");
+//            dispatcher.include(request, response);
         }
+
+//        if (request.getParameter("Action").equals("Update")) {
+//            System.out.println("in");
+//            PrintWriter out = response.getWriter();
+//
+//            suppliers sp = new suppliers();
+//            suppliersDAO spdao = new suppliersDAO();
+////
+////            String id = request.getParameter("id");
+////            suppliers existingSupplier = spdao.getSupplierByID(id);
+////            request.setAttribute("sp", existingSupplier);
+//
+//            sp.setSupplier_ID((request.getParameter("supplier_ID")));
+//            sp.setSupplier_Name((request.getParameter("supplier_Name")));
+//            sp.setSupplier_Address((request.getParameter("supplier_Address")));
+//            sp.setSupplier_Postcode((request.getParameter("supplier_Postcode")));
+//            sp.setSupplier_City((request.getParameter("supplier_City")));
+//            sp.setSupplier_State((request.getParameter("supplier_State")));
+//            sp.setSupplier_PhoneNo((request.getParameter("supplier_PhoneNo")));
+//            sp.setSupplier_Email((request.getParameter("supplier_Email")));
+//
+//            boolean result = spdao.updateSupplier(sp);
+//            System.out.println(result);
+//
+//            if (result == true){
+//                out.println("<script type=\"text/javascript\">");
+//                out.println("alert('Data updated successfully!');");
+//                out.println("location='suppliers.jsp';");
+//                out.println("</script>");
+//            }else {
+//                out.println("<script type=\"text/javascript\">");
+//                out.println("alert('Data unsuccessfully updated. Please try again.');");
+//                out.println("location='suppliers.jsp';");
+//                out.println("</script>");
+//            }
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("editSupplier.jsp");
+//            dispatcher.include(request, response);
+//
+//        }
 
 
     }

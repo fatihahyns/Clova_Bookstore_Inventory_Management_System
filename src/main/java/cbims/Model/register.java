@@ -1,4 +1,4 @@
-package com.example.clova_bookstore_inventory_management_system;
+package cbims.Model;
 
 public class register implements java.io.Serializable
 {

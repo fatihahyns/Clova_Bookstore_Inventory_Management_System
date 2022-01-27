@@ -1,5 +1,8 @@
-package com.example.clova_bookstore_inventory_management_system;
+package cbims.Controller;
 
+
+import cbims.Dao.registerDAO;
+import cbims.Model.register;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

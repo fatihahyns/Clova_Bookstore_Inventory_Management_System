@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="cbims.Dao.suppliersDAO" %>
+<%@ page import="cbims.Model.suppliers" %>
 <html>
 <head>
     <title>Suppliers | Bookstore Inventory Management System</title>
@@ -17,14 +19,27 @@
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
 <body>
-<%--<div class="bkstr-form">--%>
-    <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/suppliersServlet">
+<% suppliers sp = new suppliers(); %>
+<% suppliersDAO spdao = new suppliersDAO(); %>
+
+<div class="bkstr-form">
+<form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/suppliersServlet">
+
+    <input type="hidden" name="Action" value="Update" /> <%
+    String sid= request.getParameter("id");
+    if (!((sid) == null)) {
+        sp = spdao.selectByID(sid);
+%>
+
+            <input type="hidden" name="id" value="<%=sp.getSupplier_ID()%>" />
+
         <div class="form-group">
             <label class="control-label col-sm-4">Name:</label>
             <div class="col-sm-12">
                 <input type="text" class="form-control" name="supplier_Name">
             </div>
         </div>
+
         <div class="form-group">
             <label class="control-label col-sm-4">Address 1 (No/Unit/Street):</label>
             <div class="col-sm-12">
@@ -60,7 +75,7 @@
         <div class="form-group">
             <label class="control-label col-sm-4">Phone No:</label>
             <div class="col-sm-12">
-                <input type="text" class="form-control"  name="supplier_PhoneNo"  rows="5">
+                <input type="text" class="form-control"  name="supplier_PhoneNo">
 
             </div>
         </div>
@@ -74,8 +89,11 @@
 
         <%--                            <input type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Add Supplier">--%>
 
-        <button type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Update" >UPDATE</button>
-
+        <button type="submit" class="btn btn-primary btn-block mb-4" value="upd" >UPDATE</button>
+    <%
+        } else
+            out.println("ID Not Found");
+    %>
     </form>
 <%--</div>--%>
 </body>
