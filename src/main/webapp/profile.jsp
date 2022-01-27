@@ -7,6 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.Statement" %>
+<%@ page import="java.sql.Connection" %>
+
 <html>
 <head>
     <title>Profile | Bookstore Inventory Management System</title>
@@ -83,35 +88,42 @@
                     <li><a href="login.jsp">Log out</a></li>
                 </ul>
             </li>
-
+            <%
+                String admin_Name = (String) session.getAttribute("admin_Name");
+            %>
         </ul>
     </nav>
-
     <!-- Main -->
     <div id="main">
         <div class="inner">
             <h1>Admin Profile</h1>
 
             <div class="bkstr-form">
-                <form class="form-horizontal">
+                <form class="form-horizontal" action="UpdateProfileServlet?action=edit" method="post">
+                    <div class="form-group">
+                        <%--<label class="control-label col-sm-4">Admin ID:</label>--%>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="admin_ID" value="<%=session.getAttribute("admin_ID")%>" hidden/>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-sm-4">Admin Name:</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" name="admin_Name">
+                            <input type="text" class="form-control" name="admin_Name" value="<%=session.getAttribute("admin_Name")%>">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-sm-4">Username:</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" name="admin_Username">
+                            <input type="text" class="form-control" name="admin_Username" value="<%=session.getAttribute("admin_Username")%>">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-sm-4">Email Address:</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control"  name="admin_Email">
+                            <input type="email" class="form-control"  name="admin_Email" value="<%=session.getAttribute("admin_Email")%>">
                         </div>
                     </div>
 
@@ -119,7 +131,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4">Password:</label>
                         <div class="col-sm-12">
-                            <input type="email" class="form-control" name="admin_Pass">
+                            <input type="password" class="form-control" name="admin_Password" value="<%=session.getAttribute("admin_Password")%>">
                         </div>
                     </div>
 
@@ -127,7 +139,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4">Contact No:</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control"  name="admin_ContactNo">
+                            <input type="text" class="form-control"  name="admin_PhoneNo" value="<%=session.getAttribute("admin_PhoneNo")%>">
                         </div>
                     </div>
 

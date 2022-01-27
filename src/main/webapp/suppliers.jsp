@@ -5,6 +5,10 @@
   Time: 11:32 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="cbims.DBConnect.DBConnection"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -119,7 +123,7 @@
                         id="add-suppliers">
 
                     <div class="bkstr-form">
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/suppliersServlet">
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Name:</label>
                                 <div class="col-sm-12">
@@ -145,7 +149,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Address 3 (City):</label>
                                 <div class="col-sm-12">
-                                    <input type="email" class="form-control" name="supplier_City">
+                                    <input type="text" class="form-control" name="supplier_City">
                                 </div>
                             </div>
 
@@ -169,11 +173,13 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Email:</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control"  name="supplier_Email">
+                                    <input type="email" class="form-control"  name="supplier_Email">
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-block mb-4" name="update" >SUBMIT</button>
+<%--                            <input type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Add Supplier">--%>
+
+                            <button type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Add Supplier" >SUBMIT</button>
 
                         </form>
                     </div>
@@ -184,7 +190,7 @@
                     <table class="table table-bordered table-hover">
                         <thead class="thead-dark">
                         <tr>
-                            <th class="text-center" scope="col">ID</th>
+                            <th class="text-center" scope="col">No.</th>
                             <th class="text-center" scope="col">Name</th>
                             <th class="text-center" scope="col">Address</th>
                             <th class="text-center" scope="col">Phone Number</th>
@@ -193,54 +199,41 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th class="text-center" scope="row">1</th>
-                            <td align="center">Falcon Press</td>
-                            <td align="center">Petaling Jaya, Selangor</td>
-                            <td align="center">03-77818128</td>
-                            <td align="center">info@falconpub.com</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                        <%
+                                Connection con = DBConnection.getConn();
+                                Statement st = con.createStatement();
+                                ResultSet rs = st.executeQuery("SELECT * FROM supplier");
+                                int i=1;
+                                while (rs.next()){
 
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
+                        %>
                         <tr>
-                            <th class="text-center" scope="row">2</th>
-                            <td align="center">Advantage Quest</td>
-                            <td align="center">Petaling Jaya, Selangor</td>
-                            <td align="center">03-79323533</td>
-                            <td align="center">info@advanquest.com</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                            <th class="text-center" scope="row"><%=i%></th>
+                            <td align="center"><%=rs.getString("supplier_Name") %></td>
+                            <td align="center"><%=rs.getString("supplier_Address") +", " + rs.getString("supplier_Postcode") + " " + rs.getString("supplier_City") + ", " + rs.getString("supplier_State") %></td>
+                            <td align="center"><%=rs.getString("supplier_PhoneNo") %></td>
+                            <td align="center"><%=rs.getString("supplier_Email") %></td>
 
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">3</th>
-                            <td align="center">Berlian Books</td>
-                            <td align="center">Puchong, Selangor</td>
-                            <td align="center">03-80600687</td>
-                            <td align="center">info@berlianbooks.com</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                            <form action="suppliersServlet" method="post">
+                                <td>
+                                    <a href="editSupplier.jsp?id=<%=rs.getString("supplier_ID")%>">Edit</a> <input
+                                        type="hidden" name="j" value="<%=rs.getString("supplier_ID")%>">&nbsp;&nbsp;&nbsp;
+                                    <a href="deleteSupplier.jsp">Delete</a>&nbsp;&nbsp;&nbsp;
+<%--                                    <button type="button" data-toggle="modal" data-target="#updateSupplier" id="<%=rs.getString("supplier_ID") %>"  name="Action" value="Update" class="btn btn-success btn-sm rounded-0"><i class="material-icons">&#xE254;</i></button>--%>
+<%--                                    <button type="button" id="<%=rs.getString("supplier_ID") %>"  name="Action" value="Delete" class="btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>--%>
+                                </td>
 
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">4</th>
-                            <td align="center">Pelangi Books</td>
-                            <td align="center">Bandar Baru Bangi, Selangor</td>
-                            <td align="center">03-89223993</td>
-                            <td align="center">info@pelangibooks.com</td>
-                            <td align="center" class="col-2">
-                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
 
-                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                            </td>
+                                <%--                            <td align="center" class="col-2">--%>
+                                <%--                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>--%>
+
+                                <%--                                <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>--%>
+                                <%--                            </td>--%>
+                        </form>
                         </tr>
+                        <%
+                            }
+                        %>
                         </tbody>
                     </table>
 
@@ -249,6 +242,22 @@
             </div>
             <!-- Tabs content -->
 
+            <!-- Update Pop up -->
+<%--            <div class="modal fade" id="updateSupplier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--%>
+<%--                <div class="modal-dialog" role="document">--%>
+<%--                    <div class="modal-content">--%>
+<%--                        <div class="modal-header">--%>
+<%--                            <h5 class="modal-title" id="exampleModalLabel">Update Supplier</h5>--%>
+<%--                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+<%--                            <span aria-hidden="true">&times;</span></button>--%>
+<%--                        </div>--%>
+<%--                        <div class="modal-body">--%>
+<%--                            <div id="show-data"></div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+            <!-- Update Pop up -->
 
         </div>
     </div>
@@ -275,6 +284,24 @@
 <script src="assets/js/main.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+<%--<script type="text/javascript">--%>
+<%--    $(document).ready(function (){--%>
+<%--        $('.btn-success').click(function(){--%>
+<%--            var id = +this.id;--%>
+<%--            $.ajax({--%>
+<%--                url: "editSupplier.jsp",--%>
+<%--                type:"post",--%>
+<%--                data:{--%>
+<%--                    id: id,--%>
+<%--                },--%>
+<%--                success:function (data){--%>
+<%--                    $("#show-data").html(data);--%>
+<%--                }--%>
+<%--            });--%>
+<%--        });--%>
+<%--    });--%>
+<%--</script>--%>
 
 </body>
 </html>
