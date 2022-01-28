@@ -24,7 +24,6 @@
 <% suppliers sp = new suppliers(); %>
 <% suppliersDAO spdao = new suppliersDAO(); %>
 
-<%--<div class="bkstr-form">--%>
 <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/suppliersServlet">
 
     <input type="hidden" name="Action" value="Delete Supplier" /> <%
@@ -46,6 +45,5 @@
             out.println("ID Not Found");
     %>
 </form>
-<%--</div>--%>
 </body>
 </html>

@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cbims.Dao.categoryDAO;
+import cbims.Dao.suppliersDAO;
 import cbims.Model.category;
+import cbims.Model.suppliers;
 
 
 @WebServlet(name = "categoryServlet", value = "/categoryServlet")
@@ -53,9 +55,64 @@ public class categoryServlet extends HttpServlet {
             }
             RequestDispatcher dispatcher = request.getRequestDispatcher("category.jsp");
             dispatcher.include(request, response);
+        }
 
+        if (request.getParameter("Action").equals("Update Category")) {
+            System.out.println("in");
+            PrintWriter out = response.getWriter();
 
+            category cat = new category();
+            categoryDAO catdao = new categoryDAO();
 
+            String id = request.getParameter("id");
+            int cid = Integer.parseInt(id);
+
+            cat.setCategory_ID(cid);
+            cat.setCategory_Name(request.getParameter("category_Name"));
+            cat.setCategory_NoOfBooks(request.getParameter("category_NoOfBooks"));
+
+            request.setAttribute("cat", cat);
+
+            boolean result = catdao.updateCategory(cat);
+            System.out.println(result);
+
+            if (result == true){
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Data updated successfully!');");
+                out.println("location='category.jsp';");
+                out.println("</script>");
+            }else {
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Data unsuccessfully updated. Please try again.');");
+                out.println("location='category.jsp';");
+                out.println("</script>");
+            }
+        }
+
+        if (request.getParameter("Action").equals("Delete Category")){
+            System.out.println("in");
+            PrintWriter out = response.getWriter();
+
+            category cat = new category();
+            categoryDAO catdao = new categoryDAO();
+
+            String id = request.getParameter("id");
+            int cid = Integer.parseInt(id);
+
+            boolean result = catdao.deleteCategory(cid);
+            System.out.println(result);
+
+            if (result == true){
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Data deleted successfully!');");
+                out.println("location='category.jsp';");
+                out.println("</script>");
+            }else {
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Data unsuccessfully deleted. Please try again.');");
+                out.println("location='category.jsp';");
+                out.println("</script>");
+            }
         }
     }
 }

@@ -9,8 +9,6 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="cbims.DBConnect.DBConnection"%>
-<%@page import="cbims.Model.suppliers"%>
-<%@page import="cbims.Dao.suppliersDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>

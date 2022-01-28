@@ -84,7 +84,7 @@ public class categoryDAO {
         return cat;
     }
 
-    public boolean deleteCategory (int id){
+    public boolean deleteCategory(int id){
         Connection con = DBConnection.getConn();
 
         String sql = "DELETE FROM category WHERE category_ID=?";

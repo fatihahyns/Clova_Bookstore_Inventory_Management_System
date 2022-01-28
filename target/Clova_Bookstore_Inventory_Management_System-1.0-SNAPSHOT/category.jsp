@@ -5,6 +5,10 @@
   Time: 11:17 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="cbims.DBConnect.DBConnection"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -14,26 +18,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/deletemodal.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    <style>
-        table.table td a {
-            cursor: pointer;
-            display: inline-block;
-            margin: 0 5px;
-            min-width: 24px;
-        }
-        table.table td a.edit {
-            color: #FFC107;
-        }
-        table.table td a.delete {
-            color: #E34724;
-        }
-
-        .nav-tabs .nav-link.active {
-            background-color: #F4F4F4;
-        }
-    </style>
 </head>
 <body class="is-preload">
 <!-- Wrapper -->
@@ -115,7 +102,7 @@
 
                             <div class="form-row align-items-center">
                                 <div class="col-sm-5 my-1">
-                                    <input type="input" class="form-control" name="category_Name" placeholder="Book category">
+                                    <input type="input" class="form-control" name="category_Name" placeholder="Category name">
                                 </div>
 
                                 <div class="col-sm-3 my-1">
@@ -123,7 +110,7 @@
                                 </div>
 
                                 <div class="col-auto my-1">
-                                    <button type="submit" class="btn btn-primary" value="submit">ADD</button>
+                                    <button type="submit" class="btn btn-primary" name="Action" value="Add Category">SUBMIT</button>
                                 </div>
                             </div>
 
@@ -132,133 +119,35 @@
                             <table class="table table-bordered table-hover">
                                 <thead class="thead-dark">
                                 <tr>
-                                    <th class="text-center" scope="col">ID</th>
+                                    <th class="text-center" scope="col">No.</th>
                                     <th class="text-center" scope="col">Category</th>
                                     <th class="text-center" scope="col">No. Of Books</th>
                                     <th class="text-center" scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <th class="text-center" scope="row">1</th>
-                                    <td align="center">Accounting and Finance</td>
-                                    <td align="center">15</td>
-                                    <td align="center" class="col-2">
-                                        <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                <%
+                                    Connection con = DBConnection.getConn();
+                                    Statement st = con.createStatement();
+                                    ResultSet rs = st.executeQuery("SELECT * FROM category");
+                                    int i=1;
+                                    while (rs.next()){
 
-                                        <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                %>
+                                <tr>
+                                    <th class="text-center" scope="row"><%=i%></th>
+                                    <td align="center"><%=rs.getString("category_Name") %></td>
+                                    <td align="center"><%=rs.getString("category_NoOfBooks") %></td>
+                                    <td align="center" class="col-2">
+                                        <button type="button" data-toggle="modal" data-target="#updateCategory" id="<%=rs.getInt("category_ID") %>" class="btn btn-success btn-sm rounded-0"><i class="material-icons" title="Edit">&#xE254;</i></button>
+                                        <button type="button" data-toggle="modal" data-target="#deleteCategory" id="<%=rs.getInt("category_ID") %>" class="del btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>
+
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th class="text-center" scope="row">2</th>
-                                    <td align="center"> Business and Economics </td>
-                                    <td align="center"> 23 </td>
-                                    <td align="center" class="col-2">
-                                        <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                        <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-center" scope="row">3</th>
-                                    <td align="center"> Computing and internet</td>
-                                    <td align="center">39</td>
-                                    <td align="center" class="col-2">
-                                        <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                        <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-center" scope="row">4</th>
-                                    <td align="center"> Engineering </td>
-                                    <td align="center">21</td>
-                                    <td align="center" class="col-2">
-                                        <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                        <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-center" scope="row">5</th>
-                                    <td align="center"> Health and Medicines </td>
-                                    <td align="center">33</td>
-                                    <td align="center" class="col-2">
-                                        <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                        <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-center" scope="row">6</th>
-                                    <td align="center"> Accounting and Finance </td>
-                                    <td align="center">19</td>
-                                    <td align="center" class="col-2">
-                                        <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                        <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-center" scope="row">7</th>
-                                    <td align="center"> Architecture </td>
-                                    <td align="center">19</td>
-                                    <td align="center" class="col-2">
-                                        <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                        <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-center" scope="row">8</th>
-                                    <td align="center"> Arts </td>
-                                    <td align="center">40</td>
-                                    <td align="center" class="col-2">
-                                        <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                        <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-center" scope="row">9</th>
-                                    <td align="center"> Politics </td>
-                                    <td align="center">16</td>
-                                    <td align="center" class="col-2">
-                                        <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                        <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-center" scope="row">10</th>
-                                    <td align="center"> Business Administration </td>
-                                    <td align="center">23</td>
-                                    <td align="center" class="col-2">
-                                        <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                        <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-center" scope="row">11</th>
-                                    <td align="center"> Mass Communication </td>
-                                    <td align="center">22</td>
-                                    <td align="center" class="col-2">
-                                        <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                        <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-center" scope="row">12</th>
-                                    <td align="center"> Sport Science </td>
-                                    <td align="center">25</td>
-                                    <td align="center" class="col-2">
-                                        <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-
-                                        <a class="delete" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
+                                <%
+                                        i++;
+                                    }
+                                %>
                                 </tbody>
                             </table>
                         </form>
@@ -266,6 +155,42 @@
                 </div>
             </div>
             <!-- Tabs content -->
+
+            <!-- Update Pop up -->
+            <div class="modal fade" id="updateCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="show-data"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Update Pop up -->
+
+            <!-- Delete Pop up -->
+            <div class="modal fade" id="deleteCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal-dialog modal-confirm">
+                    <div class="modal-content">
+                        <div class="modal-header flex-column">
+                            <div class="icon-box">
+                                <i class="material-icons">&#xE5CD;</i>
+                            </div>
+                            <h4 class="modal-title w-100">Are you sure?</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="show-data2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Delete Pop up -->
 
 
         </div>
@@ -293,5 +218,42 @@
 <script src="assets/js/main.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('.btn-success').click(function(){
+            var id = +this.id;
+            $.ajax({
+                url: "editCategory.jsp",
+                type:"post",
+                data:{
+                    id: id,
+                },
+                success:function (data){
+                    $("#show-data").html(data);
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('.del').click(function(){
+            var id = +this.id;
+            $.ajax({
+                url: "deleteCategory.jsp",
+                type:"post",
+                data:{
+                    id: id,
+                },
+                success:function (data){
+                    $("#show-data2").html(data);
+                }
+            });
+        });
+    });
+</script>
+<!-- Scripts -->
 </body>
 </html>

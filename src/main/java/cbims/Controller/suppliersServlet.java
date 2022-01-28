@@ -97,9 +97,6 @@ public class suppliersServlet extends HttpServlet {
                 out.println("location='suppliers.jsp';");
                 out.println("</script>");
             }
-
-//            RequestDispatcher dispatcher = request.getRequestDispatcher("editSuppliers.jsp");
-//            dispatcher.include(request, response);
         }
 
         if (request.getParameter("Action").equals("Delete Supplier")){
@@ -111,8 +108,6 @@ public class suppliersServlet extends HttpServlet {
 
             String id = request.getParameter("id");
             int sid = Integer.parseInt(id);
-
-//            request.setAttribute("splist", spdao.getAllSuppliers());
 
             boolean result = spdao.deleteSupplier(sid);
             System.out.println(result);

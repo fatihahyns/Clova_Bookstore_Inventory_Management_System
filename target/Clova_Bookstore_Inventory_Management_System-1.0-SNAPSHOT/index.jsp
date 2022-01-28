@@ -157,7 +157,7 @@
 										<img src="images/product-6-720x480.jpg" alt="" />
 									</span>
                     <a href="#">
-                        <h2>TOTAL USERS</h2>
+                        <h2>TOTAL ADMIN</h2>
                         <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
                         <sql:query dataSource="${ic}" var="oc">
                             SELECT COUNT(admin_ID) AS count FROM admin;

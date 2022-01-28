@@ -6,11 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="cbims.Dao.suppliersDAO" %>
-<%@ page import="cbims.Model.suppliers" %>
+<%@ page import="cbims.Dao.categoryDAO" %>
+<%@ page import="cbims.Model.category" %>
 <html>
 <head>
-    <title>Suppliers | Bookstore Inventory Management System</title>
+    <title>Category | Bookstore Inventory Management System</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
@@ -21,19 +21,19 @@
 </head>
 
 <body>
-<% suppliers sp = new suppliers(); %>
-<% suppliersDAO spdao = new suppliersDAO(); %>
+<% category cat = new category(); %>
+<% categoryDAO catdao = new categoryDAO();%>
 
-<form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/suppliersServlet">
+<form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/categoryServlet">
 
-    <input type="hidden" name="Action" value="Delete Supplier" /> <%
-    String sid = request.getParameter("id");
-    if (!((sid) == null)) {
-        int supplier_ID = Integer.parseInt(sid);
-        sp = spdao.getSupplierByID(supplier_ID);
+    <input type="hidden" name="Action" value="Delete Category" /> <%
+    String cid = request.getParameter("id");
+    if (!((cid) == null)) {
+        int category_ID = Integer.parseInt(cid);
+        cat = catdao.getCategoryByID(category_ID);
 %>
 
-    <input type="hidden" name="id" value="<%=sp.getSupplier_ID()%>" />
+    <input type="hidden" name="id" value="<%=cat.getCategory_ID()%>" />
     <p>Do you really want to delete these records? This process cannot be undone.</p>
 
     <div class="modal-footer justify-content-center">
@@ -45,5 +45,6 @@
             out.println("ID Not Found");
     %>
 </form>
+<%--</div>--%>
 </body>
 </html>
