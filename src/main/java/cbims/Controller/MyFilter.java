@@ -32,6 +32,26 @@ public class MyFilter implements Filter {
             throws IOException, ServletException {
         // TODO Auto-generated method stub
         // place your code here
+        if (request.getParameter("Action").equals("Add Book"))
+            // pass the request along the filter chain
+            chain.doFilter(request, response);
+        if (request.getParameter("Action").equals("Update Book"))
+            // pass the request along the filter chain
+            chain.doFilter(request, response);
+        if (request.getParameter("Action").equals("Delete Book"))
+            // pass the request along the filter chain
+            chain.doFilter(request, response);
+
+        if (request.getParameter("Action").equals("Add Category"))
+            // pass the request along the filter chain
+            chain.doFilter(request, response);
+        if (request.getParameter("Action").equals("Update Category"))
+            // pass the request along the filter chain
+            chain.doFilter(request, response);
+        if (request.getParameter("Action").equals("Delete Category"))
+            // pass the request along the filter chain
+            chain.doFilter(request, response);
+
         if (request.getParameter("Action").equals("Add Supplier"))
             // pass the request along the filter chain
             chain.doFilter(request, response);

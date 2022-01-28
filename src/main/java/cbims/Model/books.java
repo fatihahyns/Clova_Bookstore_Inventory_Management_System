@@ -1,8 +1,8 @@
-package com.example.clova_bookstore_inventory_management_system;
+package cbims.Model;
 
 public class books {
 
-    private String book_ID;
+    private int book_ID;
     private String category_ID;
     private String book_Title;
     private String book_AuthorName;
@@ -11,7 +11,12 @@ public class books {
     private String book_NoOfStocks;
     private String supplier_ID;
 
-    public books(String book_ID, String category_ID, String book_Title, String book_AuthorName, String book_Description, String book_Price, String book_NoOfStocks, String supplier_ID) {
+    public books() {
+        super();
+    }
+
+    public books(int book_ID, String category_ID, String book_Title, String book_AuthorName, String book_Description, String book_Price, String book_NoOfStocks, String supplier_ID) {
+        super();
         this.book_ID = book_ID;
         this.category_ID = category_ID;
         this.book_Title = book_Title;
@@ -22,11 +27,11 @@ public class books {
         this.supplier_ID = supplier_ID;
     }
 
-    public String getBook_ID() {
+    public int getBook_ID() {
         return book_ID;
     }
 
-    public void setBook_ID(String book_ID) {
+    public void setBook_ID(int book_ID) {
         this.book_ID = book_ID;
     }
 

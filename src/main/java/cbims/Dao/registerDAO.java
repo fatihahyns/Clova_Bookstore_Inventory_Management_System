@@ -14,34 +14,6 @@ import cbims.Model.register;
 
 public class registerDAO {
 
-//    private String dbUrl = "jdbc:mysql://localhost:3306/cbims";
-//    private String dbUname = "root";
-//    private String dbPassword = "";
-//    private String dbDriver = "com.mysql.cj.jdbc.Driver";
-//
-//    static ResultSet rs = null;
-//    public void loadDriver(String dbDriver)
-//    {
-//        try {
-//            Class.forName(dbDriver);
-//        } catch (ClassNotFoundException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public Connection getConnection()
-//    {
-//        Connection con = null;
-//        try {
-//            con = DriverManager.getConnection(dbUrl, dbUname, dbPassword);
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        return con;
-//    }
-
     //register function
     public String register(register reg)
     {
@@ -186,24 +158,4 @@ public class registerDAO {
         return admin;
     }
 
-    /*private void printSQLException(SQLException ex)
-    {
-        for (Throwable e: ex)
-        {
-            if (e instanceof SQLException)
-            {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
-                Throwable t = ex.getCause();
-                while (t != null)
-                {
-                    System.out.println("Cause: " + t);
-                    t = t.getCause();
-                }
-            }
-        }
-
-    }*/
 }

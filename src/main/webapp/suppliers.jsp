@@ -5,7 +5,6 @@
   Time: 11:32 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -21,33 +20,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/deletemodal.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    <style>
-        table.table td a {
-            cursor: pointer;
-            display: inline-block;
-            margin: 0 5px;
-            min-width: 24px;
-        }
-        table.table td a.edit {
-            color: #FFC107;
-        }
-        table.table td a.delete {
-            color: #E34724;
-        }
-
-        .nav-tabs .nav-link.active {
-            background-color: #F4F4F4;
-        }
-    </style>
 </head>
 <body class="is-preload">
-<%
-    suppliersDAO spdao = new suppliersDAO();
-    List<suppliers> suppliersList = spdao.getAllSuppliers();
-%>
-
 <!-- Wrapper -->
 <div id="wrapper">
 
@@ -138,13 +115,13 @@
                                     <input type="text" class="form-control" name="supplier_Name">
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Address 1 (No/Unit/Street):</label>
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control"  name="supplier_Address">
                                 </div>
                             </div>
-
 
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Address 2 (Postcode):</label>
@@ -153,7 +130,6 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Address 3 (City):</label>
                                 <div class="col-sm-12">
@@ -161,14 +137,12 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Address 4 (State):</label>
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control"  name="supplier_State">
                                 </div>
                             </div>
-
 
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Phone No:</label>
@@ -185,8 +159,6 @@
                                 </div>
                             </div>
 
-<%--                            <input type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Add Supplier">--%>
-
                             <button type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Add Supplier" >SUBMIT</button>
 
                         </form>
@@ -195,7 +167,7 @@
 
                 <div class="tab-pane fade" id="list-suppliers">
 
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-bordered table-hover table-condensed">
                         <thead class="thead-dark">
                         <tr>
                             <th class="text-center" scope="col">No.</th>
@@ -222,24 +194,10 @@
                             <td align="center"><%=rs.getString("supplier_PhoneNo") %></td>
                             <td align="center"><%=rs.getString("supplier_Email") %></td>
 
-
-                                <td>
-<%--                                    <a href="editSuppliers.jsp?id=<%=rs.getInt("supplier_ID")%>">Edit</a> <input--%>
-<%--                                        type="hidden" name="j" value="<%=rs.getInt("supplier_ID")%>">&nbsp;&nbsp;&nbsp;--%>
-<%--                                    <a href="deleteSupplier.jsp">Delete</a>&nbsp;&nbsp;&nbsp;--%>
+                            <td>
                                     <button type="button" data-toggle="modal" data-target="#updateSupplier" id="<%=rs.getInt("supplier_ID") %>" class="btn btn-success btn-sm rounded-0"><i class="material-icons" title="Edit">&#xE254;</i></button>
                                     <button type="button" data-toggle="modal" data-target="#deleteSupplier" id="<%=rs.getInt("supplier_ID") %>" class="del btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>
-<%--    <a href="deleteSuppliers.jsp?id=<%=rs.getInt("supplier_ID")%>" class="btn btn-danger btn-sm rounded-0" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>--%>
-
-                                  </td>
-
-
-                                <%--                            <td align="center" class="col-2">--%>
-                                <%--                                <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>--%>
-
-                                <%--                                <a href="suppliersServlet?action=DeleteSupplier&id=<%=rs.getInt("supplier_ID")%>" class="btn btn-danger btn-sm rounded-0" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>--%>
-                                <%--                            </td>--%>
-
+                            </td>
                         </tr>
                         <%
                                 i++;
@@ -272,7 +230,7 @@
 
             <!-- Delete Pop up -->
             <div class="modal fade" id="deleteSupplier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-                <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-dialog modal-confirm">
                     <div class="modal-content">
                         <div class="modal-header flex-column">
                             <div class="icon-box">
@@ -283,7 +241,6 @@
                         </div>
                         <div class="modal-body">
                                 <div id="show-data2"></div>
-
                         </div>
                     </div>
                 </div>
@@ -351,6 +308,7 @@
         });
     });
 </script>
+<!-- Scripts -->
 
 
 

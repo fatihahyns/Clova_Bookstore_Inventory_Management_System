@@ -1,21 +1,26 @@
-package com.example.clova_bookstore_inventory_management_system;
+package cbims.Model;
 
 public class category {
-    public String category_ID;
+    public int category_ID;
     public String category_Name;
     public String category_NoOfBooks;
 
-    public category(String category_ID, String category_Name, String category_NoOfBooks) {
+    public category() {
+        super();
+    }
+
+    public category(int category_ID, String category_Name, String category_NoOfBooks) {
+        super();
         this.category_ID = category_ID;
         this.category_Name = category_Name;
         this.category_NoOfBooks = category_NoOfBooks;
     }
 
-    public String getCategory_ID() {
+    public int getCategory_ID() {
         return category_ID;
     }
 
-    public void setCategory_ID(String category_ID) {
+    public void setCategory_ID(int category_ID) {
         this.category_ID = category_ID;
     }
 

@@ -22,7 +22,7 @@
 <% suppliers sp = new suppliers(); %>
 <% suppliersDAO spdao = new suppliersDAO(); %>
 
-<%--<div class="bkstr-form">--%>
+
 <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/suppliersServlet">
 
     <input type="hidden" name="Action" value="Update Supplier" /> <%
@@ -88,14 +88,12 @@
             </div>
         </div>
 
-        <%--                            <input type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Add Supplier">--%>
-
         <button type="submit" class="btn btn-primary btn-block mb-4" value="upd" >UPDATE</button>
     <%
         } else
             out.println("ID Not Found");
     %>
     </form>
-<%--</div>--%>
+
 </body>
 </html>
