@@ -46,6 +46,12 @@
 
     </style>
 </head>
+<%
+    String admin_Name = (String) session.getAttribute("admin_Name");
+    if (admin_Name == null)
+    { response.sendRedirect("login.jsp")
+    ;}
+%>
 <body class="is-preload">
 <!-- Wrapper -->
 <div id="wrapper">

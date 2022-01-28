@@ -24,6 +24,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
+<%
+    String admin_Name = (String) session.getAttribute("admin_Name");
+    if (admin_Name == null)
+    { response.sendRedirect("login.jsp")
+    ;}
+%>
 <body class="is-preload">
 <!-- Wrapper -->
 <div id="wrapper">
@@ -69,7 +75,7 @@
 
                 <ul>
                     <li><a href="profile.jsp">Profile</a></li>
-                    <li><a href="login.jsp">Log out</a></li>
+                    <li><a href="${pageContext.request.contextPath}/logoutServlet">Log out</a></li>
                 </ul>
             </li>
 
