@@ -93,11 +93,11 @@ public class UpdateProfileServlet extends HttpServlet
             adminDao.updateUser(admin);
             PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
-            out.println("alert('SUCCESFULLY UPDATED!');");
+            out.println("alert('Data updated successfully!');");
             out.println("location='profile.jsp';");
             out.println("</script>");
 
 
-        request.setAttribute("admins", adminDao.getAllUsers());
+//        request.setAttribute("admins", adminDao.getAllUsers());
     }
 }

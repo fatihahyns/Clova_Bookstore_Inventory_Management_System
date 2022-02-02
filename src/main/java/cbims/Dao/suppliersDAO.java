@@ -15,7 +15,7 @@ public class suppliersDAO {
     public boolean addSupplier(suppliers sp) {
         Connection con = DBConnection.getConn();
 
-        String sql = "INSERT INTO supplier (supplier_ID, supplier_Name, supplier_Address, supplier_Postcode, supplier_City, supplier_State, supplier_PhoneNo, supplier_Email) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?) ";
+        String sql = "INSERT INTO supplier (supplier_ID, supplier_Name, supplier_Address, supplier_Postcode, supplier_City, supplier_State, supplier_PhoneNo, supplier_Email, admin_Name) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         int i = 0;
 
@@ -29,6 +29,7 @@ public class suppliersDAO {
             ps.setString(5, sp.getSupplier_State());
             ps.setString(6,sp.getSupplier_PhoneNo());
             ps.setString(7, sp.getSupplier_Email());
+            ps.setString(8, sp.getAdmin_Name());
 
             i = ps.executeUpdate();
         } catch (SQLException e){

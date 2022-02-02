@@ -19,6 +19,12 @@
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
 <body>
+<%
+    String admin_Name = (String) session.getAttribute("admin_Name");
+    if (admin_Name == null)
+    { response.sendRedirect("login.jsp")
+    ;}
+%>
 <% category cat = new category(); %>
 <% categoryDAO catdao = new categoryDAO();%>
 

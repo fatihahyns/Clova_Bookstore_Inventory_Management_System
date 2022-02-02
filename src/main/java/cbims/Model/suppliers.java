@@ -9,8 +9,13 @@ public class suppliers {
     private String supplier_State;
     private String supplier_PhoneNo;
     private String supplier_Email;
+    private String admin_Name;
 
-    public suppliers(int supplier_ID, String supplier_Name, String supplier_Address, String supplier_Postcode, String supplier_City, String supplier_State, String supplier_PhoneNo, String supplier_Email) {
+    public suppliers() {
+        super();
+    }
+
+    public suppliers(int supplier_ID, String supplier_Name, String supplier_Address, String supplier_Postcode, String supplier_City, String supplier_State, String supplier_PhoneNo, String supplier_Email, String admin_Name) {
         super();
         this.supplier_ID = supplier_ID;
         this.supplier_Name = supplier_Name;
@@ -20,10 +25,7 @@ public class suppliers {
         this.supplier_State = supplier_State;
         this.supplier_PhoneNo = supplier_PhoneNo;
         this.supplier_Email = supplier_Email;
-    }
-
-    public suppliers() {
-        super();
+        this.admin_Name = admin_Name;
     }
 
     public int getSupplier_ID() {
@@ -88,5 +90,13 @@ public class suppliers {
 
     public void setSupplier_Email(String supplier_Email) {
         this.supplier_Email = supplier_Email;
+    }
+
+    public String getAdmin_Name() {
+        return admin_Name;
+    }
+
+    public void setAdmin_Name(String admin_Name) {
+        this.admin_Name = admin_Name;
     }
 }

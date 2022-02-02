@@ -72,7 +72,7 @@
 
                 <ul>
                     <li><a href="profile.jsp">Profile</a></li>
-                    <li><a href="login.jsp">Log out</a></li>
+                    <li><a href="${pageContext.request.contextPath}/logoutServlet">Log out</a></li>
                 </ul>
             </li>
 
@@ -186,7 +186,9 @@
                         <%
                                 Connection con = DBConnection.getConn();
                                 Statement st = con.createStatement();
-                                ResultSet rs = st.executeQuery("SELECT * FROM supplier");
+//                                String sql = "SELECT * FROM supplier WHERE admin_Name=";
+//                            ("select * from tblorders where customer_name='" + session.getAttribute("name") + "' ")
+                                ResultSet rs = st.executeQuery("SELECT * FROM supplier WHERE admin_Name='"+session.getAttribute("admin_Name")+ "' ");
                                 int i=1;
                                 while (rs.next()){
 

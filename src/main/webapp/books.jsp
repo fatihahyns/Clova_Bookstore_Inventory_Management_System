@@ -88,7 +88,7 @@
             <h1>Books</h1>
 
             <!-- Tabs navs -->
-            <ul class="nav nav-tabs mb-3">
+            <ul class="nav nav-tabs mb-3" id="myTab">
                 <li class="nav-item">
                     <a
                             class="nav-link active"
@@ -197,6 +197,21 @@
 
                 <div class="tab-pane fade" id="list-books">
 
+<%--                    search book--%>
+    <form class="form-horizontal" method="get">
+        <div class="form-row align-items-center">
+            <div class="col-sm-11 my-1">
+                <input type="input" class="form-control" name="searchdata" placeholder="Search title / author / category / supplier">
+            </div>
+
+
+            <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary">SEARCH</button>
+            </div>
+        </div>
+    </form>
+    <br>
+<%--                    list book--%>
                     <table class="table table-bordered table-hover table-condensed">
                         <thead class="thead-dark">
                         <tr>
@@ -214,7 +229,18 @@
                         <tbody>
                             <%
                                 Statement st3 = con.createStatement();
-                                ResultSet rs3 = st3.executeQuery("SELECT bk.*, cat.*, sp.* FROM book bk, category cat, supplier sp WHERE cat.category_ID = bk.category_ID AND bk.supplier_ID = sp.supplier_ID");
+                                String search = request.getParameter("searchdata");
+                                String sql;
+
+                                if(search != null){
+                                    sql = "SELECT bk.*, cat.*, sp.* FROM book bk, category cat, supplier sp WHERE (bk.book_Title like '%"+search+"%' OR bk.book_AuthorName like '%"+search+"%' OR cat.category_Name like '%"+search+"%' OR sp.supplier_Name like '%"+search+"%') AND cat.category_ID = bk.category_ID AND bk.supplier_ID = sp.supplier_ID";
+
+
+                                }else{
+                                    sql = "SELECT bk.*, cat.*, sp.* FROM book bk, category cat, supplier sp WHERE cat.category_ID = bk.category_ID AND bk.supplier_ID = sp.supplier_ID";
+                                }
+
+                                ResultSet rs3 = st3.executeQuery(sql);
                                 int i=1;
                                 while (rs3.next()){
 
@@ -342,6 +368,23 @@
             });
         });
     });
+</script>
+
+<script>
+    $('#myTab a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
+
+    // store the currently selected tab in the hash value
+    $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+        var id = $(e.target).attr("href").substr(1);
+        window.location.hash = id;
+    });
+
+    // on load of the page: switch to the currently selected tab
+    var hash = window.location.hash;
+    $('#myTab a[href="' + hash + '"]').tab('show');
 </script>
 <!-- Scripts -->
 </body>

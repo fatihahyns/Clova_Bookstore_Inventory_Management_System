@@ -55,9 +55,16 @@ public class registerServlet extends HttpServlet
             {
                 PrintWriter out = response.getWriter();
                 out.println("<script type=\"text/javascript\">");
-                out.println("alert('User successfully registered');");
+                out.println("alert('User successfully registered!');");
                 out.println("location='login.jsp';");
                 out.println("</script>");
+            } else{
+                PrintWriter out = response.getWriter();
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('User registration failed. Please try again.');");
+                out.println("location='register.jsp';");
+                out.println("</script>");
+
             }
         }
         //response.getWriter().print(result);

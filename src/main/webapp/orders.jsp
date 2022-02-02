@@ -5,8 +5,13 @@
   Time: 11:30 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="cbims.DBConnect.DBConnection"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <html>
 <head>
     <title>Orders | Bookstore Inventory Management System</title>
@@ -137,20 +142,37 @@
                             <div class="form-row">
                                 <div class="form-group col-sm-4">
                                     <label class="control-label">Order ID:</label>
-                                    <input type="text" class="form-control" name="order_ID" placeholder="6" disabled>
+                                    <%
+                                        Connection con = DBConnection.getConn();
+                                        Statement st = con.createStatement();
+                                        ResultSet rs = st.executeQuery("SELECT order_ID FROM orders");
+                                        while (rs.next()){
+                                    %>
+                                    <input type="text" class="form-control" name="order_ID" value="<%=rs.getString("order_ID")%>" disabled>
+                                    <%
+                                        }
+                                    %>
                                 </div>
+
+
                                 <div class="form-group col-sm-4">
                                     <label class="control-label">Order Date:</label>
                                     <input type="text" class="form-control" name="order_DateTime" placeholder="2021-12-08 13:23:44" disabled>
                                 </div>
+
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Customer ID:</label>
-                                    <select class="form-control" id="slct">
-                                        <option value="" disabled selected>Select ID</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
+                                    <select  id = "CustomerDropdown" class="form-control" name="CustomerDropdown">
+                                        <option value="" disabled selected>Select Customer ID</option>
+                                        <%
+                                            Statement st1 = con.createStatement();
+                                            ResultSet rs2 = st1.executeQuery("SELECT * FROM customer");
+                                            while (rs2.next()){
+                                        %>
+                                        <option data-name="<%=rs2.getString("customer_Name")%>" data-phone="<%=rs2.getString("customer_PhoneNo")%>" data-email="<%=rs2.getString("customer_Email")%>" value="<%=rs2.getString("customer_ID") %>"><%=rs2.getString("customer_ID") %></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
                                 </div>
                             </div>
@@ -158,17 +180,19 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Name:</label>
-                                    <input type="text" class="form-control" id="cname" disabled>
+                                    <input type="text" class="form-control" name="customer_Name" readonly>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Phone Number:</label>
-                                    <input type="text" class="form-control"  id="cphoneno" disabled>
+                                    <input type="text" class="form-control"  name="customer_PhoneNo" readonly>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Email:</label>
-                                    <input type="email" class="form-control" id="cemail" disabled>
+                                    <input type="email" class="form-control" name="customer_Email" readonly>
                                 </div>
                             </div>
+
+
 
                             <br>
                             <h2>Item Details</h2>
@@ -389,30 +413,45 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
 <script>
-    var $select = document.getElementById('slct'),
-        $name = document.getElementById('cname'),
-        $phoneno = document.getElementById('cphoneno'),
-        $email = document.getElementById('cemail'),
-        val, arr, name, phoneno, email;
+    $(document).ready(function(){
+        $('#CustomerDropdown').on('change', function(event){
+            var optionSelected = $("option:selected", this);
+            var cName = $(optionSelected).data('name');  // note the data-member-id --> memberId change
+            var cPNo = $(optionSelected).data('phone');
+            var cEmail = $(optionSelected).data('email');
 
-    // usually this array is obtained from a server response
-    arr = [
-        c1 = ['Kalsum binti Said', '019-6678144', 'kalsumsaid@gmail.com' ],
-        c2 = ['Jacob Tan', '013-7774534', 'jacobtan@gmail.com' ],
-        c3 = ['Baktiar bin Zain', '013-8908534', 'baktiarzain@gmail.com'],
-        c4 = ['Natrah A/P Ravindran', '019-8971884', 'natrahravindran@gmail.com']
-    ];
-
-    $select.addEventListener('change', function(){
-        val = this.value - 1; // because arrays start at 0.
-        name = arr[val][0];
-        phoneno = arr[val][1];
-        email = arr[val][2];
-        $name.value = name;
-        $phoneno.value = phoneno;
-        $email.value = email;
+            $('input[name="customer_Name"]').val(cName);
+            $('input[name="customer_PhoneNo"]').val(cPNo);
+            $('input[name="customer_Email"]').val(cEmail);
+        });
     });
 </script>
+
+<%--<script>--%>
+<%--    var $select = document.getElementById('slct'),--%>
+<%--        $name = document.getElementById('cname'),--%>
+<%--        $phoneno = document.getElementById('cphoneno'),--%>
+<%--        $email = document.getElementById('cemail'),--%>
+<%--        val, arr, name, phoneno, email;--%>
+
+<%--    // usually this array is obtained from a server response--%>
+<%--    arr = [--%>
+<%--        c1 = ['Kalsum binti Said', '019-6678144', 'kalsumsaid@gmail.com' ],--%>
+<%--        c2 = ['Jacob Tan', '013-7774534', 'jacobtan@gmail.com' ],--%>
+<%--        c3 = ['Baktiar bin Zain', '013-8908534', 'baktiarzain@gmail.com'],--%>
+<%--        c4 = ['Natrah A/P Ravindran', '019-8971884', 'natrahravindran@gmail.com']--%>
+<%--    ];--%>
+
+<%--    $select.addEventListener('change', function(){--%>
+<%--        val = this.value - 1; // because arrays start at 0.--%>
+<%--        name = arr[val][0];--%>
+<%--        phoneno = arr[val][1];--%>
+<%--        email = arr[val][2];--%>
+<%--        $name.value = name;--%>
+<%--        $phoneno.value = phoneno;--%>
+<%--        $email.value = email;--%>
+<%--    });--%>
+<%--</script>--%>
 
 <script>
     function dynamicdropdown(listindex)

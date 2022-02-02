@@ -70,7 +70,7 @@ public class loginServlet extends HttpServlet
 
             PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
-            out.println("alert('WRONG USERNAME OR PASSWORD! PLEASE LOGIN AGAIN!');");
+            out.println("alert('Wrong username and password. Please try again.');");
             out.println("location='login.jsp';");
             out.println("</script>");
 

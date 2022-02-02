@@ -24,6 +24,12 @@
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
 <body>
+<%
+    String admin_Name = (String) session.getAttribute("admin_Name");
+    if (admin_Name == null)
+    { response.sendRedirect("login.jsp")
+    ;}
+%>
 
 <% books bk = new books();%>
 <% booksDAO bkdao = new booksDAO();%>
