@@ -29,19 +29,6 @@ public class suppliersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //Creating session
-        HttpSession hs = request.getSession();
-
-        try {
-            //if user session is null, they need to login first
-            if ((String) hs.getAttribute("admin_Name") == null){
-                response.sendRedirect("login.jsp");
-            } else{
-                String admin_Name = (String) hs.getAttribute("admin_Name");
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
 
         if (request.getParameter("Action").equals("Add Supplier")) {
             System.out.println("in");

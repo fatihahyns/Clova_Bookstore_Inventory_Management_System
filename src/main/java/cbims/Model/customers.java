@@ -1,23 +1,28 @@
-package com.example.clova_bookstore_inventory_management_system;
+package cbims.Model;
 
 public class customers {
-    private String customer_ID;
+    private int customer_ID;
     private String customer_Name;
     private String customer_PhoneNo;
     private String customer_Email;
 
-    public customers(String customer_ID, String customer_Name, String customer_PhoneNo, String customer_Email) {
+    public customers() {
+        super();
+    }
+
+    public customers(int customer_ID, String customer_Name, String customer_PhoneNo, String customer_Email) {
+        super();
         this.customer_ID = customer_ID;
         this.customer_Name = customer_Name;
         this.customer_PhoneNo = customer_PhoneNo;
         this.customer_Email = customer_Email;
     }
 
-    public String getCustomer_ID() {
+    public int getCustomer_ID() {
         return customer_ID;
     }
 
-    public void setCustomer_ID(String customer_ID) {
+    public void setCustomer_ID(int customer_ID) {
         this.customer_ID = customer_ID;
     }
 

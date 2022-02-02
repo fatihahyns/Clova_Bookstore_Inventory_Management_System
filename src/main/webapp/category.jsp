@@ -85,7 +85,7 @@
             <h1>Category</h1>
 
             <!-- Tabs navs -->
-            <ul class="nav nav-tabs mb-3">
+            <ul class="nav nav-tabs mb-3" id="myTab">
                 <li class="nav-item">
                     <a
                             class="nav-link active"

@@ -201,7 +201,7 @@
     <form class="form-horizontal" method="get">
         <div class="form-row align-items-center">
             <div class="col-sm-11 my-1">
-                <input type="input" class="form-control" name="searchdata" placeholder="Search title / author / category / supplier...">
+                <input type="input" class="form-control" name="searchdata" placeholder="Search title / author / category / supplier">
             </div>
 
 

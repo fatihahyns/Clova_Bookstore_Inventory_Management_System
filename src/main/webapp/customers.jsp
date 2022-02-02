@@ -5,30 +5,12 @@
   Time: 11:29 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-
+<%@page import="cbims.DBConnect.DBConnection"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-
-<%
-    String dbDriver = "com.mysql.jdbc.Driver";
-    String dbUname = "root";
-    String dbPassword = "";
-    String dbUrl = "jdbc:mysql://localhost:3306/cbims";
-
-    try {
-        Class.forName(dbDriver);
-    } catch (ClassNotFoundException e) {
-        e.printStackTrace();
-    }
-    Connection con = null;
-    Statement statement = null;
-    ResultSet resultSet = null;
-%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Customers | Bookstore Inventory Management System</title>
@@ -36,6 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/deletemodal.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -109,7 +92,7 @@
             <h1>Customers</h1>
 
             <!-- Tabs navs -->
-            <ul class="nav nav-tabs mb-3">
+            <ul class="nav nav-tabs mb-3" id="myTab">
                 <li class="nav-item">
                     <a
                             class="nav-link active"
@@ -158,16 +141,28 @@
                                 </div>
                             </div>
 
-
-                            <button type="submit" class="btn btn-primary btn-block mb-4" value="submit" >SUBMIT</button>
-
+                            <button type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Add Customer" >SUBMIT</button>
                         </form>
                     </div>
                 </div>
 
 
-
                 <div class="tab-pane fade" id="list-customers">
+<%--                    search customer--%>
+    <form class="form-horizontal" method="get">
+        <div class="form-row align-items-center">
+            <div class="col-sm-11 my-1">
+                <input type="input" class="form-control" name="searchdata" placeholder="Search...">
+            </div>
+
+
+            <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary">SEARCH</button>
+            </div>
+        </div>
+    </form>
+    <br>
+<%--                    list customer--%>
                     <table class="table table-bordered table-hover">
                         <thead class="thead-dark">
                         <tr>
@@ -179,55 +174,39 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         <%
-                            try{
-                                con = DriverManager.getConnection(dbUrl, dbUname, dbPassword);
-                                statement=con.createStatement();
-                                String sql ="select * from customer";
-                                resultSet = statement.executeQuery(sql);
-                                int i=1;
-                                while(resultSet.next()){
+                            Connection con = DBConnection.getConn();
+                            Statement st = con.createStatement();
+                            String search = request.getParameter("searchdata");
+                            String sql;
+
+                            if(search != null){
+                                sql = "SELECT * FROM customer WHERE customer_Name like '%"+search+"%' OR customer_PhoneNo like '%"+search+"%' OR customer_Email like '%"+search+"%'";
+
+
+                            }else{
+                                sql = "SELECT * FROM customer";
+                            }
+
+                            ResultSet rs = st.executeQuery(sql);
+                            int i=1;
+                            while (rs.next()){
+
                         %>
                             <tr>
                                 <th class="text-center" scope="row"><%=i%></th>
-                                <td align="center"><%=resultSet.getString("customer_Name") %></td>
-                                <td align="center"><%=resultSet.getString("customer_PhoneNo") %></td>
-                                <td align="center"><%=resultSet.getString("customer_Email") %></td>
+                                <td align="center"><%=rs.getString("customer_Name") %></td>
+                                <td align="center"><%=rs.getString("customer_PhoneNo") %></td>
+                                <td align="center"><%=rs.getString("customer_Email") %></td>
                                 <td align="center" class="col-2">
-<%--                                    <a class="edit editbtn" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>--%>
-<%--                                    <button type="button" id="<%=resultSet.getString("customer_ID") %>" class="btn btn-success btn-sm rounded-0" title="Edit"><i class="material-icons">&#xE254;</i></button>--%>
-                                    <button type="button" id="<%=resultSet.getString("customer_ID") %>" class="delete btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>
+                                    <button type="button" data-toggle="modal" data-target="#updateCustomer" id="<%=rs.getInt("customer_ID") %>" class="btn btn-success btn-sm rounded-0"><i class="material-icons" title="Edit">&#xE254;</i></button>
+                                    <button type="button" data-toggle="modal" data-target="#deleteCustomer" id="<%=rs.getInt("customer_ID") %>" class="del btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>
                                 </td>
                             </tr>
                         <%
                                     i++;
                                 }
-                                con.close();
-                            }
-                            catch (Exception e) {
-                                e.printStackTrace();
-                            }
                         %>
-
-                        <script>
-                            $(document).ready(function() {
-                                $(".delete").click(function() {
-                                    var id = +this.id;
-                                    $.ajax({
-                                        url: "deleteCustomers.jsp",
-                                        type: "post",
-                                        data: {
-                                            id : id,
-                                        },
-                                        success : function(data){
-                                            alert(data); // alerts the response from jsp
-                                            location.reload();
-                                        }
-                                    });
-                                });
-                            });
-                        </script>
                          </tbody>
                     </table>
  </div>
@@ -235,6 +214,42 @@
             <!-- Tabs content -->
         </div>
     </div>
+
+    <!-- Update Pop up -->
+    <div class="modal fade" id="updateCustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Book</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div id="show-data"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Update Pop up -->
+
+    <!-- Delete Pop up -->
+    <div class="modal fade" id="deleteCustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header flex-column">
+                    <div class="icon-box">
+                        <i class="material-icons">&#xE5CD;</i>
+                    </div>
+                    <h4 class="modal-title w-100">Are you sure?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="show-data2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Pop up -->
 
 
 
@@ -260,6 +275,59 @@
 <script src="assets/js/main.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('.btn-success').click(function(){
+            var id = +this.id;
+            $.ajax({
+                url: "editCustomers.jsp",
+                type:"post",
+                data:{
+                    id: id,
+                },
+                success:function (data){
+                    $("#show-data").html(data);
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('.del').click(function(){
+            var id = +this.id;
+            $.ajax({
+                url: "deleteCustomers.jsp",
+                type:"post",
+                data:{
+                    id: id,
+                },
+                success:function (data){
+                    $("#show-data2").html(data);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $('#myTab a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
+
+    // store the currently selected tab in the hash value
+    $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+        var id = $(e.target).attr("href").substr(1);
+        window.location.hash = id;
+    });
+
+    // on load of the page: switch to the currently selected tab
+    var hash = window.location.hash;
+    $('#myTab a[href="' + hash + '"]').tab('show');
+</script>
 
 </body>
 </html>

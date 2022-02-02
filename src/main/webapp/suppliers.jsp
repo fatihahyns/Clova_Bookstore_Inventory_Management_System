@@ -85,7 +85,7 @@
             <h1>Suppliers</h1>
 
             <!-- Tabs navs -->
-            <ul class="nav nav-tabs mb-3">
+            <ul class="nav nav-tabs mb-3" id="myTab">
                 <li class="nav-item">
                     <a
                             class="nav-link active"
@@ -170,7 +170,20 @@
                 </div>
 
                 <div class="tab-pane fade" id="list-suppliers">
+<%--                    search supplier--%>
+                    <form class="form-horizontal" method="get">
+                        <div class="form-row align-items-center">
+                            <div class="col-sm-11 my-1">
+                                <input type="input" class="form-control" name="searchdata" placeholder="Search...">
+                            </div>
 
+                            <div class="col-auto my-1">
+                                <button type="submit" class="btn btn-primary">SEARCH</button>
+                            </div>
+                        </div>
+                    </form>
+
+    <%--                    list supplier--%>
                     <table class="table table-bordered table-hover table-condensed">
                         <thead class="thead-dark">
                         <tr>
@@ -186,9 +199,17 @@
                         <%
                                 Connection con = DBConnection.getConn();
                                 Statement st = con.createStatement();
-//                                String sql = "SELECT * FROM supplier WHERE admin_Name=";
-//                            ("select * from tblorders where customer_name='" + session.getAttribute("name") + "' ")
-                                ResultSet rs = st.executeQuery("SELECT * FROM supplier WHERE admin_Name='"+session.getAttribute("admin_Name")+ "' ");
+                                String search = request.getParameter("searchdata");
+                                String sql;
+
+                                if(search != null){
+                                    sql = "SELECT * FROM supplier WHERE supplier_Name like '%"+search+"%' OR supplier_Address like '%"+search+"%' OR supplier_Postcode like '%"+search+"%' OR supplier_City like '%"+search+"%' OR supplier_State like '%"+search+"%' OR supplier_PhoneNo like '%"+search+"%' OR supplier_Email like '%"+search+"%'";
+
+
+                                }else{
+                                    sql = "SELECT * FROM supplier";
+                                }
+                                ResultSet rs = st.executeQuery(sql);
                                 int i=1;
                                 while (rs.next()){
 
@@ -313,6 +334,23 @@
             });
         });
     });
+</script>
+
+<script>
+    $('#myTab a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
+
+    // store the currently selected tab in the hash value
+    $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+        var id = $(e.target).attr("href").substr(1);
+        window.location.hash = id;
+    });
+
+    // on load of the page: switch to the currently selected tab
+    var hash = window.location.hash;
+    $('#myTab a[href="' + hash + '"]').tab('show');
 </script>
 <!-- Scripts -->
 

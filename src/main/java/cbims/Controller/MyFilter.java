@@ -52,6 +52,16 @@ public class MyFilter implements Filter {
             // pass the request along the filter chain
             chain.doFilter(request, response);
 
+        if (request.getParameter("Action").equals("Add Customer"))
+            // pass the request along the filter chain
+            chain.doFilter(request, response);
+        if (request.getParameter("Action").equals("Update Customer"))
+            // pass the request along the filter chain
+            chain.doFilter(request, response);
+        if (request.getParameter("Action").equals("Delete Customer"))
+            // pass the request along the filter chain
+            chain.doFilter(request, response);
+
         if (request.getParameter("Action").equals("Add Supplier"))
             // pass the request along the filter chain
             chain.doFilter(request, response);
