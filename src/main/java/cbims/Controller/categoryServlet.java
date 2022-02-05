@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cbims.Dao.categoryDAO;
-import cbims.Dao.suppliersDAO;
 import cbims.Model.category;
-import cbims.Model.suppliers;
 
 
 @WebServlet(name = "categoryServlet", value = "/categoryServlet")
@@ -41,6 +39,7 @@ public class categoryServlet extends HttpServlet {
             cat.setCategory_NoOfBooks(request.getParameter("category_NoOfBooks"));
 
             boolean result = catdao.addCategory(cat);
+            System.out.println("result");
 
             if (result == true){
                 out.println("<script type=\"text/javascript\">");

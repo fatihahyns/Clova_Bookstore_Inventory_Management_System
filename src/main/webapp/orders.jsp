@@ -166,10 +166,10 @@
                                         <option value="" disabled selected>Select Customer ID</option>
                                         <%
                                             Statement st1 = con.createStatement();
-                                            ResultSet rs2 = st1.executeQuery("SELECT * FROM customer");
-                                            while (rs2.next()){
+                                            ResultSet rs1 = st1.executeQuery("SELECT * FROM customer");
+                                            while (rs1.next()){
                                         %>
-                                        <option data-name="<%=rs2.getString("customer_Name")%>" data-phone="<%=rs2.getString("customer_PhoneNo")%>" data-email="<%=rs2.getString("customer_Email")%>" value="<%=rs2.getString("customer_ID") %>"><%=rs2.getString("customer_ID") %></option>
+                                        <option data-name="<%=rs1.getString("customer_Name")%>" data-phone="<%=rs1.getString("customer_PhoneNo")%>" data-email="<%=rs1.getString("customer_Email")%>" value="<%=rs1.getString("customer_ID") %>"><%=rs1.getString("customer_ID") %></option>
                                         <%
                                             }
                                         %>
@@ -191,51 +191,72 @@
                                     <input type="email" class="form-control" name="customer_Email" readonly>
                                 </div>
                             </div>
+                        </form>
 
 
 
                             <br>
                             <h2>Item Details</h2>
-
+                            <form method="post" action="${pageContext.request.contextPath}/orderdetailsServlet">
                             <div class="form-row align-items-center">
-                                <div class="col-sm-4 my-1">
-                                    <!-- <label class="control-label">Category:</label> -->
-                                    <select class="form-control" id="category" name="category" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
-                                        <option value="" disabled selected>Select Category</option>
-                                        <option value="acc">Accounting & Finance</option>
-                                        <option value="bs">Business & Economics</option>
-                                        <option value="comp">Computing & Internet</option>
-                                        <option value="eng">Engineering</option>
-                                    </select>
-                                </div>
+
+<%--                                <div class="col-sm-4 my-1">--%>
+<%--&lt;%&ndash;                                    <select class="form-control" id="category" name="category" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                        <option value="" disabled selected>Select Category</option>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                        <option value="acc">Accounting & Finance</option>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                        <option value="bs">Business & Economics</option>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                        <option value="comp">Computing & Internet</option>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                        <option value="eng">Engineering</option>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
+<%--                                        <select class="form-control" id="category" name="category">--%>
+<%--                                            <option>Select category</option>--%>
+<%--                                        </select>--%>
+<%--                                </div>--%>
 
 
-                                <div class="col-sm-4 my-1">
+                                <div class="col-sm-8 my-1">
                                     <!-- <label class="control-label">Book:</label> -->
 
-                                    <script>
-                                        document.write('<select class="form-control" name="book" id="book"><option value="">Select book</option></select>')
-                                    </script>
+<%--                                    <script>--%>
+<%--                                        document.write('<select class="form-control" name="book" id="book"><option value="">Select book</option></select>')--%>
+<%--                                    </script>--%>
 
-                                    <noscript>
-                                        <select class="form-control" id="book" name="book">
-                                            <option value="acc1">Everyone Can Buy Property</option>
-                                            <option value="acc2">One Up On Wall Street</option>
-                                            <option value="bs1">Beyond Entrepreneurship 2.0</option>
-                                            <option value="bs2">The Ride of a Lifetime</option>
-                                            <option value="comp1">Cloud Native Security</option>
-                                            <option value="comp2">Data Lakes For Dummies</option>
-                                            <option value="eng1">Think Like An Engineer</option>
-                                            <option value="eng2">How to Invent Everything</option>
-                                        </select></noscript>
+<%--                                    <noscript>--%>
+<%--                                        <select class="form-control" id="book" name="book">--%>
+<%--                                            <option value="acc1">Everyone Can Buy Property</option>--%>
+<%--                                            <option value="acc2">One Up On Wall Street</option>--%>
+<%--                                            <option value="bs1">Beyond Entrepreneurship 2.0</option>--%>
+<%--                                            <option value="bs2">The Ride of a Lifetime</option>--%>
+<%--                                            <option value="comp1">Cloud Native Security</option>--%>
+<%--                                            <option value="comp2">Data Lakes For Dummies</option>--%>
+<%--                                            <option value="eng1">Think Like An Engineer</option>--%>
+<%--                                            <option value="eng2">How to Invent Everything</option>--%>
+<%--                                        </select></noscript>--%>
+                                    <select id = "BookDropdown" class="form-control" name="book_ID">
+                                        <option value="" disabled selected>Select Book Title</option>
+
+                                    <%
+                                        Statement st2 = con.createStatement();
+                                        ResultSet rs2 = st2.executeQuery("SELECT * FROM book order by book_Title");
+                                        while (rs2.next()){
+                                    %>
+                                    <option data-price="<%=rs2.getString("book_Price")%>"value="<%=rs2.getInt("book_ID") %>"><%=rs2.getString("book_Title") %></option>
+                                    <%
+                                        }
+                                    %>
+                                    </select>
+
+                                    <input type="hidden" name="book_Price">
 
 
                                 </div>
 
                                 <div class="col-auto my-1">
-                                    <button type="submit" class="btn btn-success">ADD</button>
+                                    <button type="submit" class="btn btn-success" name="Action" value="Add to Cart">ADD</button>
                                 </div>
+
                             </div>
+                            </form>
 
                             <br>
 
@@ -252,61 +273,57 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    <%
+                                        Statement st3 = con.createStatement();
+                                        ResultSet rs3 = st3.executeQuery("SELECT od.*, bk.* FROM orderdetails od, book bk WHERE bk.book_ID = od.book_ID;");
+                                        while (rs3.next()){
+                                    %>
 
                                     <tr>
                                         <td class="p-4">
                                             <div class="media align-items-center">
 
                                                 <div class="media-body">
-                                                    <a href="#" class="d-block text-dark">The Ride of a Lifetime</a>
+                                                    <a href="#" class="d-block text-dark"><%=rs3.getString("book_Title") %></a>
                                                     <small>
-                                                        <span class="text-muted">ISBN: </span> 9781787630475 &nbsp;
+                                                        <span class="text-muted">Book ID: </span><%=rs3.getString("book_ID") %> &nbsp;
                                                     </small>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="text-right font-weight-semibold align-middle p-4">RM 89.95</td>
-                                        <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
-                                        <td class="text-right font-weight-semibold align-middle p-4">RM 179.90</td>
+                                        <td class="text-right font-weight-semibold align-middle p-4">RM <%=rs3.getString("orderdetails_Price") %></td>
+                                        <td class="align-middle p-4"><input type="text" class="form-control text-center" value="<%=rs3.getString("orderdetails_Quantity") %>"></td>
+                                        <td class="text-right font-weight-semibold align-middle p-4">RM <%=rs3.getString("orderdetails_TotalPrice") %></td>
                                         <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
                                     </tr>
-
-
-                                    <tr>
-                                        <td class="p-4">
-                                            <div class="media align-items-center">
-
-                                                <div class="media-body">
-                                                    <a href="#" class="d-block text-dark">One Up On Wall Street</a>
-                                                    <small>
-                                                        <span class="text-muted">ISBN: </span> 9780743200400 &nbsp;
-                                                    </small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-right font-weight-semibold align-middle p-4">RM 86.90</td>
-                                        <td class="align-middle p-4"><input type="text" class="form-control text-center" value="1"></td>
-                                        <td class="text-right font-weight-semibold align-middle p-4">RM 86.90</td>
-                                        <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
-                                    </tr>
-
+                                    <%
+                                        }
+                                    %>
                                     </tbody>
                                 </table>
                             </div>
 
                             <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
-                                <div class="mt-4">
-                                    <label class="text-muted font-weight-normal">Promocode</label>
-                                    <input type="text" placeholder="ABC" class="form-control">
-                                </div>
+<%--                                <div class="mt-4">--%>
+<%--                                    <label class="text-muted font-weight-normal">Promocode</label>--%>
+<%--                                    <input type="text" placeholder="ABC" class="form-control">--%>
+<%--                                </div>--%>
                                 <div class="d-flex">
-                                    <div class="text-right mt-4 mr-5">
-                                        <label class="text-muted font-weight-normal m-0">Discount</label>
-                                        <div class="text-large"><strong>RM 0.00</strong></div>
-                                    </div>
+<%--                                    <div class="text-right mt-4 mr-5">--%>
+<%--                                        <label class="text-muted font-weight-normal m-0">Discount</label>--%>
+<%--                                        <div class="text-large"><strong>RM 0.00</strong></div>--%>
+<%--                                    </div>--%>
+                                    <%
+                                        double finalTotalPrice = 0.00;
+                                        Statement st4 = con.createStatement();
+                                        ResultSet rs4 = st4.executeQuery("select sum(orderDetails_TotalPrice) from orderdetails");
+                                        if (rs4.next()) {
+                                            finalTotalPrice = rs4.getInt(1);
+                                        }
+                                    %>
                                     <div class="text-right mt-4">
                                         <label class="text-muted font-weight-normal m-0">Total price</label>
-                                        <div class="text-large"><strong>RM 266.80</strong></div>
+                                        <div class="text-large"><strong>RM <%=finalTotalPrice%></strong></div>
                                     </div>
                                 </div>
                             </div>
@@ -315,7 +332,7 @@
 
                             <button type="submit" class="btn btn-primary btn-block mb-4" name="submit" >PLACE ORDER</button>
 
-                        </form>
+<%--                        </form>--%>
                     </div>
                 </div>
 
@@ -427,61 +444,103 @@
     });
 </script>
 
-<%--<script>--%>
-<%--    var $select = document.getElementById('slct'),--%>
-<%--        $name = document.getElementById('cname'),--%>
-<%--        $phoneno = document.getElementById('cphoneno'),--%>
-<%--        $email = document.getElementById('cemail'),--%>
-<%--        val, arr, name, phoneno, email;--%>
+<script>
+    $(document).ready(function(){
+        $('#BookDropdown').on('change', function(event){
+            var optionSelected = $("option:selected", this);
+            var bPrice = $(optionSelected).data('price');  // note the data-member-id --> memberId change
 
-<%--    // usually this array is obtained from a server response--%>
-<%--    arr = [--%>
-<%--        c1 = ['Kalsum binti Said', '019-6678144', 'kalsumsaid@gmail.com' ],--%>
-<%--        c2 = ['Jacob Tan', '013-7774534', 'jacobtan@gmail.com' ],--%>
-<%--        c3 = ['Baktiar bin Zain', '013-8908534', 'baktiarzain@gmail.com'],--%>
-<%--        c4 = ['Natrah A/P Ravindran', '019-8971884', 'natrahravindran@gmail.com']--%>
-<%--    ];--%>
+            $('input[name="book_Price"]').val(bPrice);
+        });
+    });
+</script>
 
-<%--    $select.addEventListener('change', function(){--%>
-<%--        val = this.value - 1; // because arrays start at 0.--%>
-<%--        name = arr[val][0];--%>
-<%--        phoneno = arr[val][1];--%>
-<%--        email = arr[val][2];--%>
-<%--        $name.value = name;--%>
-<%--        $phoneno.value = phoneno;--%>
-<%--        $email.value = email;--%>
+<%--<script type="text/javascript">--%>
+<%--    $(document).ready(function () {--%>
+<%--        $.ajax({--%>
+<%--            url: "getBookCategoryServlet",--%>
+<%--            method: "GET",--%>
+<%--            data: {operation: 'category'},--%>
+<%--            success: function (data, textStatus, jqXHR) {--%>
+<%--                console.log(data);--%>
+<%--                let obj = $.parseJSON(data);--%>
+<%--                $.each(obj, function (key, value) {--%>
+<%--                    $('#category').append('<option value="' + value.id + '">' + value.name + '</option>')--%>
+<%--                });--%>
+<%--                $('select').formSelect();--%>
+<%--            },--%>
+<%--            error: function (jqXHR, textStatus, errorThrown) {--%>
+<%--                $('#category').append('<option>Category unavailable</option>');--%>
+<%--            },--%>
+<%--            cache: false--%>
+<%--        });--%>
+
+
+<%--        $('#category').change(function () {--%>
+<%--            $('#book').find('option').remove();--%>
+<%--            $('#book').append('<option>Select book title</option>');--%>
+
+<%--            let catid = $('#category').val();--%>
+<%--            let data = {--%>
+<%--                operation: "book",--%>
+<%--                id: catid--%>
+<%--            };--%>
+
+<%--            $.ajax({--%>
+<%--                url: "getBookCategoryServlet",--%>
+<%--                method: "GET",--%>
+<%--                data: data,--%>
+<%--                success: function (data, textStatus, jqXHR) {--%>
+<%--                    console.log(data);--%>
+<%--                    let obj = $.parseJSON(data);--%>
+<%--                    $.each(obj, function (key, value) {--%>
+<%--                        $('#book').append('<option value="' + value.id + '">' + value.name + '</option>')--%>
+<%--                    });--%>
+<%--                    $('select').formSelect();--%>
+<%--                },--%>
+<%--                error: function (jqXHR, textStatus, errorThrown) {--%>
+<%--                    $('#book').append('<option>Book unavailable</option>');--%>
+<%--                },--%>
+<%--                cache: false--%>
+<%--            });--%>
+<%--        });--%>
+
 <%--    });--%>
 <%--</script>--%>
 
-<script>
-    function dynamicdropdown(listindex)
-    {
-        switch (listindex)
-        {
-            case "acc" :
-                document.getElementById("book").options[0]=new Option("Select book","");
-                document.getElementById("book").options[1]=new Option("Everyone Can Buy Property","acc1");
-                document.getElementById("book").options[2]=new Option("One Up On Wall Street","acc2");
-                break;
-            case "bs" :
-                document.getElementById("book").options[0]=new Option("Select book","");
-                document.getElementById("book").options[1]=new Option("Beyond Entrepreneurship 2.0","bs1");
-                document.getElementById("book").options[2]=new Option("The Ride of a Lifetime","bs2");
-                break;
-            case "comp" :
-                document.getElementById("book").options[0]=new Option("Select book","");
-                document.getElementById("book").options[1]=new Option("Cloud Native Security","comp1");
-                document.getElementById("book").options[2]=new Option("Data Lakes For Dummies","comp2");
-                break;
-            case "eng" :
-                document.getElementById("book").options[0]=new Option("Select book","");
-                document.getElementById("book").options[1]=new Option("Think Like An Engineer","eng1");
-                document.getElementById("book").options[2]=new Option("How to Invent Everything","eng2");
-                break;
-        }
-        return true;
-    }
-</script>
+
+
+
+
+<%--<script>--%>
+<%--    function dynamicdropdown(listindex)--%>
+<%--    {--%>
+<%--        switch (listindex)--%>
+<%--        {--%>
+<%--            case "acc" :--%>
+<%--                document.getElementById("book").options[0]=new Option("Select book","");--%>
+<%--                document.getElementById("book").options[1]=new Option("Everyone Can Buy Property","acc1");--%>
+<%--                document.getElementById("book").options[2]=new Option("One Up On Wall Street","acc2");--%>
+<%--                break;--%>
+<%--            case "bs" :--%>
+<%--                document.getElementById("book").options[0]=new Option("Select book","");--%>
+<%--                document.getElementById("book").options[1]=new Option("Beyond Entrepreneurship 2.0","bs1");--%>
+<%--                document.getElementById("book").options[2]=new Option("The Ride of a Lifetime","bs2");--%>
+<%--                break;--%>
+<%--            case "comp" :--%>
+<%--                document.getElementById("book").options[0]=new Option("Select book","");--%>
+<%--                document.getElementById("book").options[1]=new Option("Cloud Native Security","comp1");--%>
+<%--                document.getElementById("book").options[2]=new Option("Data Lakes For Dummies","comp2");--%>
+<%--                break;--%>
+<%--            case "eng" :--%>
+<%--                document.getElementById("book").options[0]=new Option("Select book","");--%>
+<%--                document.getElementById("book").options[1]=new Option("Think Like An Engineer","eng1");--%>
+<%--                document.getElementById("book").options[2]=new Option("How to Invent Everything","eng2");--%>
+<%--                break;--%>
+<%--        }--%>
+<%--        return true;--%>
+<%--    }--%>
+<%--</script>--%>
 
 </body>
 </html>

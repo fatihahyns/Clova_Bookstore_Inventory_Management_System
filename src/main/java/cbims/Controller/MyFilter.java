@@ -71,6 +71,10 @@ public class MyFilter implements Filter {
         if (request.getParameter("Action").equals("Delete Supplier"))
             // pass the request along the filter chain
             chain.doFilter(request, response);
+
+        if (request.getParameter("Action").equals("Add to Cart"))
+        // pass the request along the filter chain
+            chain.doFilter(request, response);
     }
     /**
      * @see Filter#init(FilterConfig)

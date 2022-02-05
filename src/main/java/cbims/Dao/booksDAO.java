@@ -2,11 +2,14 @@ package cbims.Dao;
 
 import cbims.Model.books;
 import cbims.DBConnect.DBConnection;
+import cbims.Model.category;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class booksDAO {
     public boolean addBook(books bk) {
@@ -95,6 +98,30 @@ public class booksDAO {
             e.printStackTrace();
         }
         return bk;
+    }
+
+    public List<books> getBookByCategoryID (int id){
+        Connection con = DBConnection.getConn();
+
+        List <books> list = new ArrayList<>();
+
+        books bk = new books();
+
+        String sql = "Select book_ID, category_ID, book_Title from book where category_ID=?";
+
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                bk.setBook_ID(rs.getInt("book_ID"));
+                bk.setCategory_ID(rs.getString("category_ID"));
+                bk.setBook_Title(rs.getString("book_Title"));
+                list.add(bk);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public boolean deleteBook (int id){

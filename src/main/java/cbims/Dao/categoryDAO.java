@@ -2,11 +2,12 @@ package cbims.Dao;
 
 import cbims.Model.category;
 import cbims.DBConnect.DBConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class categoryDAO {
     public boolean addCategory(category cat) {
@@ -81,6 +82,31 @@ public class categoryDAO {
         }
         return cat;
     }
+
+    public List<category> getAllCategory(){
+        Connection con = DBConnection.getConn();
+
+        List <category> list = new ArrayList<>();
+
+        category cat = new category();
+
+        String sql = "Select * from category";
+
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                cat.setCategory_ID(rs.getInt("category_ID"));
+                cat.setCategory_Name(rs.getString("category_Name"));
+                cat.setCategory_NoOfBooks(rs.getString("category_NoOfBooks"));
+                list.add(cat);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 
     public boolean deleteCategory(int id){
         Connection con = DBConnection.getConn();
