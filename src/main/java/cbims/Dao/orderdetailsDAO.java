@@ -1,10 +1,12 @@
 package cbims.Dao;
 
 import cbims.DBConnect.DBConnection;
+import cbims.Model.category;
 import cbims.Model.orderdetails;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class orderdetailsDAO {
@@ -35,8 +37,33 @@ public class orderdetailsDAO {
         }
     }
 
+    public Double getPriceByBookID(String id){
+        Connection con = DBConnection.getConn();
+
+        Double price = 0.0;
+
+        orderdetails od = new orderdetails();
+
+        String sql = "SELECT orderDetails_Price FROM orderdetails WHERE book_ID=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                price = rs.getDouble("orderDetails_Price");
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return price;
+    }
+
     public boolean updateQuantity(orderdetails od){
         Connection con = DBConnection.getConn();
+
 
         String sql = "UPDATE orderdetails SET orderDetails_Quantity=?, orderDetails_TotalPrice=? WHERE book_ID=?";
 

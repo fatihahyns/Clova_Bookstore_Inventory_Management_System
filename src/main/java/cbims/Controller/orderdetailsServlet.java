@@ -57,5 +57,43 @@ public class orderdetailsServlet extends HttpServlet {
             dispatcher.include(request, response);
         }
 
+        if (request.getParameter("Action").equals("Update Quantity")) {
+            System.out.println("in");
+            PrintWriter out = response.getWriter();
+
+            orderdetails od = new orderdetails();
+            orderdetailsDAO oddao = new orderdetailsDAO();
+
+            String id = request.getParameter("book_ID");
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+            Double price = oddao.getPriceByBookID(id);
+
+            System.out.println(price);
+
+            Double totalprice = price * quantity;
+
+            od.setBook_ID(id);
+            od.setOrderDetails_Quantity(quantity);
+            od.setOrderDetails_TotalPrice(totalprice);
+
+            request.setAttribute("od", od);
+
+            boolean result = oddao.updateQuantity(od);
+            System.out.println(result);
+
+            if (result == true){
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Quantity updated!');");
+                out.println("location='orders.jsp';");
+                out.println("</script>");
+            }else {
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Quantity failed to update. Please try again.');");
+                out.println("location='orders.jsp';");
+                out.println("</script>");
+            }
+        }
+
     }
 }

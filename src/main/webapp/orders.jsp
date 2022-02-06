@@ -286,19 +286,28 @@
                                                 <div class="media-body">
                                                     <a href="#" class="d-block text-dark"><%=rs3.getString("book_Title") %></a>
                                                     <small>
-                                                        <span class="text-muted">Book ID: </span><%=rs3.getString("book_ID") %> &nbsp;
+                                                        <span class="text-muted">Book ID: </span><%=rs3.getString("book_ID") %>
                                                     </small>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="text-right font-weight-semibold align-middle p-4">RM <%=rs3.getString("orderdetails_Price") %></td>
-                                        <td class="align-middle p-4"><input type="text" class="form-control text-center" value="<%=rs3.getString("orderdetails_Quantity") %>"></td>
+
+                                        <td class="align-middle p-4">
+                                            <form method="post" action="${pageContext.request.contextPath}/orderdetailsServlet">
+                                                <input type="hidden" name="book_ID" value="<%=rs3.getString("book_ID") %>">
+                                                <input type="text" class="form-control text-center" name="quantity" value="<%=rs3.getString("orderdetails_Quantity") %>">
+                                            <button class="btn btn-danger btn-sm rounded-0"  name="Action" value="Update Quantity"><i class="material-icons" title="Update">&#xe5d5;</i></button>
+                                            </form>
+                                        </td>
+
                                         <td class="text-right font-weight-semibold align-middle p-4">RM <%=rs3.getString("orderdetails_TotalPrice") %></td>
                                         <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
                                     </tr>
                                     <%
                                         }
                                     %>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -313,6 +322,7 @@
 <%--                                        <label class="text-muted font-weight-normal m-0">Discount</label>--%>
 <%--                                        <div class="text-large"><strong>RM 0.00</strong></div>--%>
 <%--                                    </div>--%>
+
                                     <%
                                         double finalTotalPrice = 0.00;
                                         Statement st4 = con.createStatement();
