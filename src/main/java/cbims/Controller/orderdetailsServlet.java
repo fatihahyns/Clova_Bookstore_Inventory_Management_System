@@ -1,5 +1,6 @@
 package cbims.Controller;
 
+
 import cbims.Dao.categoryDAO;
 import cbims.Dao.orderdetailsDAO;
 import cbims.Model.category;
@@ -39,7 +40,7 @@ public class orderdetailsServlet extends HttpServlet {
             od.setOrderDetails_TotalPrice(Double.parseDouble(request.getParameter("book_Price")));
 
 
-            boolean result = oddao.addToCart(od);
+            boolean result = oddao.addBookToCart(od);
             System.out.println("result");
 
             if (result == true){
@@ -90,6 +91,31 @@ public class orderdetailsServlet extends HttpServlet {
             }else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Quantity failed to update. Please try again.');");
+                out.println("location='orders.jsp';");
+                out.println("</script>");
+            }
+        }
+
+        if (request.getParameter("Action").equals("Remove from Cart")){
+            System.out.println("in");
+            PrintWriter out = response.getWriter();
+
+            orderdetails od = new orderdetails();
+            orderdetailsDAO oddao = new orderdetailsDAO();
+
+            String id = request.getParameter("id");
+
+            boolean result = oddao.removeBookFromCart(id);
+            System.out.println(result);
+
+            if (result == true){
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Item successfully removed from cart!');");
+                out.println("location='orders.jsp';");
+                out.println("</script>");
+            }else {
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Item unsuccessfully removed from cart. Please try again.');");
                 out.println("location='orders.jsp';");
                 out.println("</script>");
             }

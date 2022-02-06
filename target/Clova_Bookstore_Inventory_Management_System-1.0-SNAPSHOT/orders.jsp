@@ -19,6 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/deletemodal.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
@@ -302,7 +303,11 @@
                                         </td>
 
                                         <td class="text-right font-weight-semibold align-middle p-4">RM <%=rs3.getString("orderdetails_TotalPrice") %></td>
-                                        <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
+                                        <td class="text-center align-middle px-0">
+                                        <button type="button" data-toggle="modal" data-target="#removeFromCart" id="<%=rs3.getString("book_ID")%>" class="del btn btn-danger btn-sm rounded-0" title="Remove">×</button>
+                                        </td>
+
+<%--                                        <a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a>--%>
                                     </tr>
                                     <%
                                         }
@@ -412,6 +417,25 @@
             </div>
             <!-- Tabs content -->
 
+            <!-- Delete Pop up -->
+            <div class="modal fade" id="removeFromCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal-dialog modal-confirm">
+                    <div class="modal-content">
+                        <div class="modal-header flex-column">
+                            <div class="icon-box">
+                                <i class="material-icons">&#xE5CD;</i>
+                            </div>
+                            <h4 class="modal-title w-100">Are you sure?</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="show-data2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Delete Pop up -->
+
 
         </div>
     </div>
@@ -461,6 +485,24 @@
             var bPrice = $(optionSelected).data('price');  // note the data-member-id --> memberId change
 
             $('input[name="book_Price"]').val(bPrice);
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('.del').click(function(){
+            var id = +this.id;
+            $.ajax({
+                url: "removeBookFromCart.jsp",
+                type:"post",
+                data:{
+                    id: id,
+                },
+                success:function (data){
+                    $("#show-data2").html(data);
+                }
+            });
         });
     });
 </script>
