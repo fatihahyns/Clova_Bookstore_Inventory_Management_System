@@ -14,7 +14,7 @@ public class orderdetailsDAO {
         Connection con = DBConnection.getConn();
 
 
-        String sql = "INSERT INTO orderdetails (orderDetails_ID, book_ID, orderDetails_Price, orderDetails_Quantity, orderDetails_TotalPrice) VALUES (NULL, ?, ?, 1, ?) ";
+        String sql = "INSERT INTO orderdetails (orderDetails_ID, book_ID, customer_Name, orderDetails_Price, orderDetails_Quantity, orderDetails_TotalPrice) VALUES (NULL, ?, ?, ?, 1, ?) ";
 
         int i = 0;
 
@@ -22,8 +22,9 @@ public class orderdetailsDAO {
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, od.getBook_ID());
-            ps.setDouble(2, od.getOrderDetails_Price());
-            ps.setDouble(3, od.getOrderDetails_TotalPrice());
+            ps.setString(2, od.getCustomer_Name());
+            ps.setDouble(3, od.getOrderDetails_Price());
+            ps.setDouble(4, od.getOrderDetails_TotalPrice());
 
 
             i = ps.executeUpdate();
@@ -103,6 +104,7 @@ public class orderdetailsDAO {
 
                 od.setOrderDetails_ID(rs.getInt("orderDetails_ID"));
                 od.setBook_ID(rs.getString("book_ID"));
+                od.setCustomer_Name(rs.getString("customer_Name"));
                 od.setOrderDetails_Price(rs.getDouble("orderDetails_Price"));
                 od.setOrderDetails_Quantity(rs.getInt("orderDetails_Quantity"));
                 od.setOrderDetails_TotalPrice(rs.getDouble("orderDetails_TotalPrice"));

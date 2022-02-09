@@ -32,6 +32,32 @@ public class customersDAO {
         }
     }
 
+    public boolean sessionCustomer (customers cust){
+        boolean status = false;
+
+        Connection con = DBConnection.getConn();
+
+        String sql = "SELECT * FROM customer WHERE customer_Name=? AND customer_Email=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, cust.getCustomer_Name());
+            ps.setString(2, cust.getCustomer_Email());
+
+            ResultSet rs = ps.executeQuery();
+            status = rs.next();
+
+                cust.setCustomer_ID(rs.getInt("customer_ID"));
+                cust.setCustomer_PhoneNo(rs.getString("customer_PhoneNo"));
+                cust.setCustomer_Name(rs.getString("customer_Name"));
+                cust.setCustomer_Email(rs.getString("customer_Email"));
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+       return status;
+    }
+
     public boolean updateCustomer(customers cust){
         Connection con = DBConnection.getConn();
 

@@ -71,6 +71,29 @@ public class booksDAO {
         }
     }
 
+    public int getCurrentStock(String id){
+        Connection con = DBConnection.getConn();
+
+        int stock = 0;
+
+        books bk = new books();
+
+        String sql = "SELECT book_NoOfStocks FROM book WHERE book_ID=?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                stock = rs.getInt("book_NoOfStocks");
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return stock;
+    }
+
     public books getBookByID(int id){
         Connection con = DBConnection.getConn();
 

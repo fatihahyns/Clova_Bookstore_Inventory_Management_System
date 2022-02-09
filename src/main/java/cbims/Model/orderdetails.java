@@ -3,6 +3,7 @@ package cbims.Model;
 public class orderdetails {
     private int orderDetails_ID;
     private String book_ID;
+    private String customer_Name;
     private double orderDetails_Price;
     private int orderDetails_Quantity;
     private  double orderDetails_TotalPrice;
@@ -11,10 +12,11 @@ public class orderdetails {
         super();
     }
 
-    public orderdetails(int orderDetails_ID,String book_ID, double orderDetails_Price, int orderDetails_Quantity, double orderDetails_TotalPrice) {
+    public orderdetails(int orderDetails_ID, String book_ID, String customer_Name, double orderDetails_Price, int orderDetails_Quantity, double orderDetails_TotalPrice) {
         super();
         this.orderDetails_ID = orderDetails_ID;
         this.book_ID = book_ID;
+        this.customer_Name = customer_Name;
         this.orderDetails_Price = orderDetails_Price;
         this.orderDetails_Quantity = orderDetails_Quantity;
         this.orderDetails_TotalPrice = orderDetails_TotalPrice;
@@ -34,6 +36,14 @@ public class orderdetails {
 
     public void setBook_ID(String book_ID) {
         this.book_ID = book_ID;
+    }
+
+    public String getCustomer_Name() {
+        return customer_Name;
+    }
+
+    public void setCustomer_Name(String customer_Name) {
+        this.customer_Name = customer_Name;
     }
 
     public double getOrderDetails_Price() {

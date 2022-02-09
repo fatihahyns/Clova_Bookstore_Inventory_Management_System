@@ -34,10 +34,21 @@ public class customersServlet extends HttpServlet {
 
             boolean result = custdao.addCustomer(cust);
 
+            if (custdao.sessionCustomer(cust)){
+                HttpSession session = request.getSession(true);
+                session.setAttribute("customer_ID", cust.getCustomer_ID());
+                session.setAttribute("customer_Name", cust.getCustomer_Name());
+                session.setAttribute("customer_PhoneNo", cust.getCustomer_PhoneNo());
+                session.setAttribute("customer_Email", cust.getCustomer_Email());
+                System.out.print("Session created");
+            }
+
+//            boolean result = custdao.addCustomer(cust);
+//
             if (result == true){
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data added successfully!');");
-                out.println("location='customers.jsp';");
+                out.println("location='orders.jsp';");
                 out.println("</script>");
             }else {
                 out.println("<script type=\"text/javascript\">");

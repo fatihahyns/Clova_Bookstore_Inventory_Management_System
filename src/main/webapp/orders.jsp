@@ -161,81 +161,49 @@
                                     <input type="text" class="form-control" name="order_DateTime" placeholder="2021-12-08 13:23:44" disabled>
                                 </div>
 
-                                <div class="form-group col-md-4">
-                                    <label class="control-label">Customer ID:</label>
-                                    <select  id = "CustomerDropdown" class="form-control" name="CustomerDropdown">
-                                        <option value="" disabled selected>Select Customer ID</option>
-                                        <%
-                                            Statement st1 = con.createStatement();
-                                            ResultSet rs1 = st1.executeQuery("SELECT * FROM customer");
-                                            while (rs1.next()){
-                                        %>
-                                        <option data-name="<%=rs1.getString("customer_Name")%>" data-phone="<%=rs1.getString("customer_PhoneNo")%>" data-email="<%=rs1.getString("customer_Email")%>" value="<%=rs1.getString("customer_ID") %>"><%=rs1.getString("customer_ID") %></option>
-                                        <%
-                                            }
-                                        %>
-                                    </select>
-                                </div>
-                            </div>
+<%--                                <div class="form-group col-md-4">--%>
+<%--                                    <label class="control-label">Customer ID:</label>--%>
+<%--                                    <select  id = "CustomerDropdown" class="form-control" name="CustomerDropdown">--%>
+<%--                                        <option value="" disabled selected>Select Customer ID</option>--%>
+<%--                                        <%--%>
+<%--                                            Statement st1 = con.createStatement();--%>
+<%--                                            ResultSet rs1 = st1.executeQuery("SELECT * FROM customer");--%>
+<%--                                            while (rs1.next()){--%>
+<%--                                        %>--%>
+<%--                                        <option data-name="<%=rs1.getString("customer_Name")%>" data-phone="<%=rs1.getString("customer_PhoneNo")%>" data-email="<%=rs1.getString("customer_Email")%>" value="<%=rs1.getString("customer_ID") %>"><%=rs1.getString("customer_ID") %></option>--%>
+<%--                                        <%--%>
+<%--                                            }--%>
+<%--                                        %>--%>
+<%--                                    </select>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
 
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Name:</label>
-                                    <input type="text" class="form-control" name="customer_Name" readonly>
+                                    <input type="text" class="form-control" name="customer_Name"  value="<%=session.getAttribute("customer_Name")%>" readonly>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Phone Number:</label>
-                                    <input type="text" class="form-control"  name="customer_PhoneNo" readonly>
+                                    <input type="text" class="form-control"  name="customer_PhoneNo" value="<%=session.getAttribute("customer_PhoneNo")%>" readonly>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Email:</label>
-                                    <input type="email" class="form-control" name="customer_Email" readonly>
+                                    <input type="email" class="form-control" name="customer_Email" value="<%=session.getAttribute("customer_Email")%>" readonly>
                                 </div>
                             </div>
                         </form>
-
+                    </div>
 
 
                             <br>
-                            <h2>Item Details</h2>
+                    <div class="bkstr-form">
                             <form method="post" action="${pageContext.request.contextPath}/orderdetailsServlet">
+                                <h2>Item Details</h2>
                             <div class="form-row align-items-center">
-
-<%--                                <div class="col-sm-4 my-1">--%>
-<%--&lt;%&ndash;                                    <select class="form-control" id="category" name="category" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="" disabled selected>Select Category</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="acc">Accounting & Finance</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="bs">Business & Economics</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="comp">Computing & Internet</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <option value="eng">Engineering</option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </select>&ndash;%&gt;--%>
-<%--                                        <select class="form-control" id="category" name="category">--%>
-<%--                                            <option>Select category</option>--%>
-<%--                                        </select>--%>
-<%--                                </div>--%>
-
-
                                 <div class="col-sm-8 my-1">
-                                    <!-- <label class="control-label">Book:</label> -->
-
-<%--                                    <script>--%>
-<%--                                        document.write('<select class="form-control" name="book" id="book"><option value="">Select book</option></select>')--%>
-<%--                                    </script>--%>
-
-<%--                                    <noscript>--%>
-<%--                                        <select class="form-control" id="book" name="book">--%>
-<%--                                            <option value="acc1">Everyone Can Buy Property</option>--%>
-<%--                                            <option value="acc2">One Up On Wall Street</option>--%>
-<%--                                            <option value="bs1">Beyond Entrepreneurship 2.0</option>--%>
-<%--                                            <option value="bs2">The Ride of a Lifetime</option>--%>
-<%--                                            <option value="comp1">Cloud Native Security</option>--%>
-<%--                                            <option value="comp2">Data Lakes For Dummies</option>--%>
-<%--                                            <option value="eng1">Think Like An Engineer</option>--%>
-<%--                                            <option value="eng2">How to Invent Everything</option>--%>
-<%--                                        </select></noscript>--%>
                                     <select id = "BookDropdown" class="form-control" name="book_ID">
                                         <option value="" disabled selected>Select Book Title</option>
-
                                     <%
                                         Statement st2 = con.createStatement();
                                         ResultSet rs2 = st2.executeQuery("SELECT * FROM book order by book_Title");
@@ -246,18 +214,14 @@
                                         }
                                     %>
                                     </select>
-
                                     <input type="hidden" name="book_Price">
-
-
                                 </div>
-
                                 <div class="col-auto my-1">
                                     <button type="submit" class="btn btn-success" name="Action" value="Add to Cart">ADD</button>
                                 </div>
-
                             </div>
                             </form>
+                    </div>
 
                             <br>
 
@@ -287,7 +251,7 @@
                                                 <div class="media-body">
                                                     <a href="#" class="d-block text-dark"><%=rs3.getString("book_Title") %></a>
                                                     <small>
-                                                        <span class="text-muted">Book ID: </span><%=rs3.getString("book_ID") %>
+                                                        <span class="text-muted">Author: </span><%=rs3.getString("book_AuthorName") %>
                                                     </small>
                                                 </div>
                                             </div>
@@ -295,9 +259,9 @@
                                         <td class="text-right font-weight-semibold align-middle p-4">RM <%=rs3.getString("orderdetails_Price") %></td>
 
                                         <td class="align-middle p-4">
-                                            <form method="post" action="${pageContext.request.contextPath}/orderdetailsServlet">
+                                            <form id="addqty" method="post" action="${pageContext.request.contextPath}/orderdetailsServlet">
                                                 <input type="hidden" name="book_ID" value="<%=rs3.getString("book_ID") %>">
-                                                <input type="text" class="form-control text-center" name="quantity" value="<%=rs3.getString("orderdetails_Quantity") %>">
+                                                <input type="number" min="1" class="form-control text-center" name="quantity" value="<%=rs3.getString("orderdetails_Quantity") %>">
                                             <button class="btn btn-danger btn-sm rounded-0"  name="Action" value="Update Quantity"><i class="material-icons" title="Update">&#xe5d5;</i></button>
                                             </form>
                                         </td>
@@ -315,7 +279,7 @@
 
                                     </tbody>
                                 </table>
-                            </div>
+
 
                             <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
 <%--                                <div class="mt-4">--%>
@@ -349,6 +313,7 @@
 
 <%--                        </form>--%>
                     </div>
+
                 </div>
 
                 <div class="tab-pane fade" id="list-orders">
