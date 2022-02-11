@@ -36,7 +36,6 @@ public class categoryServlet extends HttpServlet {
             categoryDAO catdao = new categoryDAO();
 
             cat.setCategory_Name(request.getParameter("category_Name"));
-            cat.setCategory_NoOfBooks(request.getParameter("category_NoOfBooks"));
 
             boolean result = catdao.addCategory(cat);
             System.out.println("result");
@@ -68,7 +67,6 @@ public class categoryServlet extends HttpServlet {
 
             cat.setCategory_ID(cid);
             cat.setCategory_Name(request.getParameter("category_Name"));
-            cat.setCategory_NoOfBooks(request.getParameter("category_NoOfBooks"));
 
             request.setAttribute("cat", cat);
 

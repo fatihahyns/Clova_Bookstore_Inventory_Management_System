@@ -38,6 +38,7 @@ public class booksServlet extends HttpServlet {
             bk.setSupplier_ID(request.getParameter("supplier_ID"));
             bk.setBook_AuthorName(request.getParameter("book_AuthorName"));
             bk.setBook_Title(request.getParameter("book_Title"));
+            bk.setBook_ISBN(request.getParameter("book_ISBN"));
             bk.setBook_Description(request.getParameter("book_Description"));
             bk.setBook_Price(request.getParameter("book_Price"));
             bk.setBook_NoOfStocks(request.getParameter("book_NoOfStocks"));
@@ -74,6 +75,7 @@ public class booksServlet extends HttpServlet {
             bk.setSupplier_ID(request.getParameter("supplier_ID"));
             bk.setBook_AuthorName(request.getParameter("book_AuthorName"));
             bk.setBook_Title(request.getParameter("book_Title"));
+            bk.setBook_ISBN(request.getParameter("book_ISBN"));
             bk.setBook_Description(request.getParameter("book_Description"));
             bk.setBook_Price(request.getParameter("book_Price"));
             bk.setBook_NoOfStocks(request.getParameter("book_NoOfStocks"));
@@ -91,7 +93,7 @@ public class booksServlet extends HttpServlet {
             }else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data unsuccessfully updated. Please try again.');");
-                out.println("location='books.jsp';");
+                out.println("location='books.jsp#list-books';");
                 out.println("</script>");
             }
 

@@ -27,7 +27,7 @@
 
             <!-- Logo -->
             <a href="index.jsp" class="logo">
-                <span class="fa fa-book"></span> <span class="title">Bookstore Inventory Management System</span>
+                <span class="fa fa-book"></span> <span class="title">Clova Bookstore Inventory Management System</span>
             </a>
 
             <!-- Nav -->
@@ -53,8 +53,6 @@
             <li><a href="suppliers.jsp">Suppliers</a></li>
 
             <li><a href="orders.jsp">Orders</a></li>
-
-            <li><a href="customers.jsp">Customers</a></li>
 
             <li>
                 <a href="#" class="dropdown-toggle">Account</a>

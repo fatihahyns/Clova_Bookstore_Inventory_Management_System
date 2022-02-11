@@ -47,13 +47,6 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="control-label col-sm-4">No. of Books:</label>
-        <div class="col-sm-12">
-            <input type="text" class="form-control"  name="category_NoOfBooks" value="<%=cat.getCategory_NoOfBooks()%>">
-        </div>
-    </div>
-
     <button type="submit" class="btn btn-primary btn-block mb-4" value="upd" >UPDATE</button>
     <%
         } else

@@ -62,7 +62,7 @@
 
             <!-- Logo -->
             <a href="index.jsp" class="logo">
-                <span class="fa fa-book"></span> <span class="title">Bookstore Inventory Management System</span>
+                <span class="fa fa-book"></span> <span class="title">Clova Bookstore Inventory Management System</span>
             </a>
 
             <!-- Nav -->
@@ -86,8 +86,6 @@
             <li><a href="category.jsp">Category</a></li>
 
             <li><a href="suppliers.jsp">Suppliers</a></li>
-
-            <li><a href="customers.jsp">Customers</a></li>
 
             <li><a href="orders.jsp"  class="active">Orders</a></li>
 
@@ -132,79 +130,32 @@
 
             <!-- Tabs content -->
             <div class="tab-content">
-                <div
-                        class="tab-pane fade show active"
-                        id="new-order">
+                <div class="tab-pane fade show active" id="new-order">
 
-                    <div class="bkstr-form">
-                        <form class="form-horizontal">
-                            <h2>Customer Details</h2>
-
-                            <div class="form-row">
-                                <div class="form-group col-sm-4">
-                                    <label class="control-label">Order ID:</label>
-                                    <%
-                                        Connection con = DBConnection.getConn();
-                                        Statement st = con.createStatement();
-                                        ResultSet rs = st.executeQuery("SELECT order_ID FROM orders");
-                                        while (rs.next()){
-                                    %>
-                                    <input type="text" class="form-control" name="order_ID" value="<%=rs.getString("order_ID")%>" disabled>
-                                    <%
-                                        }
-                                    %>
-                                </div>
-
-
-                                <div class="form-group col-sm-4">
-                                    <label class="control-label">Order Date:</label>
-                                    <input type="text" class="form-control" name="order_DateTime" placeholder="2021-12-08 13:23:44" disabled>
-                                </div>
-
-<%--                                <div class="form-group col-md-4">--%>
-<%--                                    <label class="control-label">Customer ID:</label>--%>
-<%--                                    <select  id = "CustomerDropdown" class="form-control" name="CustomerDropdown">--%>
-<%--                                        <option value="" disabled selected>Select Customer ID</option>--%>
-<%--                                        <%--%>
-<%--                                            Statement st1 = con.createStatement();--%>
-<%--                                            ResultSet rs1 = st1.executeQuery("SELECT * FROM customer");--%>
-<%--                                            while (rs1.next()){--%>
-<%--                                        %>--%>
-<%--                                        <option data-name="<%=rs1.getString("customer_Name")%>" data-phone="<%=rs1.getString("customer_PhoneNo")%>" data-email="<%=rs1.getString("customer_Email")%>" value="<%=rs1.getString("customer_ID") %>"><%=rs1.getString("customer_ID") %></option>--%>
-<%--                                        <%--%>
-<%--                                            }--%>
-<%--                                        %>--%>
-<%--                                    </select>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label class="control-label">Name:</label>
-                                    <input type="text" class="form-control" name="customer_Name"  value="<%=session.getAttribute("customer_Name")%>" readonly>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label class="control-label">Phone Number:</label>
-                                    <input type="text" class="form-control"  name="customer_PhoneNo" value="<%=session.getAttribute("customer_PhoneNo")%>" readonly>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label class="control-label">Email:</label>
-                                    <input type="email" class="form-control" name="customer_Email" value="<%=session.getAttribute("customer_Email")%>" readonly>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-
-                            <br>
                     <div class="bkstr-form">
                             <form method="post" action="${pageContext.request.contextPath}/orderdetailsServlet">
+                                <h2>Customer Details</h2>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Name:</label>
+                                        <input type="text" class="form-control" name="customer_Name"  value="<%=session.getAttribute("customer_Name")%>" readonly>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Phone Number:</label>
+                                        <input type="text" class="form-control"  name="customer_PhoneNo" value="<%=session.getAttribute("customer_PhoneNo")%>" readonly>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Email:</label>
+                                        <input type="email" class="form-control" name="customer_Email" value="<%=session.getAttribute("customer_Email")%>" readonly>
+                                    </div>
+                                </div>
                                 <h2>Item Details</h2>
                             <div class="form-row align-items-center">
-                                <div class="col-sm-8 my-1">
+                                <div class="col-sm-11 my-1">
                                     <select id = "BookDropdown" class="form-control" name="book_ID">
                                         <option value="" disabled selected>Select Book Title</option>
                                     <%
+                                        Connection con = DBConnection.getConn();
                                         Statement st2 = con.createStatement();
                                         ResultSet rs2 = st2.executeQuery("SELECT * FROM book order by book_Title");
                                         while (rs2.next()){
@@ -259,7 +210,7 @@
                                         <td class="text-right font-weight-semibold align-middle p-4">RM <%=rs3.getString("orderdetails_Price") %></td>
 
                                         <td class="align-middle p-4">
-                                            <form id="addqty" method="post" action="${pageContext.request.contextPath}/orderdetailsServlet">
+                                            <form  method="post" action="${pageContext.request.contextPath}/orderdetailsServlet">
                                                 <input type="hidden" name="book_ID" value="<%=rs3.getString("book_ID") %>">
                                                 <input type="number" min="1" class="form-control text-center" name="quantity" value="<%=rs3.getString("orderdetails_Quantity") %>">
                                             <button class="btn btn-danger btn-sm rounded-0"  name="Action" value="Update Quantity"><i class="material-icons" title="Update">&#xe5d5;</i></button>
@@ -309,9 +260,23 @@
 
 
 
-                            <button type="submit" class="btn btn-primary btn-block mb-4" name="submit" >PLACE ORDER</button>
+                            <form>
+                                    <%
+                                Statement st5= con.createStatement();
+                                ResultSet rs5 = st5.executeQuery("SELECT bk.book_Title, bk.book_Author, od.orderDetails_Quantity, od.orderDetails_Price,\" +\n" +
+                                        "                \"od.orderDetails_TotalPrice, od.book_ID from book bk, orderdetails od where bk.book_ID = od.book_ID AND\" +\n" +
+                                        "                \"od.customer_Name =?");
+                                        if (rs5.next()) {
+                                            String book_Title = rs5.getString("");
 
-<%--                        </form>--%>
+                                        }
+
+                                %>
+                                <input type="hidden" name="" value="">
+
+                                <button type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Place Order">PLACE ORDER</button>
+                            </form>
+
                     </div>
 
                 </div>

@@ -40,7 +40,7 @@
 
             <!-- Logo -->
             <a href="index.jsp" class="logo">
-                <span class="fa fa-book"></span> <span class="title">Bookstore Inventory Management System</span>
+                <span class="fa fa-book"></span> <span class="title">Clova Bookstore Inventory Management System</span>
             </a>
 
             <!-- Nav -->
@@ -64,8 +64,6 @@
             <li><a href="category.jsp">Category</a></li>
 
             <li><a href="suppliers.jsp">Suppliers</a></li>
-
-            <li><a href="customers.jsp">Customers</a></li>
 
             <li><a href="orders.jsp">Orders</a></li>
 
@@ -143,6 +141,13 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="control-label col-sm-4">Book ISBN:</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" name="book_ISBN">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="control-label col-sm-4">Author Name:</label>
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control"name="book_AuthorName">
@@ -201,7 +206,7 @@
     <form class="form-horizontal" method="get">
         <div class="form-row align-items-center">
             <div class="col-sm-11 my-1">
-                <input type="input" class="form-control" name="searchdata" placeholder="Search title / author / category / supplier">
+                <input type="input" class="form-control" name="searchdata" placeholder="Search title / ISBN / author / category / supplier">
             </div>
 
 
@@ -217,6 +222,7 @@
                         <tr>
                             <th class="text-center" scope="col">No.</th>
                             <th class="text-center" scope="col">Title</th>
+                            <th class="text-center" scope="col">ISBN</th>
                             <th class="text-center" scope="col">Author</th>
                             <th class="text-center" scope="col">Description</th>
                             <th class="text-center" scope="col">Price</th>
@@ -233,7 +239,9 @@
                                 String sql;
 
                                 if(search != null){
-                                    sql = "SELECT bk.*, cat.*, sp.* FROM book bk, category cat, supplier sp WHERE (bk.book_Title like '%"+search+"%' OR bk.book_AuthorName like '%"+search+"%' OR cat.category_Name like '%"+search+"%' OR sp.supplier_Name like '%"+search+"%') AND cat.category_ID = bk.category_ID AND bk.supplier_ID = sp.supplier_ID";
+                                    sql = "SELECT bk.*, cat.*, sp.* FROM book bk, category cat, supplier sp WHERE (bk.book_Title like '%"+search+"%' OR bk.book_ISBN like '%"+search+"%' OR " +
+                                            "bk.book_AuthorName like '%"+search+"%' OR cat.category_Name like '%"+search+"%' OR sp.supplier_Name like '%"+search+"%') " +
+                                            "AND cat.category_ID = bk.category_ID AND bk.supplier_ID = sp.supplier_ID";
 
 
                                 }else{
@@ -241,13 +249,14 @@
                                 }
 
                                 ResultSet rs3 = st3.executeQuery(sql);
-                                int i=1;
+                                int i=1, count=0;
                                 while (rs3.next()){
 
                         %>
                             <tr>
                                 <th class="text-center" scope="row"><%=i%></th>
                                 <td align="center"><%=rs3.getString("book_Title") %></td>
+                                <td align="center"><%=rs3.getString("book_ISBN") %></td>
                                 <td align="center"><%=rs3.getString("book_AuthorName") %></td>
                                 <td align="center"><%=rs3.getString("book_Description") %></td>
                                 <td align="center">RM <%=rs3.getString("book_Price") %></td>
@@ -262,10 +271,12 @@
                             </tr>
                                 <%
                                 i++;
+                                count++;
                             }
                         %>
                         </tbody>
                     </table>
+                    <b>Total record(s): </b><%=count%>
 
                 </div>
             </div>

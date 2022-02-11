@@ -13,7 +13,7 @@ public class categoryDAO {
     public boolean addCategory(category cat) {
         Connection con = DBConnection.getConn();
 
-        String sql = "INSERT INTO category (category_ID, category_Name, category_NoOfBooks) VALUES (NULL, ?, ?) ";
+        String sql = "INSERT INTO category (category_ID, category_Name) VALUES (NULL, ?) ";
 
         int i = 0;
 
@@ -21,7 +21,6 @@ public class categoryDAO {
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, cat.getCategory_Name());
-            ps.setString(2, cat.getCategory_NoOfBooks());
 
             i = ps.executeUpdate();
         } catch (SQLException e){
@@ -37,7 +36,7 @@ public class categoryDAO {
     public boolean updateCategory(category cat){
         Connection con = DBConnection.getConn();
 
-        String sql = "UPDATE category SET category_Name=?, category_NoOfBooks=? WHERE category_ID=?";
+        String sql = "UPDATE category SET category_Name=? WHERE category_ID=?";
 
         int i = 0;
 
@@ -45,8 +44,7 @@ public class categoryDAO {
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, cat.getCategory_Name());
-            ps.setString(2, cat.getCategory_NoOfBooks());
-            ps.setInt(3, cat.getCategory_ID());
+            ps.setInt(2, cat.getCategory_ID());
 
             i = ps.executeUpdate();
         } catch (SQLException e){
@@ -74,7 +72,6 @@ public class categoryDAO {
             if (rs.next()) {
                 cat.setCategory_ID(rs.getInt("category_ID"));
                 cat.setCategory_Name(rs.getString("category_Name"));
-                cat.setCategory_NoOfBooks(rs.getString("category_NoOfBooks"));
             }
 
         }catch (SQLException e) {
@@ -98,7 +95,6 @@ public class categoryDAO {
             while (rs.next()){
                 cat.setCategory_ID(rs.getInt("category_ID"));
                 cat.setCategory_Name(rs.getString("category_Name"));
-                cat.setCategory_NoOfBooks(rs.getString("category_NoOfBooks"));
                 list.add(cat);
             }
         } catch (SQLException e){

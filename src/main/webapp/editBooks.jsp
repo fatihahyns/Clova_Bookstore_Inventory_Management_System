@@ -71,6 +71,13 @@
     </div>
 
     <div class="form-group">
+        <label class="control-label col-sm-4">Book ISBN:</label>
+        <div class="col-sm-12">
+            <input type="text" class="form-control" name="book_ISBN" value="<%=bk.getBook_ISBN()%>">
+        </div>
+    </div>
+
+    <div class="form-group">
         <label class="control-label col-sm-4">Author Name:</label>
         <div class="col-sm-12">
             <input type="text" class="form-control"name="book_AuthorName" value="<%=bk.getBook_AuthorName()%>">

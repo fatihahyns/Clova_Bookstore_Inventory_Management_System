@@ -38,7 +38,7 @@
 
             <!-- Logo -->
             <a href="index.jsp" class="logo">
-                <span class="fa fa-book"></span> <span class="title">Bookstore Inventory Management System</span>
+                <span class="fa fa-book"></span> <span class="title">Clova Bookstore Inventory Management System</span>
             </a>
 
             <!-- Nav -->
@@ -62,8 +62,6 @@
             <li><a href="category.jsp">Category</a></li>
 
             <li><a href="suppliers.jsp" class="active">Suppliers</a></li>
-
-            <li><a href="customers.jsp">Customers</a></li>
 
             <li><a href="orders.jsp">Orders</a></li>
 
@@ -203,14 +201,15 @@
                                 String sql;
 
                                 if(search != null){
-                                    sql = "SELECT * FROM supplier WHERE supplier_Name like '%"+search+"%' OR supplier_Address like '%"+search+"%' OR supplier_Postcode like '%"+search+"%' OR supplier_City like '%"+search+"%' OR supplier_State like '%"+search+"%' OR supplier_PhoneNo like '%"+search+"%' OR supplier_Email like '%"+search+"%'";
-
+                                    sql = "SELECT * FROM supplier WHERE supplier_Name like '%"+search+"%' OR supplier_Address like '%"+search+"%' " +
+                                            "OR supplier_Postcode like '%"+search+"%' OR supplier_City like '%"+search+"%' OR supplier_State like '%"+search+"%' " +
+                                            "OR supplier_PhoneNo like '%"+search+"%' OR supplier_Email like '%"+search+"%'";
 
                                 }else{
                                     sql = "SELECT * FROM supplier";
                                 }
                                 ResultSet rs = st.executeQuery(sql);
-                                int i=1;
+                                int i=1, count = 0;
                                 while (rs.next()){
 
                         %>
@@ -226,12 +225,15 @@
                                     <button type="button" data-toggle="modal" data-target="#deleteSupplier" id="<%=rs.getInt("supplier_ID") %>" class="del btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>
                             </td>
                         </tr>
+
                         <%
                                 i++;
+                                count++;
                             }
                         %>
                         </tbody>
                     </table>
+    <b>Total record(s): </b><%=count%>
 
 
                 </div>

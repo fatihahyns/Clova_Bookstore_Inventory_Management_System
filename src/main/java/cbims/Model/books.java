@@ -5,6 +5,7 @@ public class books {
     private int book_ID;
     private String category_ID;
     private String book_Title;
+    private String book_ISBN;
     private String book_AuthorName;
     private String book_Description;
     private String book_Price;
@@ -15,11 +16,12 @@ public class books {
         super();
     }
 
-    public books(int book_ID, String category_ID, String book_Title, String book_AuthorName, String book_Description, String book_Price, String book_NoOfStocks, String supplier_ID) {
+    public books(int book_ID, String category_ID, String book_Title, String book_ISBN, String book_AuthorName, String book_Description, String book_Price, String book_NoOfStocks, String supplier_ID) {
         super();
         this.book_ID = book_ID;
         this.category_ID = category_ID;
         this.book_Title = book_Title;
+        this.book_ISBN = book_ISBN;
         this.book_AuthorName = book_AuthorName;
         this.book_Description = book_Description;
         this.book_Price = book_Price;
@@ -49,6 +51,14 @@ public class books {
 
     public void setBook_Title(String book_Title) {
         this.book_Title = book_Title;
+    }
+
+    public String getBook_ISBN() {
+        return book_ISBN;
+    }
+
+    public void setBook_ISBN(String book_ISBN) {
+        this.book_ISBN = book_ISBN;
     }
 
     public String getBook_AuthorName() {

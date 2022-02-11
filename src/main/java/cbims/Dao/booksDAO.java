@@ -15,7 +15,7 @@ public class booksDAO {
     public boolean addBook(books bk) {
         Connection con = DBConnection.getConn();
 
-        String sql = "INSERT INTO book (book_ID, category_ID, supplier_ID, book_Title, book_AuthorName, book_Description, book_Price, book_NoOfStocks) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?) ";
+        String sql = "INSERT INTO book (book_ID, category_ID, supplier_ID, book_Title, book_ISBN, book_AuthorName, book_Description, book_Price, book_NoOfStocks) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
         int i = 0;
 
@@ -25,10 +25,11 @@ public class booksDAO {
             ps.setString(1, bk.getCategory_ID());
             ps.setString(2, bk.getSupplier_ID());
             ps.setString(3, bk.getBook_Title());
-            ps.setString(4, bk.getBook_AuthorName());
-            ps.setString(5, bk.getBook_Description());
-            ps.setString(6, bk.getBook_Price());
-            ps.setString(7, bk.getBook_NoOfStocks());
+            ps.setString(4, bk.getBook_ISBN());
+            ps.setString(5, bk.getBook_AuthorName());
+            ps.setString(6, bk.getBook_Description());
+            ps.setString(7, bk.getBook_Price());
+            ps.setString(8, bk.getBook_NoOfStocks());
 
             i = ps.executeUpdate();
         } catch (SQLException e){
@@ -44,7 +45,7 @@ public class booksDAO {
     public boolean updateBook(books bk){
         Connection con = DBConnection.getConn();
 
-        String sql = "UPDATE book SET category_ID=?, supplier_ID=?, book_Title=?, book_AuthorName=?, book_Description=?, book_Price=?, book_NoOfStocks=? WHERE book_ID=?";
+        String sql = "UPDATE book SET category_ID=?, supplier_ID=?, book_Title=?, book_ISBN=?, book_AuthorName=?, book_Description=?, book_Price=?, book_NoOfStocks=? WHERE book_ID=?";
 
         int i = 0;
 
@@ -54,11 +55,12 @@ public class booksDAO {
             ps.setString(1, bk.getCategory_ID());
             ps.setString(2, bk.getSupplier_ID());
             ps.setString(3, bk.getBook_Title());
-            ps.setString(4, bk.getBook_AuthorName());
-            ps.setString(5, bk.getBook_Description());
-            ps.setString(6, bk.getBook_Price());
-            ps.setString(7, bk.getBook_NoOfStocks());
-            ps.setInt(8, bk.getBook_ID());
+            ps.setString(4, bk.getBook_ISBN());
+            ps.setString(5, bk.getBook_AuthorName());
+            ps.setString(6, bk.getBook_Description());
+            ps.setString(7, bk.getBook_Price());
+            ps.setString(8, bk.getBook_NoOfStocks());
+            ps.setInt(9, bk.getBook_ID());
 
             i = ps.executeUpdate();
         } catch (SQLException e){
@@ -112,6 +114,7 @@ public class booksDAO {
                 bk.setSupplier_ID(rs.getString("supplier_ID"));
                 bk.setBook_AuthorName(rs.getString("book_AuthorName"));
                 bk.setBook_Title(rs.getString("book_Title"));
+                bk.setBook_ISBN(rs.getString("book_ISBN"));
                 bk.setBook_Description(rs.getString("book_Description"));
                 bk.setBook_Price(rs.getString("book_Price"));
                 bk.setBook_NoOfStocks(rs.getString("book_NoOfStocks"));
