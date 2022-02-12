@@ -139,4 +139,26 @@ public class orderdetailsDAO {
             return true;
         }
     }
+
+    public boolean deleteCartOnceOrderHasBeenPlaced(String custid){
+        Connection con = DBConnection.getConn();
+
+        String sql = "DELETE FROM orderdetails WHERE customer_Name=?";
+
+        int i = 0;
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, custid);
+
+            i = ps.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        if (i == 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

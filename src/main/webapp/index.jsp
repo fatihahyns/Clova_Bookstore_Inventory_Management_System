@@ -81,7 +81,7 @@
 									<span class="image">
 										<img src="images/product-1-720x480.jpg" alt="" />
 									</span>
-                    <a href="books.jsp">
+                    <a href="books.jsp#list-books">
                         <h2>TOTAL BOOKS</h2>
                         <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
                         <sql:query dataSource="${ic}" var="oc">
@@ -112,7 +112,7 @@
 									<span class="image">
 										<img src="images/product-3-720x480.jpg" alt="" />
 									</span>
-                    <a href="suppliers.jsp">
+                    <a href="suppliers.jsp#list-suppliers">
                         <h2>TOTAL SUPPLIERS</h2>
                         <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
                         <sql:query dataSource="${ic}" var="oc">
@@ -124,27 +124,12 @@
                     </a>
                 </article>
 
-                <article class="style4">
-									<span class="image">
-										<img src="images/product-4-720x480.jpg" alt="" />
-									</span>
-                    <a href="customers.jsp">
-                        <h2>TOTAL CUSTOMERS</h2>
-                        <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
-                        <sql:query dataSource="${ic}" var="oc">
-                            SELECT COUNT(customer_ID) AS count FROM customer;
-                        </sql:query>
-                        <c:forEach var="row" items="${oc.rows}">
-                            <p style="font-size:500%;"><strong>${row.count}</strong></p>
-                        </c:forEach>
-                    </a>
-                </article>
 
                 <article class="style5">
 									<span class="image">
 										<img src="images/product-5-720x480.jpg" alt="" />
 									</span>
-                    <a href="#">
+                    <a href="orders.jsp#list-sales">
                         <h2>TOTAL SALES</h2>
                         <sql:setDataSource var="ic" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/cbims" user="root" password=""/>
                         <sql:query dataSource="${ic}" var="oc">
