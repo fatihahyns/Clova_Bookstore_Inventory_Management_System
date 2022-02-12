@@ -48,16 +48,14 @@ public class customersServlet extends HttpServlet {
             if (result == true){
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data added successfully!');");
-                out.println("location='orders.jsp';");
+                out.println("location='orders.jsp#item-details';");
                 out.println("</script>");
             }else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data unsuccessfully added. Please try again.');");
-                out.println("location='customers.jsp';");
+                out.println("location='orders.jsp';");
                 out.println("</script>");
             }
-            RequestDispatcher dispatcher = request.getRequestDispatcher("customers.jsp");
-            dispatcher.include(request, response);
         }
 
         if (request.getParameter("Action").equals("Update Customer")) {
@@ -83,12 +81,12 @@ public class customersServlet extends HttpServlet {
             if (result == true){
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data updated successfully!');");
-                out.println("location='customers.jsp';");
+                out.println("location='orders.jsp';");
                 out.println("</script>");
             }else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data unsuccessfully updated. Please try again.');");
-                out.println("location='customers.jsp';");
+                out.println("location='orders.jsp';");
                 out.println("</script>");
             }
         }

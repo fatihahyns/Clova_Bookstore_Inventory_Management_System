@@ -38,7 +38,7 @@
 
             <!-- Logo -->
             <a href="index.jsp" class="logo">
-                <span class="fa fa-book"></span> <span class="title">Bookstore Inventory Management System</span>
+                <span class="fa fa-book"></span> <span class="title">Clova Bookstore Inventory Management System</span>
             </a>
 
             <!-- Nav -->
@@ -62,8 +62,6 @@
             <li><a href="category.jsp" class="active">Category</a></li>
 
             <li><a href="suppliers.jsp">Suppliers</a></li>
-
-            <li><a href="customers.jsp">Customers</a></li>
 
             <li><a href="orders.jsp">Orders</a></li>
 
@@ -107,12 +105,8 @@
 
 
                             <div class="form-row align-items-center">
-                                <div class="col-sm-5 my-1">
+                                <div class="col-sm-8 my-1">
                                     <input type="input" class="form-control" name="category_Name" placeholder="Category name">
-                                </div>
-
-                                <div class="col-sm-3 my-1">
-                                    <input type="input" class="form-control" name="category_NoOfBooks" placeholder="No. of books">
                                 </div>
 
                                 <div class="col-auto my-1">
@@ -127,7 +121,6 @@
                                 <tr>
                                     <th class="text-center" scope="col">No.</th>
                                     <th class="text-center" scope="col">Category</th>
-                                    <th class="text-center" scope="col">No. Of Books</th>
                                     <th class="text-center" scope="col">Action</th>
                                 </tr>
                                 </thead>
@@ -136,14 +129,13 @@
                                     Connection con = DBConnection.getConn();
                                     Statement st = con.createStatement();
                                     ResultSet rs = st.executeQuery("SELECT * FROM category");
-                                    int i=1;
+                                    int i=1, count=0;
                                     while (rs.next()){
 
                                 %>
                                 <tr>
                                     <th class="text-center" scope="row"><%=i%></th>
                                     <td align="center"><%=rs.getString("category_Name") %></td>
-                                    <td align="center"><%=rs.getString("category_NoOfBooks") %></td>
                                     <td align="center" class="col-2">
                                         <button type="button" data-toggle="modal" data-target="#updateCategory" id="<%=rs.getInt("category_ID") %>" class="btn btn-success btn-sm rounded-0"><i class="material-icons" title="Edit">&#xE254;</i></button>
                                         <button type="button" data-toggle="modal" data-target="#deleteCategory" id="<%=rs.getInt("category_ID") %>" class="del btn btn-danger btn-sm rounded-0"><i class="material-icons" title="Delete">&#xE872;</i></button>
@@ -152,10 +144,12 @@
                                 </tr>
                                 <%
                                         i++;
+                                        count++;
                                     }
                                 %>
                                 </tbody>
                             </table>
+                            <b>Total record(s): </b><%=count%>
                         </form>
                     </div>
                 </div>
@@ -259,6 +253,22 @@
             });
         });
     });
+</script>
+<script>
+    $('#myTab a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
+
+    // store the currently selected tab in the hash value
+    $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+        var id = $(e.target).attr("href").substr(1);
+        window.location.hash = id;
+    });
+
+    // on load of the page: switch to the currently selected tab
+    var hash = window.location.hash;
+    $('#myTab a[href="' + hash + '"]').tab('show');
 </script>
 <!-- Scripts -->
 </body>

@@ -1,9 +1,8 @@
 package cbims.Controller;
 
+import cbims.Dao.booksDAO;
 import cbims.Dao.orderdetailsDAO;
 import cbims.Dao.ordersDAO;
-import cbims.Model.orderdetails;
-import cbims.Model.orders;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -27,47 +26,44 @@ public class ordersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-//        if (request.getParameter("Action").equals("Place Order")) {
-//            System.out.println("in");
-//            PrintWriter out = response.getWriter();
-//
-//            orders o = new orders();
-//            ordersDAO odao = new ordersDAO();
-//
-//            HttpSession session = request.getSession();
-//
-//            try {
-//                if ((String) session.getAttribute("customer_Name") == null) {
-//                    System.out.println("no session created");
-//                } else {
-//                    String masuk = (String) session.getAttribute("customer_Name");
-//                    System.out.println(masuk);
-//                    od.setBook_ID(request.getParameter("book_ID"));
-//                    od.setCustomer_Name(masuk);
-//                    od.setOrderDetails_Price(Double.parseDouble(request.getParameter("book_Price")));
-//                    od.setOrderDetails_TotalPrice(Double.parseDouble(request.getParameter("book_Price")));
-//
-//                    boolean result = oddao.addBookToCart(od);
-//                    System.out.println(result);
-//
-//                    if (result == true) {
-//                        out.println("<script type=\"text/javascript\">");
-//                        out.println("alert('Item successfully added to cart!');");
-//                        out.println("location='orders.jsp';");
-//                        out.println("</script>");
-//                    } else {
-//                        out.println("<script type=\"text/javascript\">");
-//                        out.println("alert('Item unsuccessfully added to cart. Please try again.');");
-//                        out.println("location='orders.jsp';");
-//                        out.println("</script>");
-//                    }
-//                    RequestDispatcher dispatcher = request.getRequestDispatcher("orders.jsp");
-//                    dispatcher.include(request, response);
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
+        if (request.getParameter("Action").equals("Place Order")) {
+            System.out.println("in");
+            PrintWriter out = response.getWriter();
+
+            ordersDAO odao = new ordersDAO();
+            orderdetailsDAO oddao = new orderdetailsDAO();
+            booksDAO bdao = new booksDAO();
+
+            HttpSession session = request.getSession();
+
+            try {
+                if ((String) session.getAttribute("customer_Name") == null) {
+                    System.out.println("no session created");
+                } else {
+                    String masuk = (String) session.getAttribute("customer_Name");
+                    System.out.println(masuk);
+
+                        boolean result = odao.placeOrder(masuk);
+
+                        if (result == true) {
+                            out.println("<script type=\"text/javascript\">");
+                            out.println("alert('Item has been placed. Thank you for your order.');");
+                            out.println("location='orders.jsp';");
+                            out.println("</script>");
+                        } else {
+                            out.println("<script type=\"text/javascript\">");
+                            out.println("alert('Item can't be placed. Please try again.');");
+                            out.println("location='orders.jsp';");
+                            out.println("</script>");
+                        }
+
+                        oddao.deleteCartOnceOrderHasBeenPlaced(masuk);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 }

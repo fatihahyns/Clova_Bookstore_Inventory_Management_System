@@ -108,30 +108,65 @@
             <h1>Orders</h1>
 
             <!-- Tabs navs -->
-            <ul class="nav nav-tabs mb-3">
+            <ul class="nav nav-tabs mb-3" id="myTab">
                 <li class="nav-item">
                     <a
                             class="nav-link active"
                             data-bs-toggle="tab"
-                            href="#new-order"
-                    >New Order</a
-                    >
+                            href="#customer-details"
+                    >Customer Details</a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                            class="nav-link"
+                            data-bs-toggle="tab"
+                            href="#item-details"
+                    >Item Details</a>
                 </li>
                 <li class="nav-item">
                     <a
                             class="nav-link"
                             data-bs-toggle="tab"
-                            href="#list-orders"
-                    >List of Orders</a
-                    >
+                            href="#list-sales"
+                    >List of Sales</a>
                 </li>
             </ul>
             <!-- Tabs navs -->
 
             <!-- Tabs content -->
             <div class="tab-content">
-                <div class="tab-pane fade show active" id="new-order">
 
+                <div class="tab-pane fade show active" id="customer-details">
+                    <div class="bkstr-form">
+                        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/customersServlet">
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">Full Name:</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control"name="customer_Name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">Phone Number:</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control"  name="customer_PhoneNo">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">Email:</label>
+                                <div class="col-sm-12">
+                                    <input type="email" class="form-control" name="customer_Email">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Add Customer" >SUBMIT</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="item-details">
                     <div class="bkstr-form">
                             <form method="post" action="${pageContext.request.contextPath}/orderdetailsServlet">
                                 <h2>Customer Details</h2>
@@ -202,7 +237,7 @@
                                                 <div class="media-body">
                                                     <a href="#" class="d-block text-dark"><%=rs3.getString("book_Title") %></a>
                                                     <small>
-                                                        <span class="text-muted">Author: </span><%=rs3.getString("book_AuthorName") %>
+                                                        <span class="text-muted">ISBN: </span><%=rs3.getString("book_ISBN") %>
                                                     </small>
                                                 </div>
                                             </div>
@@ -233,15 +268,15 @@
 
 
                             <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
-<%--                                <div class="mt-4">--%>
-<%--                                    <label class="text-muted font-weight-normal">Promocode</label>--%>
-<%--                                    <input type="text" placeholder="ABC" class="form-control">--%>
-<%--                                </div>--%>
+                                <div class="mt-4">
+                                    <label class="text-muted font-weight-normal">Promocode</label>
+                                    <input type="text" placeholder="ABC" class="form-control">
+                                </div>
                                 <div class="d-flex">
-<%--                                    <div class="text-right mt-4 mr-5">--%>
-<%--                                        <label class="text-muted font-weight-normal m-0">Discount</label>--%>
-<%--                                        <div class="text-large"><strong>RM 0.00</strong></div>--%>
-<%--                                    </div>--%>
+                                    <div class="text-right mt-4 mr-5">
+                                        <label class="text-muted font-weight-normal m-0">Discount</label>
+                                        <div class="text-large"><strong>RM 0.00</strong></div>
+                                    </div>
 
                                     <%
                                         double finalTotalPrice = 0.00;
@@ -258,35 +293,21 @@
                                 </div>
                             </div>
 
-
-
-                            <form>
-                                    <%
-                                Statement st5= con.createStatement();
-                                ResultSet rs5 = st5.executeQuery("SELECT bk.book_Title, bk.book_Author, od.orderDetails_Quantity, od.orderDetails_Price,\" +\n" +
-                                        "                \"od.orderDetails_TotalPrice, od.book_ID from book bk, orderdetails od where bk.book_ID = od.book_ID AND\" +\n" +
-                                        "                \"od.customer_Name =?");
-                                        if (rs5.next()) {
-                                            String book_Title = rs5.getString("")
-
-                                        }
-
-                                %>
-                                <input type="hidden" name="" value="">
+                            <form method="post" action="${pageContext.request.contextPath}/ordersServlet">
 
                                 <button type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Place Order">PLACE ORDER</button>
+
                             </form>
 
                     </div>
-
                 </div>
 
-                <div class="tab-pane fade" id="list-orders">
+                <div class="tab-pane fade" id="list-sales">
 
                     <table class="table table-bordered table-hover">
                         <thead class="thead-dark">
                         <tr>
-                            <th class="text-center" scope="col">Order ID</th>
+                            <th class="text-center" scope="col">Order No.</th>
                             <th class="text-center" scope="col">Order Date Time</th>
                             <th class="text-center" scope="col">Customer Name</th>
                             <th class="text-center" scope="col">Total Price</th>
@@ -294,51 +315,22 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <%
+                            Statement st5 = con.createStatement();
+                            ResultSet rs5 = st5.executeQuery("select * from orders");
+                            while (rs5.next()) {
+                        %>
                         <tr>
-                            <th class="text-center" scope="row">1</th>
-                            <td align="center">2021-11-20 13:12:44</td>
-                            <td align="center">Kalsum binti Said</td>
-                            <td align="center">RM 45.90</td>
+                            <th class="text-center" scope="row"><%=rs5.getString("order_No") %></th>
+                            <td align="center"><%=rs5.getString("order_DateTime") %></td>
+                            <td align="center"><%=rs5.getString("customer_Name") %></td>
+                            <td align="center">RM <%=rs5.getString("orderDetails_TotalPrice") %></td>
                             <td align="center" class="col-2">
-                                <a class="view viewbtn" title="View" data-toggle="tooltip"><i class="material-icons">visibility</i></a>
+                                <button type="button" data-toggle="modal" data-target="#viewOrderDetails" id="<%=rs5.getString("order_No")%>" class="view btn btn-primary btn-sm rounded-0" title="View"><i class="material-icons">visibility</i></button>
+
                             </td>
                         </tr>
-                        <tr>
-                            <th class="text-center" scope="row">2</th>
-                            <td align="center">2021-11-23 10:00:24</td>
-                            <td align="center">Baktiar bin Zain</td>
-                            <td align="center">RM 200.50</td>
-                            <td align="center" class="col-2">
-                                <a class="view viewbtn" title="View" data-toggle="tooltip"><i class="material-icons">visibility</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">3</th>
-                            <td align="center">2021-11-30 20:32:18</td>
-                            <td align="center">Kalsum binti Said</td>
-                            <td align="center">RM 89.90</td>
-                            <td align="center" class="col-2">
-                                <a class="view viewbtn" title="View" data-toggle="tooltip"><i class="material-icons">visibility</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">4</th>
-                            <td align="center">2021-11-30 21:12:44</td>
-                            <td align="center">Jacob Tan</td>
-                            <td align="center">RM 118.90</td>
-                            <td align="center" class="col-2">
-                                <a class="view viewbtn" title="View" data-toggle="tooltip"><i class="material-icons">visibility</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-center" scope="row">5</th>
-                            <td align="center">2021-12-04 09:20:11</td>
-                            <td align="center">Natrah A/P Ravindran</td>
-                            <td align="center">RM 37.50</td>
-                            <td align="center" class="col-2">
-                                <a class="view viewbtn" title="View" data-toggle="tooltip"><i class="material-icons">visibility</i></a>
-                            </td>
-                        </tr>
+                        <%}%>
                         </tbody>
                     </table>
 
@@ -365,6 +357,23 @@
                 </div>
             </div>
             <!-- Delete Pop up -->
+
+            <!-- View Pop up -->
+            <div class="modal fade" id="viewOrderDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Order Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="show-data3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- View Pop up -->
 
 
         </div>
@@ -435,6 +444,41 @@
             });
         });
     });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('.view').click(function(){
+            var id = +this.id;
+            $.ajax({
+                url: "viewOrderDetails.jsp",
+                type:"post",
+                data:{
+                    id: id,
+                },
+                success:function (data){
+                    $("#show-data3").html(data);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $('#myTab a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
+
+    // store the currently selected tab in the hash value
+    $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+        var id = $(e.target).attr("href").substr(1);
+        window.location.hash = id;
+    });
+
+    // on load of the page: switch to the currently selected tab
+    var hash = window.location.hash;
+    $('#myTab a[href="' + hash + '"]').tab('show');
 </script>
 
 <%--<script type="text/javascript">--%>

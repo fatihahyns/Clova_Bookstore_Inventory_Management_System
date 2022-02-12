@@ -56,15 +56,15 @@ public class orderdetailsServlet extends HttpServlet {
                     if (result == true) {
                         out.println("<script type=\"text/javascript\">");
                         out.println("alert('Item successfully added to cart!');");
-                        out.println("location='orders.jsp';");
+                        out.println("location='orders.jsp#item-details';");
                         out.println("</script>");
                     } else {
                         out.println("<script type=\"text/javascript\">");
                         out.println("alert('Item unsuccessfully added to cart. Please try again.');");
-                        out.println("location='orders.jsp';");
+                        out.println("location='orders.jsp#item-details';");
                         out.println("</script>");
                     }
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("orders.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("orders.jsp#new-order");
                     dispatcher.include(request, response);
                 }
             } catch (Exception e) {
@@ -78,8 +78,6 @@ public class orderdetailsServlet extends HttpServlet {
 
             orderdetails od = new orderdetails();
             orderdetailsDAO oddao = new orderdetailsDAO();
-
-            books bk = new books();
             booksDAO bdao = new booksDAO();
 
             String id = request.getParameter("book_ID");
@@ -96,9 +94,8 @@ public class orderdetailsServlet extends HttpServlet {
             if (quantity > currentstock){
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Not enough stock!');");
-                out.println("location='orders.jsp';");
+                out.println("location='orders.jsp#item-details';");
                 out.println("</script>");
-                System.out.println("lebih dari stock");
             }else{
                 od.setBook_ID(id);
                 od.setOrderDetails_Quantity(quantity);
@@ -108,17 +105,16 @@ public class orderdetailsServlet extends HttpServlet {
 
                 boolean result = oddao.updateQuantity(od);
                 System.out.println(result);
-                System.out.println("kurang dari stock");
 
                 if (result == true){
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('Quantity updated!');");
-                    out.println("location='orders.jsp';");
+                    out.println("location='orders.jsp#item-details';");
                     out.println("</script>");
                 }else {
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('Quantity failed to update. Please try again.');");
-                    out.println("location='orders.jsp';");
+                    out.println("location='orders.jsp#item-details';");
                     out.println("</script>");
                 }
             }
@@ -139,12 +135,12 @@ public class orderdetailsServlet extends HttpServlet {
             if (result == true){
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Item successfully removed from cart!');");
-                out.println("location='orders.jsp';");
+                out.println("location='orders.jsp#item-details';");
                 out.println("</script>");
             }else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Item unsuccessfully removed from cart. Please try again.');");
-                out.println("location='orders.jsp';");
+                out.println("location='orders.jsp#item-details';");
                 out.println("</script>");
             }
         }
