@@ -32,7 +32,6 @@ public class ordersServlet extends HttpServlet {
 
             ordersDAO odao = new ordersDAO();
             orderdetailsDAO oddao = new orderdetailsDAO();
-            booksDAO bdao = new booksDAO();
 
             HttpSession session = request.getSession();
 
@@ -48,17 +47,16 @@ public class ordersServlet extends HttpServlet {
                         if (result == true) {
                             out.println("<script type=\"text/javascript\">");
                             out.println("alert('Item has been placed. Thank you for your order.');");
-                            out.println("location='orders.jsp';");
+                            out.println("location='orders.jsp#list-sales';");
                             out.println("</script>");
                         } else {
                             out.println("<script type=\"text/javascript\">");
                             out.println("alert('Item can't be placed. Please try again.');");
-                            out.println("location='orders.jsp';");
+                            out.println("location='orders.jsp#item-details';");
                             out.println("</script>");
                         }
 
                         oddao.deleteCartOnceOrderHasBeenPlaced(masuk);
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();

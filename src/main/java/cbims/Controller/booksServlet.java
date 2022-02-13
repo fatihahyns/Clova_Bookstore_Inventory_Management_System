@@ -48,7 +48,7 @@ public class booksServlet extends HttpServlet {
             if (result == true){
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data added successfully!');");
-                out.println("location='books.jsp';");
+                out.println("location='books.jsp#list-books';");
                 out.println("</script>");
             }else {
                 out.println("<script type=\"text/javascript\">");
@@ -88,7 +88,7 @@ public class booksServlet extends HttpServlet {
             if (result == true){
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data updated successfully!');");
-                out.println("location='books.jsp';");
+                out.println("location='books.jsp#list-books';");
                 out.println("</script>");
             }else {
                 out.println("<script type=\"text/javascript\">");
@@ -115,18 +115,14 @@ public class booksServlet extends HttpServlet {
             if (result == true){
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data deleted successfully!');");
-                out.println("location='books.jsp';");
+                out.println("location='books.jsp#list-books';");
                 out.println("</script>");
             }else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data unsuccessfully deleted. Please try again.');");
-                out.println("location='books.jsp';");
+                out.println("location='books.jsp#list-books';");
                 out.println("</script>");
             }
         }
-
-
-
-
     }
 }

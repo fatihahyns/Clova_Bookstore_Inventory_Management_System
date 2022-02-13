@@ -2,7 +2,6 @@ package cbims.Dao;
 
 import cbims.Model.books;
 import cbims.DBConnect.DBConnection;
-import cbims.Model.category;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

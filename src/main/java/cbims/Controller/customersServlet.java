@@ -43,76 +43,14 @@ public class customersServlet extends HttpServlet {
                 System.out.print("Session created");
             }
 
-//            boolean result = custdao.addCustomer(cust);
-//
             if (result == true){
                 out.println("<script type=\"text/javascript\">");
-                out.println("alert('Data added successfully!');");
                 out.println("location='orders.jsp#item-details';");
                 out.println("</script>");
             }else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data unsuccessfully added. Please try again.');");
                 out.println("location='orders.jsp';");
-                out.println("</script>");
-            }
-        }
-
-        if (request.getParameter("Action").equals("Update Customer")) {
-            System.out.println("in");
-            PrintWriter out = response.getWriter();
-
-            customers cust = new customers();
-            customersDAO custdao = new customersDAO();
-
-            String id = request.getParameter("id");
-            int custid = Integer.parseInt(id);
-
-            cust.setCustomer_ID(custid);
-            cust.setCustomer_Name(request.getParameter("customer_Name"));
-            cust.setCustomer_PhoneNo(request.getParameter("customer_PhoneNo"));
-            cust.setCustomer_Email(request.getParameter("customer_Email"));
-
-            request.setAttribute("cust", cust);
-
-            boolean result = custdao.updateCustomer(cust);
-            System.out.println(result);
-
-            if (result == true){
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Data updated successfully!');");
-                out.println("location='orders.jsp';");
-                out.println("</script>");
-            }else {
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Data unsuccessfully updated. Please try again.');");
-                out.println("location='orders.jsp';");
-                out.println("</script>");
-            }
-        }
-
-        if (request.getParameter("Action").equals("Delete Customer")) {
-            System.out.println("in");
-            PrintWriter out = response.getWriter();
-
-            customers cust = new customers();
-            customersDAO custdao = new customersDAO();
-
-            String id = request.getParameter("id");
-            int custid = Integer.parseInt(id);
-
-            boolean result = custdao.deleteCustomer(custid);
-            System.out.println(result);
-
-            if (result == true){
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Data deleted successfully!');");
-                out.println("location='customers.jsp';");
-                out.println("</script>");
-            }else {
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Data unsuccessfully deleted. Please try again.');");
-                out.println("location='customers.jsp';");
                 out.println("</script>");
             }
         }

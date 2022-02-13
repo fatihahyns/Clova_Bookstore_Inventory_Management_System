@@ -50,7 +50,7 @@ public class suppliersServlet extends HttpServlet {
             if (result == true){
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data added successfully!');");
-                out.println("location='suppliers.jsp';");
+                out.println("location='suppliers.jsp#list-suppliers';");
                 out.println("</script>");
             }else {
                 out.println("<script type=\"text/javascript\">");
@@ -90,12 +90,12 @@ public class suppliersServlet extends HttpServlet {
             if (result == true){
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data updated successfully!');");
-                out.println("location='suppliers.jsp';");
+                out.println("location='suppliers.jsp#list-suppliers';");
                 out.println("</script>");
             }else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data unsuccessfully updated. Please try again.');");
-                out.println("location='suppliers.jsp';");
+                out.println("location='suppliers.jsp#list-suppliers';");
                 out.println("</script>");
             }
         }
@@ -116,12 +116,12 @@ public class suppliersServlet extends HttpServlet {
             if (result == true){
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data deleted successfully!');");
-                out.println("location='suppliers.jsp';");
+                out.println("location='suppliers.jsp#list-suppliers';");
                 out.println("</script>");
             }else {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Data unsuccessfully deleted. Please try again.');");
-                out.println("location='suppliers.jsp';");
+                out.println("location='suppliers.jsp#list-suppliers';");
                 out.println("</script>");
             }
         }

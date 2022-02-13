@@ -60,7 +60,7 @@ public class UpdateProfileServlet extends HttpServlet
     {
         register admin = new register();
 
-        //admin.setAdmin_ID(request.getParameter("adminID"));
+
         admin.setAdmin_Name(request.getParameter("admin_Name"));
         admin.setAdmin_PhoneNo(request.getParameter("admin_PhoneNo"));
         admin.setAdmin_Username(request.getParameter("admin_Username"));
@@ -69,25 +69,13 @@ public class UpdateProfileServlet extends HttpServlet
 
 
         HttpSession session = request.getSession(true);
-        //session.setAttribute("admin_ID", admin.getAdmin_ID());
+
         session.setAttribute("admin_Name", admin.getAdmin_Name());
         session.setAttribute("admin_PhoneNo", admin.getAdmin_PhoneNo());
         session.setAttribute("admin_Username", admin.getAdmin_Username());
         session.setAttribute("admin_Email", admin.getAdmin_Email());
         session.setAttribute("admin_Password", admin.getAdmin_Password());
 
-
-
-         //String admin_ID = request.getParameter("admin_ID");
-
-
-            /*admin.setAdminID(Integer.parseInt(request.getParameter("adminID")));
-            adminDao.addUser(admin);
-            PrintWriter out = response.getWriter();
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('PLEASE LOGIN');");
-            out.println("location='Homepage.jsp';");
-            out.println("</script>");*/
 
             admin.setAdmin_ID(Integer.parseInt(request.getParameter("admin_ID")));
             adminDao.updateUser(admin);
@@ -97,7 +85,5 @@ public class UpdateProfileServlet extends HttpServlet
             out.println("location='profile.jsp';");
             out.println("</script>");
 
-
-//        request.setAttribute("admins", adminDao.getAllUsers());
     }
 }

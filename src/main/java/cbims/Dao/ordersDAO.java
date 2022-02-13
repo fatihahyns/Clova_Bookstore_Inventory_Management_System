@@ -1,8 +1,6 @@
 package cbims.Dao;
 
 import cbims.DBConnect.DBConnection;
-import cbims.Model.books;
-import cbims.Model.orderdetails;
 import cbims.Model.orders;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,7 +41,7 @@ public class ordersDAO {
                 PreparedStatement ps3 = con.prepareStatement("SELECT book_NoOfStocks from book where book_ID ='"+bID+"'");
                 ResultSet rs3 = ps3.executeQuery();
 
-                if (rs.next()) {
+                while (rs3.next()) {
                     int currentstock = rs3.getInt("book_NoOfStocks");
                     System.out.println(currentstock);
                     int newstock = currentstock - odQuantity;
@@ -67,12 +65,13 @@ public class ordersDAO {
         }
     }
 
+
     public orders getOrderByOrderNo(int id){
         Connection con = DBConnection.getConn();
 
         orders o = new orders();
 
-        String sql = "SELECT * FROM orders WHERE order_No=?";
+        String sql = "SELECT bk.book_ID, bk.book_Title, bk.book_ISBN, od.* from book bk,orders od where bk.book_ID = od.book_ID AND od.order_No=?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -86,9 +85,12 @@ public class ordersDAO {
                 o.setOrder_DateTime(rs.getString("order_DateTime"));
                 o.setCustomer_Name(rs.getString("customer_Name"));
                 o.setBook_ID(rs.getString("book_ID"));
+                o.setBook_Title(rs.getString("book_Title"));
+                o.setBook_ISBN(rs.getString("book_ISBN"));
                 o.setOrderDetails_Price(rs.getDouble("orderDetails_Price"));
                 o.setOrderDetails_Quantity(rs.getInt("orderDetails_Quantity"));
                 o.setOrderDetails_TotalPrice(rs.getDouble("orderDetails_TotalPrice"));
+
             }
 
         }catch (SQLException e) {

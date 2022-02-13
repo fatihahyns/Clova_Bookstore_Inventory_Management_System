@@ -30,19 +30,12 @@ public class registerServlet extends HttpServlet
 
         register reg = new register();
 
-       //reg.setAdmin_ID(Integer.parseInt(request.getParameter("admin_ID")));
         reg.setAdmin_Name(request.getParameter("admin_Name"));
         reg.setAdmin_PhoneNo(request.getParameter("admin_PhoneNo"));
         reg.setAdmin_Email(request.getParameter("admin_Email"));
         reg.setAdmin_Username(request.getParameter("admin_Username"));
         reg.setAdmin_Password(request.getParameter("admin_Password"));
 
-       /* int admin_ID = Integer.parseInt(request.getParameter("admin_ID")) ;
-        String admin_Name = request.getParameter("admin_Name");
-        String admin_PhoneNo = request.getParameter("admin_PhoneNo");
-        String admin_Username = request.getParameter("admin_Username");
-        String admin_Email = request.getParameter("admin_Email");
-        String admin_Password = request.getParameter("admin_Password");*/
 
         String admin_ID = request.getParameter("admin_ID");
 
@@ -67,7 +60,6 @@ public class registerServlet extends HttpServlet
 
             }
         }
-        //response.getWriter().print(result);
 
     }
 }

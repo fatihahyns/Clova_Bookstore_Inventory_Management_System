@@ -31,24 +31,6 @@ public class loginServlet extends HttpServlet
         admin.setAdmin_Username(request.getParameter("admin_Username"));
         admin.setAdmin_Password(request.getParameter("admin_Password"));
 
-
-        /*int admin_ID = Integer.parseInt(request.getParameter("admin_ID")) ;
-        String admin_Name = request.getParameter("admin_Name");
-        String admin_PhoneNo = request.getParameter("admin_PhoneNo");
-        String admin_Username = request.getParameter("admin_Username");
-        String admin_Email = request.getParameter("admin_Email");
-        String admin_Password = request.getParameter("admin_Password");*/
-
-        // register log = new register(admin_ID,admin_Name,admin_PhoneNo,admin_Username,admin_Email,admin_Password);
-        /*log.setAdmin_Username(admin_Username);
-        log.setAdmin_Password(admin_Password);
-        log.setAdmin_PhoneNo(admin_PhoneNo);
-        log.setAdmin_Email(admin_Email);
-        log.setAdmin_Username(admin_Username);
-        log.setAdmin_Password(admin_Password);*/
-
-        //HttpSession session = request.getSession(true);
-         //log = lg.login(log);
         if (lg.login(admin))
         {
 
@@ -66,8 +48,6 @@ public class loginServlet extends HttpServlet
         }
         else
         {
-
-
             PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Wrong username and password. Please try again.');");

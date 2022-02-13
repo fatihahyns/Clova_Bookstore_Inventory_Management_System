@@ -6,6 +6,8 @@ public class orders {
     private String order_DateTime;
     private String customer_Name;
     private String book_ID;
+    private String book_Title;
+    private String book_ISBN;
     private Double orderDetails_Price;
     private int orderDetails_Quantity;
     private Double orderDetails_TotalPrice;
@@ -14,13 +16,15 @@ public class orders {
         super();
     }
 
-    public orders(int order_ID, int order_No, String order_DateTime, String customer_Name, String book_ID, Double orderDetails_Price, int orderDetails_Quantity, Double orderDetails_TotalPrice) {
+    public orders(int order_ID, int order_No, String order_DateTime, String customer_Name, String book_ID, String book_Title, String book_ISBN, Double orderDetails_Price, int orderDetails_Quantity, Double orderDetails_TotalPrice) {
         super();
         this.order_ID = order_ID;
         this.order_No = order_No;
         this.order_DateTime = order_DateTime;
         this.customer_Name = customer_Name;
         this.book_ID = book_ID;
+        this.book_Title = book_Title;
+        this.book_ISBN = book_ISBN;
         this.orderDetails_Price = orderDetails_Price;
         this.orderDetails_Quantity = orderDetails_Quantity;
         this.orderDetails_TotalPrice = orderDetails_TotalPrice;
@@ -88,5 +92,21 @@ public class orders {
 
     public void setOrderDetails_TotalPrice(Double orderDetails_TotalPrice) {
         this.orderDetails_TotalPrice = orderDetails_TotalPrice;
+    }
+
+    public String getBook_Title() {
+        return book_Title;
+    }
+
+    public void setBook_Title(String book_Title) {
+        this.book_Title = book_Title;
+    }
+
+    public String getBook_ISBN() {
+        return book_ISBN;
+    }
+
+    public void setBook_ISBN(String book_ISBN) {
+        this.book_ISBN = book_ISBN;
     }
 }

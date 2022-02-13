@@ -1,7 +1,6 @@
 package cbims.Dao;
 
 import cbims.DBConnect.DBConnection;
-import cbims.Model.category;
 import cbims.Model.orderdetails;
 
 import java.sql.Connection;

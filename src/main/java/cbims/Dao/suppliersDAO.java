@@ -100,35 +100,6 @@ public class suppliersDAO {
         return sp;
     }
 
-    public List getAllSuppliers() {
-        List splist = new ArrayList();
-
-        Connection con = DBConnection.getConn();
-
-        String sql = "SELECT * FROM supplier";
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                suppliers sp = new suppliers();
-                sp.setSupplier_ID(rs.getInt("supplier_ID"));
-                sp.setSupplier_Name(rs.getString("supplier_Name"));
-                sp.setSupplier_Address(rs.getString("supplier_Address"));
-                sp.setSupplier_Postcode(rs.getString("supplier_Postcode"));
-                sp.setSupplier_City(rs.getString("supplier_City"));
-                sp.setSupplier_State(rs.getString("supplier_State"));
-                sp.setSupplier_PhoneNo(rs.getString("supplier_PhoneNo"));
-                sp.setSupplier_Email(rs.getString("supplier_Email"));
-                splist.add(sp);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return splist;
-    }
-
 
     public boolean deleteSupplier (int id){
         Connection con = DBConnection.getConn();

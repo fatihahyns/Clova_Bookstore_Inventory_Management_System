@@ -1,7 +1,6 @@
 package cbims.Dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,10 +51,6 @@ public class registerDAO {
             ps = con.prepareStatement(sql);
             ps.setString(1, log.getAdmin_Username());
             ps.setString(2, log.getAdmin_Password());
-            /*ps.setInt(3,log.getAdmin_ID());
-            ps.setString(4,log.getAdmin_Name());
-            ps.setString(5,log.getAdmin_PhoneNo());
-            ps.setString(6, log.getAdmin_Email());*/
             ResultSet rs = ps.executeQuery();
             status = rs.next();
 
@@ -65,7 +60,6 @@ public class registerDAO {
             String admin_Email = rs.getString("admin_Email");
             String admin_Username = rs.getString("admin_Username");
             String admin_Password = rs.getString("admin_Password");
-            //System.out.println("Welcome " + admin_Name);
             log.setAdmin_ID(admin_ID);
             log.setAdmin_Name(admin_Name);
             log.setAdmin_PhoneNo(admin_PhoneNo);

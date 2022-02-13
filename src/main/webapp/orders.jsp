@@ -9,6 +9,7 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="cbims.DBConnect.DBConnection"%>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
@@ -161,7 +162,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Add Customer" >SUBMIT</button>
+                            <button type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Add Customer" >CONTINUE</button>
                         </form>
                     </div>
                 </div>
@@ -186,7 +187,7 @@
                                 </div>
                                 <h2>Item Details</h2>
                             <div class="form-row align-items-center">
-                                <div class="col-sm-11 my-1">
+                                <div class="col-sm-9 my-1">
                                     <select id = "BookDropdown" class="form-control" name="book_ID">
                                         <option value="" disabled selected>Select Book Title</option>
                                     <%
@@ -202,7 +203,7 @@
                                     </select>
                                     <input type="hidden" name="book_Price">
                                 </div>
-                                <div class="col-auto my-1">
+                                <div class="col-auto my-3">
                                     <button type="submit" class="btn btn-success" name="Action" value="Add to Cart">ADD</button>
                                 </div>
                             </div>
@@ -216,10 +217,10 @@
                                     <thead>
                                     <tr>
                                         <!-- Set columns width -->
-                                        <th class="text-center py-3 px-4" style="min-width: 200px;">Description</th>
-                                        <th class="text-right py-3 px-4" style="width: 130px;">Price</th>
-                                        <th class="text-center py-3 px-4" style="width: 100px;">Quantity</th>
-                                        <th class="text-right py-3 px-4" style="width: 130px;">Total</th>
+                                        <th class="text-center py-3 px-4" style="min-width: 100px;">Description</th>
+                                        <th class="text-center py-3 px-4" style="width: 150px;">Price</th>
+                                        <th class="text-center py-3 px-4" style="width: 250px;">Quantity</th>
+                                        <th class="text-center py-3 px-4" style="width: 150px;">Total</th>
                                         <th class="text-center align-middle py-3 px-0" style="width: 100px;">Remove</th>
                                     </tr>
                                     </thead>
@@ -242,22 +243,26 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="text-right font-weight-semibold align-middle p-4">RM <%=rs3.getString("orderdetails_Price") %></td>
+                                        <td class="text-center font-weight-semibold align-middle p-4">RM <%=rs3.getString("orderdetails_Price") %></td>
 
                                         <td class="align-middle p-4">
                                             <form  method="post" action="${pageContext.request.contextPath}/orderdetailsServlet">
-                                                <input type="hidden" name="book_ID" value="<%=rs3.getString("book_ID") %>">
-                                                <input type="number" min="1" class="form-control text-center" name="quantity" value="<%=rs3.getString("orderdetails_Quantity") %>">
-                                            <button class="btn btn-danger btn-sm rounded-0"  name="Action" value="Update Quantity"><i class="material-icons" title="Update">&#xe5d5;</i></button>
+                                                <div class="form-row align-items-center">
+                                                    <input type="hidden" name="book_ID" value="<%=rs3.getString("book_ID") %>">
+                                                    <div class="col-sm-4 my-0">
+                                                        <input type="number" min="1" class="form-control text-center" name="quantity" value="<%=rs3.getString("orderdetails_Quantity") %>">
+                                                    </div>
+                                                    <div class="col-auto my-3">
+                                                        <button class="btn btn-danger btn-sm rounded-0"  name="Action" value="Update Quantity"><i class="material-icons" title="Update">&#xe5d5;</i></button>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </td>
 
-                                        <td class="text-right font-weight-semibold align-middle p-4">RM <%=rs3.getString("orderdetails_TotalPrice") %></td>
+                                        <td class="text-center font-weight-semibold align-middle p-4">RM <%=rs3.getString("orderdetails_TotalPrice") %></td>
                                         <td class="text-center align-middle px-0">
                                         <button type="button" data-toggle="modal" data-target="#removeFromCart" id="<%=rs3.getString("book_ID")%>" class="del btn btn-danger btn-sm rounded-0" title="Remove">×</button>
                                         </td>
-
-<%--                                        <a href="#" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a>--%>
                                     </tr>
                                     <%
                                         }
@@ -269,16 +274,17 @@
 
                             <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
                                 <div class="mt-4">
-                                    <label class="text-muted font-weight-normal">Promocode</label>
-                                    <input type="text" placeholder="ABC" class="form-control">
+
+                                    <input type="hidden" placeholder="ABC" class="form-control">
                                 </div>
                                 <div class="d-flex">
                                     <div class="text-right mt-4 mr-5">
-                                        <label class="text-muted font-weight-normal m-0">Discount</label>
-                                        <div class="text-large"><strong>RM 0.00</strong></div>
+
+                                        <input type="hidden" placeholder="ABC" class="form-control">
                                     </div>
 
                                     <%
+                                        DecimalFormat df = new DecimalFormat("##. 00");
                                         double finalTotalPrice = 0.00;
                                         Statement st4 = con.createStatement();
                                         ResultSet rs4 = st4.executeQuery("select sum(orderDetails_TotalPrice) from orderdetails");
@@ -288,14 +294,14 @@
                                     %>
                                     <div class="text-right mt-4">
                                         <label class="text-muted font-weight-normal m-0">Total price</label>
-                                        <div class="text-large"><strong>RM <%=finalTotalPrice%></strong></div>
+                                        <div class="text-large"><strong>RM <%=df.format(finalTotalPrice)%></strong></div>
                                     </div>
                                 </div>
                             </div>
 
                             <form method="post" action="${pageContext.request.contextPath}/ordersServlet">
 
-                                <button type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Place Order">PLACE ORDER</button>
+                                <button type="submit" class="btn btn-primary btn-block mb-4" name="Action" value="Place Order">BUY</button>
 
                             </form>
 
@@ -303,10 +309,24 @@
                 </div>
 
                 <div class="tab-pane fade" id="list-sales">
+                    <%--                    search order--%>
+                    <form class="form-horizontal" method="get">
+                        <div class="form-row align-items-center">
+                            <div class="col-sm-11 my-1">
+                                <input type="input" class="form-control" name="searchdata" placeholder="Search order No / order date / cutomer name">
+                            </div>
+
+
+                            <div class="col-auto my-1">
+                                <button type="submit" class="btn btn-primary">SEARCH</button>
+                            </div>
+                        </div>
+                    </form>
 
                     <table class="table table-bordered table-hover">
                         <thead class="thead-dark">
                         <tr>
+                            <th class="text-center" scope="col">No.</th>
                             <th class="text-center" scope="col">Order No.</th>
                             <th class="text-center" scope="col">Order Date Time</th>
                             <th class="text-center" scope="col">Customer Name</th>
@@ -317,24 +337,36 @@
                         <tbody>
                         <%
                             Statement st5 = con.createStatement();
-                            ResultSet rs5 = st5.executeQuery("select * from orders");
+                            String search = request.getParameter("searchdata");
+                            String sql;
+
+                            if(search != null){
+                                sql = "SELECT *  FROM orders WHERE order_No like '%"+search+"%' OR customer_Name like '%"+search+"%' OR order_DateTime like '%"+search+"%'";
+
+
+                            }else{
+                                sql = "select * from orders";
+                            }
+                            ResultSet rs5 = st5.executeQuery(sql);
+                            int i=1, count=0;
                             while (rs5.next()) {
                         %>
                         <tr>
+                            <th class="text-center" scope="row"><%=i%></th>
                             <th class="text-center" scope="row"><%=rs5.getString("order_No") %></th>
                             <td align="center"><%=rs5.getString("order_DateTime") %></td>
                             <td align="center"><%=rs5.getString("customer_Name") %></td>
                             <td align="center">RM <%=rs5.getString("orderDetails_TotalPrice") %></td>
                             <td align="center" class="col-2">
                                 <button type="button" data-toggle="modal" data-target="#viewOrderDetails" id="<%=rs5.getString("order_No")%>" class="view btn btn-primary btn-sm rounded-0" title="View"><i class="material-icons">visibility</i></button>
-
                             </td>
                         </tr>
-                        <%}%>
+                        <% i++;
+                            count++;
+                            }%>
                         </tbody>
                     </table>
-
-
+                    <b>Total record(s): </b><%=count%>
                 </div>
             </div>
             <!-- Tabs content -->
@@ -480,93 +512,6 @@
     var hash = window.location.hash;
     $('#myTab a[href="' + hash + '"]').tab('show');
 </script>
-
-<%--<script type="text/javascript">--%>
-<%--    $(document).ready(function () {--%>
-<%--        $.ajax({--%>
-<%--            url: "getBookCategoryServlet",--%>
-<%--            method: "GET",--%>
-<%--            data: {operation: 'category'},--%>
-<%--            success: function (data, textStatus, jqXHR) {--%>
-<%--                console.log(data);--%>
-<%--                let obj = $.parseJSON(data);--%>
-<%--                $.each(obj, function (key, value) {--%>
-<%--                    $('#category').append('<option value="' + value.id + '">' + value.name + '</option>')--%>
-<%--                });--%>
-<%--                $('select').formSelect();--%>
-<%--            },--%>
-<%--            error: function (jqXHR, textStatus, errorThrown) {--%>
-<%--                $('#category').append('<option>Category unavailable</option>');--%>
-<%--            },--%>
-<%--            cache: false--%>
-<%--        });--%>
-
-
-<%--        $('#category').change(function () {--%>
-<%--            $('#book').find('option').remove();--%>
-<%--            $('#book').append('<option>Select book title</option>');--%>
-
-<%--            let catid = $('#category').val();--%>
-<%--            let data = {--%>
-<%--                operation: "book",--%>
-<%--                id: catid--%>
-<%--            };--%>
-
-<%--            $.ajax({--%>
-<%--                url: "getBookCategoryServlet",--%>
-<%--                method: "GET",--%>
-<%--                data: data,--%>
-<%--                success: function (data, textStatus, jqXHR) {--%>
-<%--                    console.log(data);--%>
-<%--                    let obj = $.parseJSON(data);--%>
-<%--                    $.each(obj, function (key, value) {--%>
-<%--                        $('#book').append('<option value="' + value.id + '">' + value.name + '</option>')--%>
-<%--                    });--%>
-<%--                    $('select').formSelect();--%>
-<%--                },--%>
-<%--                error: function (jqXHR, textStatus, errorThrown) {--%>
-<%--                    $('#book').append('<option>Book unavailable</option>');--%>
-<%--                },--%>
-<%--                cache: false--%>
-<%--            });--%>
-<%--        });--%>
-
-<%--    });--%>
-<%--</script>--%>
-
-
-
-
-
-<%--<script>--%>
-<%--    function dynamicdropdown(listindex)--%>
-<%--    {--%>
-<%--        switch (listindex)--%>
-<%--        {--%>
-<%--            case "acc" :--%>
-<%--                document.getElementById("book").options[0]=new Option("Select book","");--%>
-<%--                document.getElementById("book").options[1]=new Option("Everyone Can Buy Property","acc1");--%>
-<%--                document.getElementById("book").options[2]=new Option("One Up On Wall Street","acc2");--%>
-<%--                break;--%>
-<%--            case "bs" :--%>
-<%--                document.getElementById("book").options[0]=new Option("Select book","");--%>
-<%--                document.getElementById("book").options[1]=new Option("Beyond Entrepreneurship 2.0","bs1");--%>
-<%--                document.getElementById("book").options[2]=new Option("The Ride of a Lifetime","bs2");--%>
-<%--                break;--%>
-<%--            case "comp" :--%>
-<%--                document.getElementById("book").options[0]=new Option("Select book","");--%>
-<%--                document.getElementById("book").options[1]=new Option("Cloud Native Security","comp1");--%>
-<%--                document.getElementById("book").options[2]=new Option("Data Lakes For Dummies","comp2");--%>
-<%--                break;--%>
-<%--            case "eng" :--%>
-<%--                document.getElementById("book").options[0]=new Option("Select book","");--%>
-<%--                document.getElementById("book").options[1]=new Option("Think Like An Engineer","eng1");--%>
-<%--                document.getElementById("book").options[2]=new Option("How to Invent Everything","eng2");--%>
-<%--                break;--%>
-<%--        }--%>
-<%--        return true;--%>
-<%--    }--%>
-<%--</script>--%>
 
 </body>
 </html>
